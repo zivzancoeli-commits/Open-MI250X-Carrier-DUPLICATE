@@ -1,0 +1,413 @@
+(kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
+	(uuid "9e149b2c-ee24-41e4-9a2c-1616a441d16c")
+	(paper "A3")
+	(title_block
+		(title "Rev3 8-seat PCBWay chassis stub (NOT fab-ready)")
+		(date "2026-08-21")
+		(rev "Rev3_8Seat_PCBWay_v1")
+		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
+		(comment 2 "8 OAM seats. Host X11DPH-T is NOT on this PCB. No CEM cable. No 20-layer UBB.")
+		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+	)
+
+	(lib_symbols
+(symbol "power:P48V" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "P48V" (at 0 3.556 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "P48V_0_1"
+		(pin power_in line (at 0 0 90) (length 0) (name "P48V") (number "1"))
+	)
+)
+
+(symbol "power:P12V1" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "P12V1" (at 0 3.556 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "P12V1_0_1"
+		(pin power_in line (at 0 0 90) (length 0) (name "P12V1") (number "1"))
+	)
+)
+
+(symbol "power:P12V2" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "P12V2" (at 0 3.556 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "P12V2_0_1"
+		(pin power_in line (at 0 0 90) (length 0) (name "P12V2") (number "1"))
+	)
+)
+
+(symbol "power:+3V3" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "+3V3" (at 0 3.556 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "+3V3_0_1"
+		(pin power_in line (at 0 0 90) (length 0) (name "+3V3") (number "1"))
+	)
+)
+
+(symbol "power:GND" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "GND" (at 0 -3.81 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "GND_0_1"
+		(pin power_in line (at 0 0 270) (length 0) (name "GND") (number "1"))
+	)
+)
+
+	)
+
+	(text "DO NOT FABRICATE / DO NOT ENERGIZE P48V\n8 identical OAM seats (populate 0-1 now, 2-7 later). Same board.\n16x Molex 218910-1115, 5.00 mm stack. 4-layer FR-4. Outline 492 x 372 mm.\n4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling (not a UBB drawing).\nSeats 0-1: named host PCIe nets toward HOST CONNECTOR REGION. No CEM invented.\nSeats 2-7: mechanical+power only. needs on-board PCIe switch — MPN Unknown.\nX11DPH-T: 3x Gen3 x16 + 4x Gen3 x8. NOT enough lanes for 8x MI250X (2 GCD, typically 2x x16).\nS1-S7 NOT routed between OAMs. TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\nP48V pads exist, NO POUR. Molex catalog 30 V vs OCP 44-59.5 V, ticket 167157.\nDell D3000E-S1 is 12 V CRPS — do not mix. P3V3 = Conn0 C1/C2 only. Never r2.0."
+		(exclude_from_sim no)
+		(at 25.4 15.24 0)
+		(effects (font (size 1.8 1.8)) (justify left top))
+		(uuid "cf6554aa-3dd3-45cb-a64e-f07e52c2849f")
+	)
+	(sheet
+		(at 20 100)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "c5e82caf-9ee9-46ce-815e-b91c8b893a31")
+		(property "Sheetname" "00_DO_NOT_FABRICATE"
+			(at 22.54 97.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/00_do_not_fabricate.kicad_sch"
+			(at 22.54 134.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92 100)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "13b565c3-78c4-490c-a3bb-f5d2d422de73")
+		(property "Sheetname" "01_Power_Clock_Reset"
+			(at 94.54 97.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/01_power_clock_reset.kicad_sch"
+			(at 94.54 134.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 164 100)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "3303dd91-f203-4793-a8b9-9b94be99b148")
+		(property "Sheetname" "02_Host_PCIe_Stub_OAM0_1"
+			(at 166.54 97.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/02_host_pcie_stub.kicad_sch"
+			(at 166.54 134.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 236 100)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "f9329830-6d7e-4397-890c-f4690e94510f")
+		(property "Sheetname" "03_OAM0_Connectors"
+			(at 238.54 97.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/03_oam0_connectors.kicad_sch"
+			(at 238.54 134.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20 142)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "d276c9e5-3ee8-4b4c-bd7c-ee6b5ea4ee8e")
+		(property "Sheetname" "04_OAM1_Connectors"
+			(at 22.54 139.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/04_oam1_connectors.kicad_sch"
+			(at 22.54 176.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92 142)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "699188f6-a7c4-44d8-850f-ecb87e28e08c")
+		(property "Sheetname" "05_OAM2_MechPower"
+			(at 94.54 139.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/05_oam2_connectors.kicad_sch"
+			(at 94.54 176.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 164 142)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "7634db92-336e-4b33-a8fc-e11a1eddb982")
+		(property "Sheetname" "06_OAM3_MechPower"
+			(at 166.54 139.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/06_oam3_connectors.kicad_sch"
+			(at 166.54 176.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 236 142)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "d8c1ca96-de88-4139-872b-5251be92540a")
+		(property "Sheetname" "07_OAM4_MechPower"
+			(at 238.54 139.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/07_oam4_connectors.kicad_sch"
+			(at 238.54 176.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20 184)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "17052ae9-6be3-4626-8612-b2f037352e25")
+		(property "Sheetname" "08_OAM5_MechPower"
+			(at 22.54 181.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/08_oam5_connectors.kicad_sch"
+			(at 22.54 218.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 92 184)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "34237e46-1339-41c9-a5b5-4346e0f91f54")
+		(property "Sheetname" "09_OAM6_MechPower"
+			(at 94.54 181.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/09_oam6_connectors.kicad_sch"
+			(at 94.54 218.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 164 184)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "9c078d8c-c1c7-4722-9912-5f9e69a0cfff")
+		(property "Sheetname" "10_OAM7_MechPower"
+			(at 166.54 181.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/10_oam7_connectors.kicad_sch"
+			(at 166.54 218.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 236 184)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "71174233-d0cc-46d9-beab-f4391a30a093")
+		(property "Sheetname" "11_PCIe_Switch_Unknown"
+			(at 238.54 181.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/11_pcie_switch_unknown.kicad_sch"
+			(at 238.54 218.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "13")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20 226)
+		(size 65 32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "fc1052b3-4dca-40a2-8660-bb9f4bfed3cc")
+		(property "Sheetname" "12_Unmapped_AMD"
+			(at 22.54 223.46 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
+		)
+		(property "Sheetfile" "sheets/12_unmapped_amd.kicad_sch"
+			(at 22.54 260.54 0)
+			(effects (font (size 1.016 1.016)) (justify left top))
+		)
+		(instances
+			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
+				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+					(page "14")
+				)
+			)
+		)
+	)
+
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

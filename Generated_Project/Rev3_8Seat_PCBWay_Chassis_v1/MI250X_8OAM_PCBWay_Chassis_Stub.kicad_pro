@@ -1,0 +1,119 @@
+{
+  "board": {
+    "design_settings": {
+      "defaults": {
+        "board_outline_line_width": 0.1,
+        "copper_line_width": 0.2,
+        "courtyard_line_width": 0.05,
+        "silk_line_width": 0.12
+      },
+      "rules": {
+        "min_clearance": 0.1,
+        "min_track_width": 0.1
+      },
+      "track_widths": [
+        0.1,
+        0.2,
+        0.5,
+        1.0
+      ],
+      "via_dimensions": [
+        {
+          "diameter": 0.6,
+          "drill": 0.3
+        }
+      ]
+    }
+  },
+  "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pro",
+    "version": 3
+  },
+  "net_settings": {
+    "classes": [],
+    "meta": {
+      "version": 0
+    }
+  },
+  "pcbnew": {
+    "last_paths": {
+      "netlist": "",
+      "plot": ""
+    },
+    "page_layout_descr_file": ""
+  },
+  "schematic": {
+    "annotate_start_num": 0
+  },
+  "sheets": [
+    [
+      "MI250X_8OAM_PCBWay_Chassis_Stub.kicad_sch",
+      "Root"
+    ],
+    [
+      "sheets/00_do_not_fabricate.kicad_sch",
+      "00_DO_NOT_FABRICATE"
+    ],
+    [
+      "sheets/01_power_clock_reset.kicad_sch",
+      "01_Power_Clock_Reset"
+    ],
+    [
+      "sheets/02_host_pcie_stub.kicad_sch",
+      "02_Host_PCIe_Stub_OAM0_1"
+    ],
+    [
+      "sheets/03_oam0_connectors.kicad_sch",
+      "03_OAM0_Connectors"
+    ],
+    [
+      "sheets/04_oam1_connectors.kicad_sch",
+      "04_OAM1_Connectors"
+    ],
+    [
+      "sheets/05_oam2_connectors.kicad_sch",
+      "05_OAM2_MechPower"
+    ],
+    [
+      "sheets/06_oam3_connectors.kicad_sch",
+      "06_OAM3_MechPower"
+    ],
+    [
+      "sheets/07_oam4_connectors.kicad_sch",
+      "07_OAM4_MechPower"
+    ],
+    [
+      "sheets/08_oam5_connectors.kicad_sch",
+      "08_OAM5_MechPower"
+    ],
+    [
+      "sheets/09_oam6_connectors.kicad_sch",
+      "09_OAM6_MechPower"
+    ],
+    [
+      "sheets/10_oam7_connectors.kicad_sch",
+      "10_OAM7_MechPower"
+    ],
+    [
+      "sheets/11_pcie_switch_unknown.kicad_sch",
+      "11_PCIe_Switch_Unknown"
+    ],
+    [
+      "sheets/12_unmapped_amd.kicad_sch",
+      "12_Unmapped_AMD"
+    ]
+  ],
+  "text_variables": {
+    "DO_NOT_FABRICATE": "true",
+    "DO_NOT_ENERGIZE": "true",
+    "PINMAP": "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map"
+  }
+}

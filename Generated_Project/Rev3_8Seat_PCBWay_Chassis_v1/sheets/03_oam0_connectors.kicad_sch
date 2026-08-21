@@ -1,0 +1,141 @@
+(kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
+	(uuid "c215ec95-3c42-4a87-b4c5-a151eeeb6d69")
+	(paper "A3")
+	(title_block
+		(title "OAM0 connectors")
+		(date "2026-08-21")
+		(rev "Rev3_8Seat_PCBWay_v1")
+		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
+		(comment 2 "Documentation sheet — no invented nets")
+		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+	)
+
+	(text "OAM0 connector instances — HOST-FACING SEAT (populate now).\n\nFootprint: Molex 218910-1115 candidate (geometry). Hermaphroditic — mates with itself\n(Farnell 2189101115: Mates With 2189101115; mated height 5.00 mm).\n\nPad nets assigned on the PCB from the v1.0 CSV. Schematic shows hierarchical\nports for power / clock / reset / mgmt. Host PCIe names live on sheet 02.\nSerDes S1-S7 named on the PCB for this seat and left unrouted (AMD xGMI unknown).\n\nMODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).\n"
+		(exclude_from_sim no)
+		(at 20.32 20.32 0)
+		(effects (font (size 1.5 1.5)) (justify left top))
+		(uuid "67bbc018-9d47-4d32-a917-4195debf585e")
+	)
+
+
+	(hierarchical_label "P48V"
+		(shape bidirectional)
+		(at 25.4 150 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "576dd6e3-768e-4e57-ad99-1b95fb70479e")
+	)
+
+	(hierarchical_label "P12V1"
+		(shape bidirectional)
+		(at 25.4 155.08 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "74ce06b3-3e8a-47e8-a77b-8e109235d532")
+	)
+
+	(hierarchical_label "P12V2"
+		(shape bidirectional)
+		(at 25.4 160.16000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "276b86dd-783d-45f7-b5db-7045a01215b8")
+	)
+
+	(hierarchical_label "P3V3"
+		(shape bidirectional)
+		(at 25.4 165.24000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "df9128e6-8898-4d42-8ee9-7e6e4205eaec")
+	)
+
+	(hierarchical_label "GND"
+		(shape bidirectional)
+		(at 25.4 170.32000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "515bf194-67f2-4e74-8684-efc1e832dee5")
+	)
+
+	(hierarchical_label "OAM0_PVREF"
+		(shape bidirectional)
+		(at 25.4 175.40000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e688eaba-d1cd-4e19-b71a-7615852d67b3")
+	)
+
+	(hierarchical_label "OAM0_PE_REFCLKP"
+		(shape bidirectional)
+		(at 25.4 180.48000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c960ed14-769b-4f88-8012-d1025c6903f5")
+	)
+
+	(hierarchical_label "OAM0_PE_REFCLKN"
+		(shape bidirectional)
+		(at 25.4 185.5600000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3ed88c07-9c59-42a8-b786-12bf96f9227a")
+	)
+
+	(hierarchical_label "OAM0_PERST#"
+		(shape bidirectional)
+		(at 25.4 190.6400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a7d8e781-c34a-4457-bcdd-67163e236841")
+	)
+
+	(hierarchical_label "OAM0_HOST_PWRGD"
+		(shape bidirectional)
+		(at 25.4 195.7200000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "41625c34-572d-47a9-b207-ee81fa3029b6")
+	)
+
+	(hierarchical_label "OAM0_MODULE_PWRGD"
+		(shape bidirectional)
+		(at 25.4 200.80000000000013 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dfe6e77b-1409-4f8e-8e69-8a285ddac4ba")
+	)
+
+	(hierarchical_label "OAM0_WARMRST#"
+		(shape bidirectional)
+		(at 25.4 205.88000000000014 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f8e12052-187a-4e58-809f-a00698002ff5")
+	)
+
+	(hierarchical_label "OAM0_PWRBRK#"
+		(shape bidirectional)
+		(at 25.4 210.96000000000015 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "60b9542e-d5ab-41c0-a0cc-1b05952e3723")
+	)
+
+	(hierarchical_label "OAM0_PRSNT0#"
+		(shape bidirectional)
+		(at 25.4 216.04000000000016 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8e61a20e-3fab-4ce0-a4f9-8c04663bdba7")
+	)
+
+	(hierarchical_label "OAM0_SMBus_SLV_D"
+		(shape bidirectional)
+		(at 25.4 221.12000000000018 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0c5936c8-543f-471a-a499-66daee690fe6")
+	)
+
+	(hierarchical_label "OAM0_SMBus_SLV_CLK"
+		(shape bidirectional)
+		(at 25.4 226.2000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "495ac223-b0a7-413a-95f1-ceb47b1b0a78")
+	)
+
+
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

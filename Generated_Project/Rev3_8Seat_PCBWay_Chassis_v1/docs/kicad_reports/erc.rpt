@@ -1,0 +1,1207 @@
+ERC report (2026-08-21T22:42:44+0000, Encoding UTF8)
+
+***** Sheet /
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM1_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 180.48 mm): Hierarchical Label 'OAM1_PE_REFCLKP'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 185.56 mm): Hierarchical Label 'OAM1_PE_REFCLKN'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 190.64 mm): Hierarchical Label 'OAM1_PERST#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 195.72 mm): Hierarchical Label 'OAM1_HOST_PWRGD'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 200.80 mm): Hierarchical Label 'OAM1_MODULE_PWRGD'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 205.88 mm): Hierarchical Label 'OAM1_WARMRST#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 210.96 mm): Hierarchical Label 'OAM1_PWRBRK#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 216.04 mm): Hierarchical Label 'OAM1_PRSNT0#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 221.12 mm): Hierarchical Label 'OAM1_SMBus_SLV_D'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM1_SMBus_SLV_CLK'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM5_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM2_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM6_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 130.00 mm): Hierarchical Label 'OAM0_PCIE_TX0P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 133.81 mm): Hierarchical Label 'OAM0_PCIE_RX0P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 137.62 mm): Hierarchical Label 'OAM0_PCIE_TX0N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 141.43 mm): Hierarchical Label 'OAM0_PCIE_RX0N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 145.24 mm): Hierarchical Label 'OAM0_PCIE_TX1P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 149.05 mm): Hierarchical Label 'OAM0_PCIE_RX1P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 152.86 mm): Hierarchical Label 'OAM0_PCIE_TX1N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 156.67 mm): Hierarchical Label 'OAM0_PCIE_RX1N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 130.00 mm): Hierarchical Label 'OAM0_PCIE_RX8N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.48 mm): Hierarchical Label 'OAM0_PCIE_TX2P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 133.81 mm): Hierarchical Label 'OAM0_PCIE_TX9P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 164.29 mm): Hierarchical Label 'OAM0_PCIE_RX2P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 137.62 mm): Hierarchical Label 'OAM0_PCIE_RX9P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 168.10 mm): Hierarchical Label 'OAM0_PCIE_TX2N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 141.43 mm): Hierarchical Label 'OAM0_PCIE_TX9N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 145.24 mm): Hierarchical Label 'OAM0_PCIE_RX9N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 171.91 mm): Hierarchical Label 'OAM0_PCIE_RX2N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 149.05 mm): Hierarchical Label 'OAM0_PCIE_TX10P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.72 mm): Hierarchical Label 'OAM0_PCIE_TX3P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 152.86 mm): Hierarchical Label 'OAM0_PCIE_RX10P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 179.53 mm): Hierarchical Label 'OAM0_PCIE_RX3P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 156.67 mm): Hierarchical Label 'OAM0_PCIE_TX10N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 183.34 mm): Hierarchical Label 'OAM0_PCIE_TX3N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 160.48 mm): Hierarchical Label 'OAM0_PCIE_RX10N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 187.15 mm): Hierarchical Label 'OAM0_PCIE_RX3N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 164.29 mm): Hierarchical Label 'OAM0_PCIE_TX11P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 190.96 mm): Hierarchical Label 'OAM0_PCIE_TX4P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 168.10 mm): Hierarchical Label 'OAM0_PCIE_RX11P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 194.77 mm): Hierarchical Label 'OAM0_PCIE_RX4P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 171.91 mm): Hierarchical Label 'OAM0_PCIE_TX11N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 175.72 mm): Hierarchical Label 'OAM0_PCIE_RX11N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 198.58 mm): Hierarchical Label 'OAM0_PCIE_TX4N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 179.53 mm): Hierarchical Label 'OAM0_PCIE_TX12P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 202.39 mm): Hierarchical Label 'OAM0_PCIE_RX4N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 183.34 mm): Hierarchical Label 'OAM0_PCIE_RX12P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 206.20 mm): Hierarchical Label 'OAM0_PCIE_TX5P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 187.15 mm): Hierarchical Label 'OAM0_PCIE_TX12N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 130.00 mm): Hierarchical Label 'OAM1_PCIE_TX1N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 210.01 mm): Hierarchical Label 'OAM0_PCIE_RX5P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 133.81 mm): Hierarchical Label 'OAM1_PCIE_RX1N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 190.96 mm): Hierarchical Label 'OAM0_PCIE_RX12N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 137.62 mm): Hierarchical Label 'OAM1_PCIE_TX2P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 213.82 mm): Hierarchical Label 'OAM0_PCIE_TX5N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 194.77 mm): Hierarchical Label 'OAM0_PCIE_TX13P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 141.43 mm): Hierarchical Label 'OAM1_PCIE_RX2P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 217.63 mm): Hierarchical Label 'OAM0_PCIE_RX5N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 145.24 mm): Hierarchical Label 'OAM1_PCIE_TX2N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 198.58 mm): Hierarchical Label 'OAM0_PCIE_RX13P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 149.05 mm): Hierarchical Label 'OAM1_PCIE_RX2N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 221.44 mm): Hierarchical Label 'OAM0_PCIE_TX6P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 202.39 mm): Hierarchical Label 'OAM0_PCIE_TX13N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 152.86 mm): Hierarchical Label 'OAM1_PCIE_TX3P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 225.25 mm): Hierarchical Label 'OAM0_PCIE_RX6P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 206.20 mm): Hierarchical Label 'OAM0_PCIE_RX13N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 156.67 mm): Hierarchical Label 'OAM1_PCIE_RX3P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 160.48 mm): Hierarchical Label 'OAM1_PCIE_TX3N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 229.06 mm): Hierarchical Label 'OAM0_PCIE_TX6N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 210.01 mm): Hierarchical Label 'OAM0_PCIE_TX14P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 164.29 mm): Hierarchical Label 'OAM1_PCIE_RX3N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 213.82 mm): Hierarchical Label 'OAM0_PCIE_RX14P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 232.87 mm): Hierarchical Label 'OAM0_PCIE_RX6N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 168.10 mm): Hierarchical Label 'OAM1_PCIE_TX4P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 217.63 mm): Hierarchical Label 'OAM0_PCIE_TX14N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 236.68 mm): Hierarchical Label 'OAM0_PCIE_TX7P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 171.91 mm): Hierarchical Label 'OAM1_PCIE_RX4P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 221.44 mm): Hierarchical Label 'OAM0_PCIE_RX14N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 175.72 mm): Hierarchical Label 'OAM1_PCIE_TX4N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 240.49 mm): Hierarchical Label 'OAM0_PCIE_RX7P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 179.53 mm): Hierarchical Label 'OAM1_PCIE_RX4N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 225.25 mm): Hierarchical Label 'OAM0_PCIE_TX15P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 244.30 mm): Hierarchical Label 'OAM0_PCIE_TX7N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 183.34 mm): Hierarchical Label 'OAM1_PCIE_TX5P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 229.06 mm): Hierarchical Label 'OAM0_PCIE_RX15P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 248.11 mm): Hierarchical Label 'OAM0_PCIE_RX7N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 187.15 mm): Hierarchical Label 'OAM1_PCIE_RX5P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 232.87 mm): Hierarchical Label 'OAM0_PCIE_TX15N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 190.96 mm): Hierarchical Label 'OAM1_PCIE_TX5N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 251.92 mm): Hierarchical Label 'OAM0_PCIE_TX8P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 236.68 mm): Hierarchical Label 'OAM0_PCIE_RX15N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 194.77 mm): Hierarchical Label 'OAM1_PCIE_RX5N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 255.73 mm): Hierarchical Label 'OAM0_PCIE_RX8P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 198.58 mm): Hierarchical Label 'OAM1_PCIE_TX6P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 240.49 mm): Hierarchical Label 'OAM1_PCIE_TX0P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 259.54 mm): Hierarchical Label 'OAM0_PCIE_TX8N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 202.39 mm): Hierarchical Label 'OAM1_PCIE_RX6P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 244.30 mm): Hierarchical Label 'OAM1_PCIE_RX0P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 206.20 mm): Hierarchical Label 'OAM1_PCIE_TX6N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 248.11 mm): Hierarchical Label 'OAM1_PCIE_TX0N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 210.01 mm): Hierarchical Label 'OAM1_PCIE_RX6N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 130.00 mm): Hierarchical Label 'OAM1_PCIE_RX10P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 251.92 mm): Hierarchical Label 'OAM1_PCIE_RX0N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 213.82 mm): Hierarchical Label 'OAM1_PCIE_TX7P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 133.81 mm): Hierarchical Label 'OAM1_PCIE_TX10N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 137.62 mm): Hierarchical Label 'OAM1_PCIE_RX10N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 255.73 mm): Hierarchical Label 'OAM1_PCIE_TX1P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 217.63 mm): Hierarchical Label 'OAM1_PCIE_RX7P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 141.43 mm): Hierarchical Label 'OAM1_PCIE_TX11P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 221.44 mm): Hierarchical Label 'OAM1_PCIE_TX7N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(95.40 mm, 259.54 mm): Hierarchical Label 'OAM1_PCIE_RX1P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 145.24 mm): Hierarchical Label 'OAM1_PCIE_RX11P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 149.05 mm): Hierarchical Label 'OAM1_PCIE_TX11N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 225.25 mm): Hierarchical Label 'OAM1_PCIE_RX7N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 152.86 mm): Hierarchical Label 'OAM1_PCIE_RX11N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 229.06 mm): Hierarchical Label 'OAM1_PCIE_TX8P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 156.67 mm): Hierarchical Label 'OAM1_PCIE_TX12P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 160.48 mm): Hierarchical Label 'OAM1_PCIE_RX12P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 232.87 mm): Hierarchical Label 'OAM1_PCIE_RX8P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 164.29 mm): Hierarchical Label 'OAM1_PCIE_TX12N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 236.68 mm): Hierarchical Label 'OAM1_PCIE_TX8N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 168.10 mm): Hierarchical Label 'OAM1_PCIE_RX12N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 171.91 mm): Hierarchical Label 'OAM1_PCIE_TX13P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 240.49 mm): Hierarchical Label 'OAM1_PCIE_RX8N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 175.72 mm): Hierarchical Label 'OAM1_PCIE_RX13P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 244.30 mm): Hierarchical Label 'OAM1_PCIE_TX9P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 179.53 mm): Hierarchical Label 'OAM1_PCIE_TX13N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 248.11 mm): Hierarchical Label 'OAM1_PCIE_RX9P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 183.34 mm): Hierarchical Label 'OAM1_PCIE_RX13N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 187.15 mm): Hierarchical Label 'OAM1_PCIE_TX14P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 251.92 mm): Hierarchical Label 'OAM1_PCIE_TX9N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 190.96 mm): Hierarchical Label 'OAM1_PCIE_RX14P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 255.73 mm): Hierarchical Label 'OAM1_PCIE_RX9N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 194.77 mm): Hierarchical Label 'OAM1_PCIE_TX14N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(165.40 mm, 259.54 mm): Hierarchical Label 'OAM1_PCIE_TX10P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 198.58 mm): Hierarchical Label 'OAM1_PCIE_RX14N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 202.39 mm): Hierarchical Label 'OAM1_PCIE_TX15P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 206.20 mm): Hierarchical Label 'OAM1_PCIE_RX15P'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 210.01 mm): Hierarchical Label 'OAM1_PCIE_TX15N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(235.40 mm, 213.82 mm): Hierarchical Label 'OAM1_PCIE_RX15N'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM3_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM7_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM0_PVREF'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 180.48 mm): Hierarchical Label 'OAM0_PE_REFCLKP'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 185.56 mm): Hierarchical Label 'OAM0_PE_REFCLKN'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 190.64 mm): Hierarchical Label 'OAM0_PERST#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 195.72 mm): Hierarchical Label 'OAM0_HOST_PWRGD'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 200.80 mm): Hierarchical Label 'OAM0_MODULE_PWRGD'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 205.88 mm): Hierarchical Label 'OAM0_WARMRST#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 210.96 mm): Hierarchical Label 'OAM0_PWRBRK#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 216.04 mm): Hierarchical Label 'OAM0_PRSNT0#'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 221.12 mm): Hierarchical Label 'OAM0_SMBus_SLV_D'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM0_SMBus_SLV_CLK'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[label_dangling]: Label not connected to anything
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM4_PVREF'
+
+***** Sheet /00_DO_NOT_FABRICATE/
+
+***** Sheet /01_Power_Clock_Reset/
+
+***** Sheet /02_Host_PCIe_Stub_OAM0_1/
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX0P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 130.00 mm): Hierarchical Label 'OAM0_PCIE_TX0P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX0P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 133.81 mm): Hierarchical Label 'OAM0_PCIE_RX0P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX0N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 137.62 mm): Hierarchical Label 'OAM0_PCIE_TX0N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX0N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 141.43 mm): Hierarchical Label 'OAM0_PCIE_RX0N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX1P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 145.24 mm): Hierarchical Label 'OAM0_PCIE_TX1P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX1P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 149.05 mm): Hierarchical Label 'OAM0_PCIE_RX1P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX1N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 152.86 mm): Hierarchical Label 'OAM0_PCIE_TX1N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX1N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 156.67 mm): Hierarchical Label 'OAM0_PCIE_RX1N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX8N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 130.00 mm): Hierarchical Label 'OAM0_PCIE_RX8N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX2P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.48 mm): Hierarchical Label 'OAM0_PCIE_TX2P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX9P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 133.81 mm): Hierarchical Label 'OAM0_PCIE_TX9P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX2P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 164.29 mm): Hierarchical Label 'OAM0_PCIE_RX2P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX9P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 137.62 mm): Hierarchical Label 'OAM0_PCIE_RX9P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX2N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 168.10 mm): Hierarchical Label 'OAM0_PCIE_TX2N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX9N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 141.43 mm): Hierarchical Label 'OAM0_PCIE_TX9N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX9N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 145.24 mm): Hierarchical Label 'OAM0_PCIE_RX9N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX2N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 171.91 mm): Hierarchical Label 'OAM0_PCIE_RX2N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX10P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 149.05 mm): Hierarchical Label 'OAM0_PCIE_TX10P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX3P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.72 mm): Hierarchical Label 'OAM0_PCIE_TX3P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX10P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 152.86 mm): Hierarchical Label 'OAM0_PCIE_RX10P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX3P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 179.53 mm): Hierarchical Label 'OAM0_PCIE_RX3P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX10N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 156.67 mm): Hierarchical Label 'OAM0_PCIE_TX10N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX3N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 183.34 mm): Hierarchical Label 'OAM0_PCIE_TX3N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX10N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 160.48 mm): Hierarchical Label 'OAM0_PCIE_RX10N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX3N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 187.15 mm): Hierarchical Label 'OAM0_PCIE_RX3N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX11P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 164.29 mm): Hierarchical Label 'OAM0_PCIE_TX11P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX4P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 190.96 mm): Hierarchical Label 'OAM0_PCIE_TX4P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX11P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 168.10 mm): Hierarchical Label 'OAM0_PCIE_RX11P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX4P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 194.77 mm): Hierarchical Label 'OAM0_PCIE_RX4P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX11N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 171.91 mm): Hierarchical Label 'OAM0_PCIE_TX11N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX11N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 175.72 mm): Hierarchical Label 'OAM0_PCIE_RX11N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX4N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 198.58 mm): Hierarchical Label 'OAM0_PCIE_TX4N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX12P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 179.53 mm): Hierarchical Label 'OAM0_PCIE_TX12P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX4N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 202.39 mm): Hierarchical Label 'OAM0_PCIE_RX4N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX12P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 183.34 mm): Hierarchical Label 'OAM0_PCIE_RX12P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX5P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 206.20 mm): Hierarchical Label 'OAM0_PCIE_TX5P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX12N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 187.15 mm): Hierarchical Label 'OAM0_PCIE_TX12N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX1N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 130.00 mm): Hierarchical Label 'OAM1_PCIE_TX1N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX5P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 210.01 mm): Hierarchical Label 'OAM0_PCIE_RX5P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX1N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 133.81 mm): Hierarchical Label 'OAM1_PCIE_RX1N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX12N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 190.96 mm): Hierarchical Label 'OAM0_PCIE_RX12N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX2P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 137.62 mm): Hierarchical Label 'OAM1_PCIE_TX2P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX5N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 213.82 mm): Hierarchical Label 'OAM0_PCIE_TX5N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX13P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 194.77 mm): Hierarchical Label 'OAM0_PCIE_TX13P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX2P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 141.43 mm): Hierarchical Label 'OAM1_PCIE_RX2P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX5N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 217.63 mm): Hierarchical Label 'OAM0_PCIE_RX5N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX2N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 145.24 mm): Hierarchical Label 'OAM1_PCIE_TX2N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX13P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 198.58 mm): Hierarchical Label 'OAM0_PCIE_RX13P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX2N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 149.05 mm): Hierarchical Label 'OAM1_PCIE_RX2N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX6P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 221.44 mm): Hierarchical Label 'OAM0_PCIE_TX6P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX13N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 202.39 mm): Hierarchical Label 'OAM0_PCIE_TX13N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX3P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 152.86 mm): Hierarchical Label 'OAM1_PCIE_TX3P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX6P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 225.25 mm): Hierarchical Label 'OAM0_PCIE_RX6P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX13N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 206.20 mm): Hierarchical Label 'OAM0_PCIE_RX13N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX3P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 156.67 mm): Hierarchical Label 'OAM1_PCIE_RX3P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX3N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 160.48 mm): Hierarchical Label 'OAM1_PCIE_TX3N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX6N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 229.06 mm): Hierarchical Label 'OAM0_PCIE_TX6N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX14P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 210.01 mm): Hierarchical Label 'OAM0_PCIE_TX14P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX3N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 164.29 mm): Hierarchical Label 'OAM1_PCIE_RX3N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX14P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 213.82 mm): Hierarchical Label 'OAM0_PCIE_RX14P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX6N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 232.87 mm): Hierarchical Label 'OAM0_PCIE_RX6N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX4P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 168.10 mm): Hierarchical Label 'OAM1_PCIE_TX4P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX14N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 217.63 mm): Hierarchical Label 'OAM0_PCIE_TX14N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX7P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 236.68 mm): Hierarchical Label 'OAM0_PCIE_TX7P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX4P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 171.91 mm): Hierarchical Label 'OAM1_PCIE_RX4P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX14N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 221.44 mm): Hierarchical Label 'OAM0_PCIE_RX14N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX4N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 175.72 mm): Hierarchical Label 'OAM1_PCIE_TX4N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX7P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 240.49 mm): Hierarchical Label 'OAM0_PCIE_RX7P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX4N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 179.53 mm): Hierarchical Label 'OAM1_PCIE_RX4N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX15P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 225.25 mm): Hierarchical Label 'OAM0_PCIE_TX15P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX7N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 244.30 mm): Hierarchical Label 'OAM0_PCIE_TX7N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX5P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 183.34 mm): Hierarchical Label 'OAM1_PCIE_TX5P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX15P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 229.06 mm): Hierarchical Label 'OAM0_PCIE_RX15P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX7N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 248.11 mm): Hierarchical Label 'OAM0_PCIE_RX7N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX5P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 187.15 mm): Hierarchical Label 'OAM1_PCIE_RX5P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX15N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 232.87 mm): Hierarchical Label 'OAM0_PCIE_TX15N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX5N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 190.96 mm): Hierarchical Label 'OAM1_PCIE_TX5N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX8P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 251.92 mm): Hierarchical Label 'OAM0_PCIE_TX8P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX15N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 236.68 mm): Hierarchical Label 'OAM0_PCIE_RX15N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX5N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 194.77 mm): Hierarchical Label 'OAM1_PCIE_RX5N'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_RX8P has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 255.73 mm): Hierarchical Label 'OAM0_PCIE_RX8P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX6P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 198.58 mm): Hierarchical Label 'OAM1_PCIE_TX6P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX0P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 240.49 mm): Hierarchical Label 'OAM1_PCIE_TX0P'
+[hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX8N has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 259.54 mm): Hierarchical Label 'OAM0_PCIE_TX8N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX6P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 202.39 mm): Hierarchical Label 'OAM1_PCIE_RX6P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX0P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 244.30 mm): Hierarchical Label 'OAM1_PCIE_RX0P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX6N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 206.20 mm): Hierarchical Label 'OAM1_PCIE_TX6N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX0N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 248.11 mm): Hierarchical Label 'OAM1_PCIE_TX0N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX6N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 210.01 mm): Hierarchical Label 'OAM1_PCIE_RX6N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX10P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 130.00 mm): Hierarchical Label 'OAM1_PCIE_RX10P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX0N has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 251.92 mm): Hierarchical Label 'OAM1_PCIE_RX0N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX7P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 213.82 mm): Hierarchical Label 'OAM1_PCIE_TX7P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX10N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 133.81 mm): Hierarchical Label 'OAM1_PCIE_TX10N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX10N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 137.62 mm): Hierarchical Label 'OAM1_PCIE_RX10N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX1P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 255.73 mm): Hierarchical Label 'OAM1_PCIE_TX1P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX7P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 217.63 mm): Hierarchical Label 'OAM1_PCIE_RX7P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX11P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 141.43 mm): Hierarchical Label 'OAM1_PCIE_TX11P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX7N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 221.44 mm): Hierarchical Label 'OAM1_PCIE_TX7N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX1P has no matching sheet pin in the parent sheet
+    ; error
+    @(95.40 mm, 259.54 mm): Hierarchical Label 'OAM1_PCIE_RX1P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX11P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 145.24 mm): Hierarchical Label 'OAM1_PCIE_RX11P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX11N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 149.05 mm): Hierarchical Label 'OAM1_PCIE_TX11N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX7N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 225.25 mm): Hierarchical Label 'OAM1_PCIE_RX7N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX11N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 152.86 mm): Hierarchical Label 'OAM1_PCIE_RX11N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX8P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 229.06 mm): Hierarchical Label 'OAM1_PCIE_TX8P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX12P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 156.67 mm): Hierarchical Label 'OAM1_PCIE_TX12P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX12P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 160.48 mm): Hierarchical Label 'OAM1_PCIE_RX12P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX8P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 232.87 mm): Hierarchical Label 'OAM1_PCIE_RX8P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX12N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 164.29 mm): Hierarchical Label 'OAM1_PCIE_TX12N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX8N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 236.68 mm): Hierarchical Label 'OAM1_PCIE_TX8N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX12N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 168.10 mm): Hierarchical Label 'OAM1_PCIE_RX12N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX13P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 171.91 mm): Hierarchical Label 'OAM1_PCIE_TX13P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX8N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 240.49 mm): Hierarchical Label 'OAM1_PCIE_RX8N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX13P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 175.72 mm): Hierarchical Label 'OAM1_PCIE_RX13P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX9P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 244.30 mm): Hierarchical Label 'OAM1_PCIE_TX9P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX13N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 179.53 mm): Hierarchical Label 'OAM1_PCIE_TX13N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX9P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 248.11 mm): Hierarchical Label 'OAM1_PCIE_RX9P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX13N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 183.34 mm): Hierarchical Label 'OAM1_PCIE_RX13N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX14P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 187.15 mm): Hierarchical Label 'OAM1_PCIE_TX14P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX9N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 251.92 mm): Hierarchical Label 'OAM1_PCIE_TX9N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX14P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 190.96 mm): Hierarchical Label 'OAM1_PCIE_RX14P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX9N has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 255.73 mm): Hierarchical Label 'OAM1_PCIE_RX9N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX14N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 194.77 mm): Hierarchical Label 'OAM1_PCIE_TX14N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX10P has no matching sheet pin in the parent sheet
+    ; error
+    @(165.40 mm, 259.54 mm): Hierarchical Label 'OAM1_PCIE_TX10P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX14N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 198.58 mm): Hierarchical Label 'OAM1_PCIE_RX14N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX15P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 202.39 mm): Hierarchical Label 'OAM1_PCIE_TX15P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX15P has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 206.20 mm): Hierarchical Label 'OAM1_PCIE_RX15P'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_TX15N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 210.01 mm): Hierarchical Label 'OAM1_PCIE_TX15N'
+[hier_label_mismatch]: Hierarchical label OAM1_PCIE_RX15N has no matching sheet pin in the parent sheet
+    ; error
+    @(235.40 mm, 213.82 mm): Hierarchical Label 'OAM1_PCIE_RX15N'
+
+***** Sheet /03_OAM0_Connectors/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM0_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM0_PVREF'
+[hier_label_mismatch]: Hierarchical label OAM0_PE_REFCLKP has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 180.48 mm): Hierarchical Label 'OAM0_PE_REFCLKP'
+[hier_label_mismatch]: Hierarchical label OAM0_PE_REFCLKN has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 185.56 mm): Hierarchical Label 'OAM0_PE_REFCLKN'
+[hier_label_mismatch]: Hierarchical label OAM0_PERST# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 190.64 mm): Hierarchical Label 'OAM0_PERST#'
+[hier_label_mismatch]: Hierarchical label OAM0_HOST_PWRGD has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 195.72 mm): Hierarchical Label 'OAM0_HOST_PWRGD'
+[hier_label_mismatch]: Hierarchical label OAM0_MODULE_PWRGD has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 200.80 mm): Hierarchical Label 'OAM0_MODULE_PWRGD'
+[hier_label_mismatch]: Hierarchical label OAM0_WARMRST# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 205.88 mm): Hierarchical Label 'OAM0_WARMRST#'
+[hier_label_mismatch]: Hierarchical label OAM0_PWRBRK# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 210.96 mm): Hierarchical Label 'OAM0_PWRBRK#'
+[hier_label_mismatch]: Hierarchical label OAM0_PRSNT0# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 216.04 mm): Hierarchical Label 'OAM0_PRSNT0#'
+[hier_label_mismatch]: Hierarchical label OAM0_SMBus_SLV_D has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 221.12 mm): Hierarchical Label 'OAM0_SMBus_SLV_D'
+[hier_label_mismatch]: Hierarchical label OAM0_SMBus_SLV_CLK has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM0_SMBus_SLV_CLK'
+
+***** Sheet /04_OAM1_Connectors/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM1_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM1_PVREF'
+[hier_label_mismatch]: Hierarchical label OAM1_PE_REFCLKP has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 180.48 mm): Hierarchical Label 'OAM1_PE_REFCLKP'
+[hier_label_mismatch]: Hierarchical label OAM1_PE_REFCLKN has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 185.56 mm): Hierarchical Label 'OAM1_PE_REFCLKN'
+[hier_label_mismatch]: Hierarchical label OAM1_PERST# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 190.64 mm): Hierarchical Label 'OAM1_PERST#'
+[hier_label_mismatch]: Hierarchical label OAM1_HOST_PWRGD has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 195.72 mm): Hierarchical Label 'OAM1_HOST_PWRGD'
+[hier_label_mismatch]: Hierarchical label OAM1_MODULE_PWRGD has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 200.80 mm): Hierarchical Label 'OAM1_MODULE_PWRGD'
+[hier_label_mismatch]: Hierarchical label OAM1_WARMRST# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 205.88 mm): Hierarchical Label 'OAM1_WARMRST#'
+[hier_label_mismatch]: Hierarchical label OAM1_PWRBRK# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 210.96 mm): Hierarchical Label 'OAM1_PWRBRK#'
+[hier_label_mismatch]: Hierarchical label OAM1_PRSNT0# has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 216.04 mm): Hierarchical Label 'OAM1_PRSNT0#'
+[hier_label_mismatch]: Hierarchical label OAM1_SMBus_SLV_D has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 221.12 mm): Hierarchical Label 'OAM1_SMBus_SLV_D'
+[hier_label_mismatch]: Hierarchical label OAM1_SMBus_SLV_CLK has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM1_SMBus_SLV_CLK'
+
+***** Sheet /05_OAM2_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM2_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM2_PVREF'
+
+***** Sheet /06_OAM3_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM3_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM3_PVREF'
+
+***** Sheet /07_OAM4_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM4_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM4_PVREF'
+
+***** Sheet /08_OAM5_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM5_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM5_PVREF'
+
+***** Sheet /09_OAM6_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM6_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM6_PVREF'
+
+***** Sheet /10_OAM7_MechPower/
+[hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
+[hier_label_mismatch]: Hierarchical label P12V1 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 155.08 mm): Hierarchical Label 'P12V1'
+[hier_label_mismatch]: Hierarchical label P12V2 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 160.16 mm): Hierarchical Label 'P12V2'
+[hier_label_mismatch]: Hierarchical label P3V3 has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 165.24 mm): Hierarchical Label 'P3V3'
+[hier_label_mismatch]: Hierarchical label GND has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 170.32 mm): Hierarchical Label 'GND'
+[hier_label_mismatch]: Hierarchical label OAM7_PVREF has no matching sheet pin in the parent sheet
+    ; error
+    @(25.40 mm, 175.40 mm): Hierarchical Label 'OAM7_PVREF'
+
+***** Sheet /11_PCIe_Switch_Unknown/
+
+***** Sheet /12_Unmapped_AMD/
+
+ ** ERC messages: 392  Errors 392  Warnings 0

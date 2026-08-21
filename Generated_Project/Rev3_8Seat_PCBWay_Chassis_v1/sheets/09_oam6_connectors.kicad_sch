@@ -1,0 +1,71 @@
+(kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
+	(uuid "c3e65514-90e7-4414-87c1-e84dcda5c07c")
+	(paper "A3")
+	(title_block
+		(title "OAM6 connectors")
+		(date "2026-08-21")
+		(rev "Rev3_8Seat_PCBWay_v1")
+		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
+		(comment 2 "Documentation sheet — no invented nets")
+		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+	)
+
+	(text "OAM6 connector instances — MECHANICAL + POWER ONLY (populate later).\n\nSame 2x Molex 218910-1115 land pattern and Fig 2 M3.5 holes as seats 0-1.\nPCIe / xGMI / clock / mgmt pads have NO NET on this seat.\n\nneeds on-board PCIe switch — MPN Unknown.\n\nPower pads share P48V / P12V1 / P12V2 / P3V3 / GND with the rest of the board.\nP48V still NO POUR, DO NOT ENERGIZE. PVREF is a module output — never drive.\n"
+		(exclude_from_sim no)
+		(at 20.32 20.32 0)
+		(effects (font (size 1.5 1.5)) (justify left top))
+		(uuid "0ed56da2-6fe0-4b84-bdef-00dec8d670f9")
+	)
+
+
+	(hierarchical_label "P48V"
+		(shape bidirectional)
+		(at 25.4 150 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ed2539b1-eed4-4498-b019-3337fb782180")
+	)
+
+	(hierarchical_label "P12V1"
+		(shape bidirectional)
+		(at 25.4 155.08 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dba0dbb1-debe-423e-a86f-12619afd28b2")
+	)
+
+	(hierarchical_label "P12V2"
+		(shape bidirectional)
+		(at 25.4 160.16000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "67dca1a8-ea99-454d-99a0-c313fa094ab5")
+	)
+
+	(hierarchical_label "P3V3"
+		(shape bidirectional)
+		(at 25.4 165.24000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c08c4388-2df6-4e03-8a84-129d63a23436")
+	)
+
+	(hierarchical_label "GND"
+		(shape bidirectional)
+		(at 25.4 170.32000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5c4bb86b-ba24-4401-8cf4-d1ef5a2b6d9d")
+	)
+
+	(hierarchical_label "OAM6_PVREF"
+		(shape bidirectional)
+		(at 25.4 175.40000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ad615131-3d34-495a-9df5-eb868e03c5ef")
+	)
+
+
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

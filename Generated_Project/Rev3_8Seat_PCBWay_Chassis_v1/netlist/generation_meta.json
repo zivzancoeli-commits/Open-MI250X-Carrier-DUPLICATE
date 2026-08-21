@@ -1,0 +1,72 @@
+{
+  "pinmap_csv": "22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv",
+  "xlsx_present": true,
+  "named_pads": 1376,
+  "unmapped_signal_names": [
+    "DO_NOT_USE",
+    "RFU",
+    "TEST0",
+    "TEST1",
+    "TEST10",
+    "TEST11",
+    "TEST12",
+    "TEST13",
+    "TEST14",
+    "TEST2",
+    "TEST3",
+    "TEST4",
+    "TEST5",
+    "TEST6",
+    "TEST7",
+    "TEST8",
+    "TEST9",
+    "TEST_MODE#"
+  ],
+  "shared_rails": [
+    "GND",
+    "P12V1",
+    "P12V2",
+    "P3V3",
+    "P48V"
+  ],
+  "do_not_fabricate": true,
+  "do_not_energize_p48v": true,
+  "rev": "Rev3_8Seat_PCBWay_Chassis_v1",
+  "molex_voltage_ticket": "167157",
+  "layers": 4,
+  "oam_seats": 8,
+  "connectors_per_seat": 2,
+  "molex_mpn": "218910-1115",
+  "molex_qty": 16,
+  "molex_mates_with": "2189101115 (hermaphroditic, self-mating)",
+  "board_outline_mm": [
+    492.0,
+    372.0
+  ],
+  "koz_reserve_mm": [
+    412.0,
+    332.0
+  ],
+  "koz_tiling": "4x2 of 103x166 INFERRED not a UBB drawing",
+  "pcbway_adv_finished_ml_mm": [
+    508.0,
+    600.0
+  ],
+  "fits_pcbway_508x600": true,
+  "host_pcie_seats": [
+    0,
+    1
+  ],
+  "mech_power_only_seats": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "p3v3_count_conn0": 2,
+  "npth_m35_count": 32,
+  "p48v_pour": false,
+  "signal_tracks": false
+}
