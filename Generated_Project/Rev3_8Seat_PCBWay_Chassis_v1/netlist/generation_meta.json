@@ -33,11 +33,53 @@
   "do_not_energize_p48v": true,
   "rev": "Rev3_8Seat_PCBWay_Chassis_v1",
   "molex_voltage_ticket": "167157",
-  "layers": 4,
+  "molex_csa_60v": "COFC 80170713 written 2026-08-18 via Brian Park / ticket 167157",
+  "molex_skip_pins": "published OCP P48V map satisfies Skip Pins; no extra NC pads",
+  "molex_current_followup_open": "1.2 A per used power contact at 48-59.5 V (2 oz); skip/void NC on same MPN",
+  "eli_ack": "2026-08-19",
+  "layers": 12,
+  "layer_stack_target": "12L 2.0 mm stuffed-switch (8x-running)",
+  "layer_stack_dnp_option": "8L 2.0 mm cheaper DNP-switch option only",
+  "board_thickness_mm_planning": 2.0,
+  "copper_oz": {
+    "F.Cu": 2,
+    "inners": 1,
+    "B.Cu": 2
+  },
   "oam_seats": 8,
+  "electrically_named_seats": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "first_stuff_seats": [
+    0,
+    1
+  ],
+  "sw0_seats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sw1_seats": [
+    4,
+    5,
+    6,
+    7
+  ],
   "connectors_per_seat": 2,
   "molex_mpn": "218910-1115",
   "molex_qty": 16,
+  "molex_street_usd_each": [
+    50,
+    96
+  ],
   "molex_mates_with": "2189101115 (hermaphroditic, self-mating)",
   "board_outline_mm": [
     492.0,
@@ -53,20 +95,55 @@
     600.0
   ],
   "fits_pcbway_508x600": true,
-  "host_pcie_seats": [
-    0,
-    1
-  ],
-  "mech_power_only_seats": [
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
   "p3v3_count_conn0": 2,
+  "p48v_pads_conn0": [
+    "H59",
+    "H60",
+    "H61",
+    "H62",
+    "H63",
+    "H64",
+    "J61",
+    "J62",
+    "J63",
+    "J64",
+    "K59",
+    "K60",
+    "K61",
+    "K62",
+    "L61",
+    "L62"
+  ],
+  "p48v_pad_count_per_seat": 16,
   "npth_m35_count": 32,
-  "p48v_pour": false,
-  "signal_tracks": false
+  "p48v_pour": "local_per_seat_F.Cu_not_board_wide_flood",
+  "p48v_star_net": "P48V_STAR",
+  "board_entry": "Anderson SB175 175A/600V long edge, 2 AWG",
+  "p48v_not_tied_to": "Dell D3000E-S1 12V CRPS",
+  "no_psu_shopping_on_pcb_bom": true,
+  "fuse_per_seat_A": 15,
+  "fuse_mpn": "Unknown",
+  "pcie_switch_mpn": "PM8536B-FEI",
+  "pcie_switch_qty_dnp": 2,
+  "pcie_switch_package": "1311-ball 37.5 mm FCBGA 1.0 mm pitch",
+  "pcie_switch_alt_docs_only": "PEX8780-AB80BI G 80-lane 35 mm",
+  "host_connector_mpn": "Unknown",
+  "host_uplinks": "two X11DPH-T CPU x16 to SW0/SW1",
+  "xgmi_routed": false,
+  "no_gpu_vrm": true,
+  "pvref_driven": false,
+  "p12v2_status": "named_v1.0_Unknown_may_be_NC",
+  "signal_tracks": false,
+  "inner_planes": {
+    "In1.Cu": "GND",
+    "In2.Cu": "signal_reserved",
+    "In3.Cu": "signal_reserved",
+    "In4.Cu": "GND",
+    "In5.Cu": "signal_reserved",
+    "In6.Cu": "signal_reserved",
+    "In7.Cu": "GND",
+    "In8.Cu": "signal_reserved",
+    "In9.Cu": "signal_reserved",
+    "In10.Cu": "GND"
+  }
 }

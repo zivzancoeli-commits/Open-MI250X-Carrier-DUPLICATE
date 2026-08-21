@@ -15,7 +15,8 @@
         0.1,
         0.2,
         0.5,
-        1.0
+        1.0,
+        2.0
       ],
       "via_dimensions": [
         {
@@ -38,9 +39,32 @@
     "version": 3
   },
   "net_settings": {
-    "classes": [],
+    "classes": [
+      {
+        "name": "Default",
+        "clearance": 0.2,
+        "track_width": 0.25
+      },
+      {
+        "name": "P48V",
+        "clearance": 0.64,
+        "track_width": 2.0,
+        "nets": [
+          "P48V",
+          "P48V_STAR"
+        ]
+      },
+      {
+        "name": "GND",
+        "clearance": 0.25,
+        "track_width": 0.5,
+        "nets": [
+          "GND"
+        ]
+      }
+    ],
     "meta": {
-      "version": 0
+      "version": 2
     }
   },
   "pcbnew": {
@@ -104,7 +128,7 @@
     ],
     [
       "sheets/11_pcie_switch_unknown.kicad_sch",
-      "11_PCIe_Switch_Unknown"
+      "11_PM8536_DNP"
     ],
     [
       "sheets/12_unmapped_amd.kicad_sch",

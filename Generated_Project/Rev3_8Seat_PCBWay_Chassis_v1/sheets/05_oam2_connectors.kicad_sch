@@ -1,21 +1,21 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "0a500547-680e-43ab-a7c6-7460a30f46e6")
+	(uuid "019ec734-34a0-4917-b22e-45b7afd32bea")
 	(paper "A3")
 	(title_block
 		(title "OAM2 connectors")
 		(date "2026-08-21")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "Documentation sheet — no invented nets")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
+        (comment 2 "Documentation sheet — no invented nets")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. Star-fed P48V.")
 	)
 
-	(text "OAM2 connector instances — MECHANICAL + POWER ONLY (populate later).\n\nSame 2x Molex 218910-1115 land pattern and Fig 2 M3.5 holes as seats 0-1.\nPCIe / xGMI / clock / mgmt pads have NO NET on this seat.\n\nneeds on-board PCIe switch — MPN Unknown.\n\nPower pads share P48V / P12V1 / P12V2 / P3V3 / GND with the rest of the board.\nP48V still NO POUR, DO NOT ENERGIZE. PVREF is a module output — never drive.\n"
+	(text "OAM2 connector instances — electrically designed; module may be DNP.\n\nFootprint: Molex 218910-1115 candidate (geometry). Hermaphroditic — mates with itself\n(Farnell 2189101115: Mates With 2189101115; mated height 5.00 mm).\n\nPad nets assigned on the PCB from the v1.0 CSV for this seat:\nP48V/P12V1/P3V3/GND, PE (16 lanes) toward SW0 PM8536B-FEI DNP (seats 0-3),\nPE_REFCLK / PERST# / HOST_PWRGD (ENABLE). S1-S7 have NO NET (no xGMI).\nTEST*/RFU/DO_NOT_USE unmapped. PVREF is a module output — never drive.\nP12V2 named from v1.0 but Unknown / may be NC. P48V is a LOCAL pour after a ~15 A fuse keepout.\n\nMODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "53bfb2ed-4374-4a07-9236-7650a23f16c6")
+		(uuid "4b2cba17-0351-4d9e-b35a-6ee9d0bb00cf")
 	)
 
 
@@ -23,42 +23,112 @@
 		(shape bidirectional)
 		(at 25.4 150 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "879b2d0e-345a-4f2f-bebd-c6ab615319d2")
+		(uuid "e6549cdf-944d-43e2-9a50-de41df12811e")
 	)
 
 	(hierarchical_label "P12V1"
 		(shape bidirectional)
 		(at 25.4 155.08 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d6b9eff7-df13-45f1-8100-84a8e0d00756")
+		(uuid "8225dbdb-3d2b-4ff7-81a5-2b8226ad7f13")
 	)
 
 	(hierarchical_label "P12V2"
 		(shape bidirectional)
 		(at 25.4 160.16000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a2fb7455-6926-4503-9663-a9488a7b7cc5")
+		(uuid "eb0cee6e-38bf-4679-8748-24b233be1871")
 	)
 
 	(hierarchical_label "P3V3"
 		(shape bidirectional)
 		(at 25.4 165.24000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "45ea5056-1f88-4ef4-9db4-c2a55a6985d6")
+		(uuid "45d759cd-8d7d-4f2b-8646-5ea63ca52f68")
 	)
 
 	(hierarchical_label "GND"
 		(shape bidirectional)
 		(at 25.4 170.32000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7800eb58-c7c0-4300-8e44-2e80b3e12262")
+		(uuid "bcc71819-9c15-4966-beac-2be2b222a867")
 	)
 
 	(hierarchical_label "OAM2_PVREF"
 		(shape bidirectional)
 		(at 25.4 175.40000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "737e8c5e-9ea2-4a14-809d-424ba64f5382")
+		(uuid "91b47f74-28ce-4dc5-b38c-8120718b1656")
+	)
+
+	(hierarchical_label "OAM2_PE_REFCLKP"
+		(shape bidirectional)
+		(at 25.4 180.48000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e281d7e7-a27d-4c03-8328-ad17fa87e83b")
+	)
+
+	(hierarchical_label "OAM2_PE_REFCLKN"
+		(shape bidirectional)
+		(at 25.4 185.5600000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0909ccf2-0503-4766-95ca-6fa7e76a7234")
+	)
+
+	(hierarchical_label "OAM2_PERST#"
+		(shape bidirectional)
+		(at 25.4 190.6400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4a22bb5b-415e-440c-a01f-c9dc70f13130")
+	)
+
+	(hierarchical_label "OAM2_HOST_PWRGD"
+		(shape bidirectional)
+		(at 25.4 195.7200000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "239cd3d4-4ff9-4a03-86e6-924d9eb4dcfd")
+	)
+
+	(hierarchical_label "OAM2_MODULE_PWRGD"
+		(shape bidirectional)
+		(at 25.4 200.80000000000013 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7cc3630a-8ed2-4abb-94ef-9552c7cbc43e")
+	)
+
+	(hierarchical_label "OAM2_WARMRST#"
+		(shape bidirectional)
+		(at 25.4 205.88000000000014 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dc8ead3e-c51c-4652-a954-f92459d46d42")
+	)
+
+	(hierarchical_label "OAM2_PWRBRK#"
+		(shape bidirectional)
+		(at 25.4 210.96000000000015 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "610938ad-2496-480f-a690-547edf4be594")
+	)
+
+	(hierarchical_label "OAM2_PRSNT0#"
+		(shape bidirectional)
+		(at 25.4 216.04000000000016 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "63575de3-f73b-4354-bc3f-2dd2672c9ba7")
+	)
+
+	(hierarchical_label "OAM2_SMBus_SLV_D"
+		(shape bidirectional)
+		(at 25.4 221.12000000000018 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e7430abb-8124-49ab-9229-ac7b4af6f246")
+	)
+
+	(hierarchical_label "OAM2_SMBus_SLV_CLK"
+		(shape bidirectional)
+		(at 25.4 226.2000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0ac5fc2c-7145-4152-8883-a316db6bd55b")
 	)
 
 

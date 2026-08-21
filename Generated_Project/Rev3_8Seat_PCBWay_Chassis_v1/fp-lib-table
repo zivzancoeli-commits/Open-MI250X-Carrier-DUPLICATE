@@ -1,3 +1,3 @@
 (fp_lib_table
-  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints")(options "")(descr "Molex 218910-1115 geometry candidate"))
+  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints")(options "")(descr "218910-1115 + Anderson SB175 geometry candidates"))
 )

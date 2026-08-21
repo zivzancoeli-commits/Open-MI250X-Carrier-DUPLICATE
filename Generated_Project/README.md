@@ -56,6 +56,16 @@ Generated_Project/Rev2_MI250X_Carrier_BuyableFirstSystem_v1/
 
 Shopping list: `20_System_BOM/SHOPPING.md`. Pin map authority: `22_Pinmap_Research/` (OCP generic v1.0, 688 contacts, not r2.0).
 
+## Rev3 8-seat PCBWay chassis (Chamber B PCB only, 2026-08-21)
+
+**DO NOT FABRICATE. DO NOT ENERGIZE P48V.** Not a PCBWay upload. Does not overwrite Rev1 or Rev2 trees.
+
+```
+Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/
+```
+
+Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target (8L 2.0 mm is a cheaper DNP-switch option in docs only). Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
+
 ## Exhaustive public-source hunt (copied tree, 2026-08-17)
 
 Research only — **not fab-ready**. Findings: `Generated_Project/Rev2_MI250X_Carrier_ExhaustiveSourceHunt_v1/FINDINGS.md`.

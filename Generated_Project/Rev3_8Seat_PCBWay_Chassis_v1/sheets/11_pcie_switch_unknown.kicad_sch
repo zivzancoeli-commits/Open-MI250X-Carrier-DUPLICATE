@@ -1,21 +1,21 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "453627e5-a372-4a37-934f-bc4da528ac81")
+	(uuid "3cdaf84c-f82f-4192-808c-146f416cdb74")
 	(paper "A3")
 	(title_block
-		(title "PCIe switch MPN Unknown")
+		(title "PM8536B-FEI DNP x2 (keepout only)")
 		(date "2026-08-21")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "Documentation sheet — no invented nets")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
+        (comment 2 "Documentation sheet — no invented nets")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. Star-fed P48V.")
 	)
 
-	(text "SEATS 2-7 HOST I/O — NOT CLOSED.\n\nX11DPH-T (system host, NOT on this PCB):\n  3x PCIe Gen3 x16 + 4x Gen3 x8.\nEach MI250X OAM is 2 GCD and typically presents 2x x16 of host PCIe.\n8 seats therefore need far more host lanes than the locked motherboard has.\n\nThis stub:\n- Seats 0-1: named PCIE_* nets aimed at the HOST CONNECTOR REGION on the PCB.\n  No CEM / SlimSAS / MCIO / retimer MPN is invented.\n- Seats 2-7: mechanical + power pads only. PCIe and S1-S7 have no net.\n\nTo light seats 2-7 later, this carrier would need an on-board PCIe switch\n(and likely a refclk / PERST distribution tree).\n\nneeds on-board PCIe switch — MPN Unknown.\n\nDo not buy a random Broadcom/Microchip switch to \"finish\" this board.\nSI, bifurcation, dual-GCD mapping, and the AMD overlay are all still Unknown.\nDo not route S1-S7 as a pretend xGMI mesh.\n"
+	(text "TWO PM8536B-FEI KEEPOUTS — DNP. No fake schematic pins.\n\nU_SW0  PM8536B-FEI  DNP  seats 0-3   16 US + 64 DS   x8 per GCD\nU_SW1  PM8536B-FEI  DNP  seats 4-7   16 US + 64 DS   x8 per GCD\n\nPackage (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA, 1.0 mm pitch.\nPCBWay can assemble 1.0 mm without HDI; 12L 2.0 mm is the stuffed-switch TARGET.\n8L 2.0 mm is a cheaper DNP-switch / mezz+power option only — not the 8x-running stack.\nCaveat: guest quotes used 6/6 mil + 0.3 mm hole; 1311-ball escape may need finer rules.\n\nDo NOT populate until Eli buys the parts. Courtyard/keepout only.\nPEX8780-AB80BI G (80-lane 35 mm) is a cheaper alt in docs only — not placed.\nPM8533B-F3EI (48-lane 27 mm) is a 2-seat alt in docs only — not placed.\n\nHost X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.\nTwo CPU x16 become the two switch uplinks (silk + connector keepout, MPN Unknown).\nDo not invent CEM / SlimSAS / MCIO / retimer.\n\n8 x 2 x x16 = 256 DS vs 80 host — x16-per-GCD is impossible. x8 per GCD is the plan.\nGCD1 = SERDES_7 is Inferred (OAM v1.5 may put a second PE x16 on Conn1 SERDES_7).\nDo NOT route S1-S7 as if that were proven. No xGMI mesh.\n\nRefclk / PERST# / HOST_PWRGD per seat per OAM v1.5\n(HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "7bdd22dc-4e22-4c36-8908-b05666b4c506")
+		(uuid "e45665d5-93a0-46fa-b13e-2e0dab27b020")
 	)
 
 	(sheet_instances

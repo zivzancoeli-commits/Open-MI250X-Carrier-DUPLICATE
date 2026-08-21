@@ -1,31 +1,32 @@
 # BOM — Rev3 8-seat PCBWay chassis PCB
 
-**DO NOT FABRICATE.** This is the PCB bill only. It is not a system shopping list and not a SuperMicro tray.
+**DO NOT FABRICATE.** This is the **PCB bill only**. It is not a system shopping list, not a GPU order, not a 48 V shelf, and not a cooling loop.
 
 **Verified connector MPN on this board: Molex 218910-1115 × 16.**  
-**Host SuperMicro X11DPH-T is NOT on this PCB** (system BOM / chassis, if bought at all).
+**Host SuperMicro X11DPH-T is NOT on this PCB.**  
+**GPUs (P41933-001) are do-not-order on the sheet and are NOT on this BOM.**  
+**Do not add Mean Well / cold-plate / GPU line items here.**
 
 | Qty | Ref | MPN / value | Description | Status | Notes |
 |---:|---|---|---|---|---|
-| 16 | J0_Conn0, J0_Conn1 … J7_Conn0, J7_Conn1 | **Molex 218910-1115** (2189101115) | Mirror Mezz Pro, 688 contact, hermaphroditic, 5.00 mm mated height | **Verified** OCP v1.5 §5/§6.2 + Farnell “Mates With 2189101115” | Only connector MPN on this board. Do not buy 218916 unless a non-5 mm stack is documented. Voltage vs P48V **OPEN** (catalog 30 V vs OCP 44–59.5 V, ticket **167157**). Factory pack is typically reel; BGA/mezz attach is not a default PCBWay process. |
-| 32 | H01–H74 (H{seat}{1–4}) | NPTH φ 3.9 mm, 8 mm MIN land | OAM Fig 2 M3.5 holes, one set per seat | **Verified** geometry (OCP v1.5 Fig 2) | Screw **length** / bolster stack **Unknown**. Not a buyable fastener SKU here. |
-| 1 | PCB | 4-layer, **492 × 372 mm**, 1.6 mm planning (1.6–2.4 mm range) | FR4 stub, eight 103×166 mm KOZ + host-stub strip | **Inferred** outline (20 mm service margin + 40 mm host region, planning) | **Not a fab gerber.** No P48V pour. No signal tracks. Fits PCBWay advanced finished multilayer 508×600 mm. |
+| 16 | J0_Conn0, J0_Conn1 … J7_Conn0, J7_Conn1 | **Molex 218910-1115** (2189101115) | Mirror Mezz Pro, 688 contact, hermaphroditic, 5.00 mm mated height | **Verified** OCP v1.5 §5/§6.2 + Farnell | Only stuffed connector MPN. Street **~$50–$96 ea**. **Do not order** from this tree. Voltage: CSA 60 V written 2026-08-18 at OCP P48V (COFC 80170713); **1.2 A/contact at 48–59.5 V still OPEN**. No extra skip/void NC pads. Factory pack typically reel; BGA/mezz attach is not a default PCBWay process. |
+| 1 | J_SB175 | Anderson **SB175** 2-pole | 175 A / 600 V board-entry landing, 2 AWG, Kelvin pads | **Verified** family rating (DS-SB175). Geometry planning from 2-pole envelope **53.1×35.4 mm**, holes **Ø6.6 / 28.6 mm** | Housing+contacts are the chassis inlet, not a 48 V PSU. **Do not tie to D3000E-S1 (12 V).** |
+| 8 | F0–F7 | **~15 A fuse keepout** | Per-seat P48V fuse | **Keepout only** | **MPN Unknown.** Not a buy line. |
+| 0 | U_SW0, U_SW1 | **PM8536B-FEI** | Switchtec PFX 96-lane Gen3, 1311-ball 37.5 mm FCBGA, 1.0 mm | **DNP keepout** | Qty 2 courtyards. Do not stuff until purchased. Not a PCBWay SMT line today. PEX8780-AB80BI G is docs-only cheaper 80-lane alt. |
+| 32 | H01–H74 (H{seat}{1–4}) | NPTH φ 3.9 mm, 8 mm MIN land | OAM Fig 2 M3.5 holes | **Verified** geometry | Screw length / bolster **Unknown**. Not a fastener SKU here. |
+| 1 | PCB | **12-layer, 492 × 372 mm, 2.0 mm**, 2 oz outer / 1 oz inner planning | FR4 chassis, eight 103×166 mm KOZ + host-stub strip | **Inferred** outline | **Not a fab gerber.** Guest 12L 2.0 mm qty-5 **$2237.90 + $68.43 DHL**. **Do not upload.** |
 
-## Explicitly not on this PCB
+## Explicitly not on this PCB (sheet-compatible, do not buy onto the carrier)
 
 | Item | Why it is absent |
 |---|---|
-| SuperMicro **X11DPH-T** | Host motherboard. System BOM only. Not a carrier part. |
-| SuperMicro **AS-4124GQ-TNMI** tray / AOM-MCM-Q-P UBB | The thing this PCB is trying to avoid buying. Not a part on this board. |
-| CEM x16 edge / SlimSAS / MCIO “GPU cable” | **Not invented.** v1.0 names `PCIE_TXn`/`PCIE_RXn` only, seats 0–1, aimed at a silk REGION. |
-| On-board PCIe switch | **MPN Unknown.** Required before seats 2–7 have host I/O. Do not guess Broadcom/Microchip. |
-| Clock generator for `PE_REFCLK` | Stub labels on seats 0–1 only. |
-| VRMs, 12 V→48 V converter | Forbidden. |
-| BMC / SMBus address programming | Overlay Unknown. |
-| MODULE_ID / LINK_CONFIG 1k pulldowns | OCP rule exists; population deferred until AMD overlay. |
-| 48 V PSU / harness / fuse | Not a PCB part. Do not energize P48V. Dell D3000E-S1 is **12 V CRPS** — do not mix. |
-| MI250X OAM modules | Seats only. Modules carry the mating 218910-1115 already. |
-
-## System items (not this board)
-
-If a host is purchased later it is **not** stuffed onto this carrier. Pointers live under `20_System_BOM/` in the repo. Buying a host does not close ticket 167157 and does not make this KiCad PCBWay-ready.
+| SuperMicro **X11DPH-T**, 2× Gold **6230**, **NH-D9 DX-3647** | Host Chamber B. **Not** this PCB. U14S is the wrong cooler (collides). |
+| 1000 W ATX/EPS | **Host only.** Not OAM P48V. |
+| Chamber A **B550M 244×244** | Desk. Not this PCB. |
+| HPE **P41933-001** / any MI250X | Do-not-order on the sheet. Seats exist; modules are not a chassis line. |
+| Dell **D3000E-S1** | **12 V CRPS.** Must not feed OAM P48V. |
+| Mean Well RCP-2000 / RKP-1UT / any 48 V shelf | **No PSU shopping** on this BOM. SB175 is the inlet only. |
+| SuperMicro **CBL-PWEX-1280** / **PWS-3K06G-2R** | Existence proof elsewhere, not a buy here. |
+| CEM x16 / SlimSAS / MCIO / retimer | **Not invented.** |
+| GPU multiphase VRM / cold plate | Forbidden on this PCB. Module has 48 V core VRMs. |
+| MODULE_ID / LINK_CONFIG 1k pulldowns | OCP rule exists; deferred until AMD overlay. |

@@ -1,31 +1,14 @@
-# STATUS — Rev3 8-seat PCBWay chassis stub
+# STATUS — Rev3 8-seat PCBWay chassis PCB
 
 **Tree:** `Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/`  
-**Date:** 2026-08-21 15:41 PT  
+**Date:** 2026-08-21  
 **Pin map:** `22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv` (1376 named pads). xlsx in `22_Pinmap_Research/downloads/` wins on mismatch; this generator consumes the CSV (P3V3 = Conn0 C1/C2 checked). **v1.x only.** r2.0 is UNUSABLE.
 
-**DO NOT FABRICATE. DO NOT ENERGIZE P48V.** Named-net + mechanical mapping artifact, not a fab package, not a PCBWay order.
+**DO NOT FABRICATE. DO NOT ENERGIZE P48V** until AMD overlay + Molex 1.2 A/contact follow-up are written. Not a PCBWay upload.
 
-Labels: **Verified** / **Inferred** / **Unknown**. Do not treat Inferred as a pin assignment or a UBB drawing.
+Labels: **Verified** / **Inferred** / **Unknown**. Do not treat Inferred as a pin assignment.
 
----
-
-## What this tree is
-
-8 OAM seats on one 4-layer FR-4 coupon:
-
-| | |
-|---|---|
-| Outline | **492 × 372 mm** |
-| 8-KOZ floor | **412 × 332 mm** = 4×2 of 103×166 mm |
-| Seat grid | col pitch 103 mm, row pitch 166 mm. Row 0 (Y=20): seats **0 1 2 3**. Row 1 (Y=186): seats **4 5 6 7**. |
-| Connectors | **16×** Molex **218910-1115** (2 per seat), rot 180 **Inferred** |
-| Holes | **32×** M3.5 NPTH φ3.9 mm (Fig 2), 8 mm MIN land |
-| Layers | 4. Inners reserved. **No signal tracks.** **No P48V pour.** |
-| Host region | X=452–492 mm strip. Silk only. **No CEM invented.** |
-
-Seats **0–1** (populate now): v1.0 named nets including host PCIe, aimed at the host region.  
-Seats **2–7** (same lands, later): **mechanical + power pads only**; PCIe/xGMI/clock/mgmt **no net**.
+This tree is the **Chamber B OAM chassis PCB only**. It must stay compatible with Eli’s 2026-08-21 sheet. It does **not** shop GPUs, 48 V shelves, cooling loops, or a whole-system cart.
 
 Regenerate (do not hand-edit pad nets):
 
@@ -35,29 +18,44 @@ python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/generate_from_v10_p
 
 ---
 
-## PCBWay size vs 508 × 600
+## Compatibility vs the sheet
 
-| Limit | Value | This board |
+| Sheet item | On this PCB? | Fits / does not |
 |---|---|---|
-| PCBWay standard multilayer max | 560 × 1150 mm | 492 × 372 **fits** |
-| PCBWay advanced finished multilayer (normal process) | **508 × 600 mm** | 492 < 508 and 372 < 600 → **fits** (16 mm / 228 mm slack) |
-| 8-KOZ + 20 mm margin only | 452 × 372 mm | also fits; we added a 40 mm host-stub strip |
-
-It should quote as standard-ish, not an oversize special. **Still do not upload.** Finish TBD. Thickness 1.6 mm in KiCad, planning 1.6–2.4 mm. Old MFC qty-5 **220 × 120 mm** cart is **UNRELATED** (`docs/PCBWAY.md`).
+| 8× OAM KOZ 103×166 mm, 16× Molex **218910-1115**, 32× M3.5 NPTH φ3.9 mm | **Yes** (this board) | **Fits.** 4×2 tiling **412×332 mm** (Inferred) on outline **492×372 mm**. |
+| Board in Chamber B next to E-ATX **304.8×330.2 mm** | Mechanical neighbour, not a part | **Fits as a neighbour.** Chassis PCB 492×372 can sit in Chamber B beside the host. Coolers are **not** on this PCB. |
+| SuperMicro **X11DPH-T** (3× Gen3 x16 + 4× Gen3 x8) | **Not on this PCB** | **Fits as the host.** Host-stub silk + cable keepout sized for two CPU **x16 uplinks** to the DNP switches + leftover 1× x16 + 4× x8. **No CEM MPN invented.** |
+| 2× Xeon Gold **6230** | **Not on this PCB** | Host CPUs. Compatible as the locked host SKU. |
+| **NH-D9 DX-3647** (NOT U14S) | **Not on this PCB** | **Fits the sheet.** U14S collides on dual 3647 — do not use U14S. Coolers live on the host, not here. |
+| 1000 W ATX/EPS | **Not on this PCB** | **Host only.** Do not treat it as OAM P48V. |
+| First stuffing **2×** MI250X (**P41933-001**) | Seats only; GPUs **do-not-order** | **Fits electrically.** Seats 0–1 are first-stuff candidates. All **8** seats already have named PE/power/clock nets so lighting 3–8 does **not** need a respin. Modules DNP until they exist. |
+| 8× MI250X when modules exist | 8 electrically designed seats | **Fits the chassis intent** at **x8 per GCD** through two DNP **PM8536B-FEI**. **Does not fit** 8× full-width GCD **x16** (256 DS vs 80 host Gen3). |
+| Chamber A desk **mATX B550M 244×244** | **Not on this PCB** | Chamber A. Do not put it on the chassis. |
+| Dell **D3000E-S1** | **Not on this PCB** | **Does not fit as GPU P48V.** It is **12 V CRPS**. Do not tie OAM P48V to it. |
+| Molex **218910-1115** ×16 | **Yes** | **Fits** the OCP 5.00 mm stack. Street ~$50–$96 ea. **Do not order** from this tree. |
+| **PM8536B-FEI** ×2 | Courtyard **DNP** only | **Fits as the stuffed-switch plan.** 37.5 mm 1311-FCBGA, 1.0 mm pitch. Not stuffed. PEX8780 is docs-only cheaper 80-lane alt. |
+| xGMI / Infinity Fabric S1–S7 | No net | **Does not fit** (overlay Unknown). Not routed. |
+| Custom cold plate / GPU HS | **Not on this PCB** | **Do not shop** onto this BOM. |
 
 ---
 
-## Why 8-seat PCB vs buying AS-4124GQ-TNMI
+## What this tree is
 
-AS-4124GQ-TNMI is SuperMicro’s 4U MI250 OAM system (AOM-MCM-Q-P UBB, 54 V UBB cable CBL-PWEX-1280, Infinity Fabric GPU–GPU, EPYC 7003 host, 3 kW PSUs). Public integrator pages this run listed barebone starting about **$10.5k–$18k** (Wiredzone $10,502; Broadberry “configuring from $18,287”; Computerlink “starting at $17,088.99”) and several vendors will only sell a **full** system (CPUs + RAM + 4 GPUs), not the tray alone.
+8 electrically designed OAM seats on one **12-layer, 2.0 mm** FR-4 chassis (stuffed-switch **target**):
 
-This PCB exists because Eli wants a **carrier/UBB-like coupon** that:
+| | |
+|---|---|
+| Outline | **492 × 372 mm** (fits PCBWay advanced finished ML **508 × 600**) |
+| 8-KOZ floor | **412 × 332 mm** = 4×2 of 103×166 mm |
+| Seat grid | col pitch 103 mm, row pitch 166 mm. Row 0 (Y=20): seats **0 1 2 3**. Row 1 (Y=186): seats **4 5 6 7**. |
+| Connectors | **16×** Molex **218910-1115** (2 per seat), rot 180 **Inferred** |
+| Holes | **32×** M3.5 NPTH φ3.9 mm (Fig 2), 8 mm MIN land |
+| Layers | **12**, 2.0 mm, 2 oz outer / 1 oz inner **planning**. **8L 2.0 mm is a cheaper DNP-switch option only**, not the 8×-running target. |
+| P48V | Anderson **SB175** on the long edge → star + Kelvin sense → per-seat **~15 A fuse keepouts** → **local F.Cu pours** on the 16 verified Conn0 P48V pads. **Not** a 100 A flood plane. |
+| Switches | **U_SW0** / **U_SW1** **PM8536B-FEI DNP** keepouts (x8 per GCD; SW0 seats 0–3, SW1 seats 4–7) |
+| Host region | X=452–492 mm strip. Silk + cable keepout. **No CEM invented.** |
 
-1. Holds **8 identical seats** on one FR-4 board (2 populated now).
-2. Is **PCBWay-size** (492 × 372 < 508 × 600) instead of a server SKU.
-3. Reuses the locked **X11DPH-T** host rather than buying dual EPYC 7003.
-
-It is **not** a replacement for the SuperMicro UBB: xGMI is not routed, seats 2–7 have no host PCIe, P48V is not a closed 54 V harness, and Molex 30 V vs OCP 44–59.5 V is still open. The cost argument is “bare FR-4 + 16 mezz connectors vs a 4U OAM server,” **not** “this stub enumerates 8× MI250X.”
+First stuffing: **2 populated modules / 6 DNP modules** is allowed. The copper/netlist already covers all eight.
 
 ---
 
@@ -67,34 +65,28 @@ It is **not** a replacement for the SuperMicro UBB: xGMI is not routed, seats 2�
 |---|---|
 | 1376 named pads, Conn0+Conn1 688 each | v1.0 CSV row count |
 | P3V3 = Conn0 C1, C2 (2 pads) | v1.0 map; matches v1.5 Table 4. r2.0 (P3V3=6) UNUSABLE |
-| Shared OCP rails `P48V` `P12V1` `P12V2` `P3V3` `GND` | v1.0 names. Same net on all 8 OAMs. **No VRM. No P48V pour.** |
-| P48V: 16 Conn0 pads/seat, OCP 44–59.5 V class | v1.0 pin list / OCP Table 5 family |
-| Connector MPN 218910-1115, hermaphroditic, 5.00 mm stack | Farnell 2189101115; OCP v1.5 §5/§6.2. Buy **16× for the carrier** |
-| Module PCB 102×165 mm; KOZ 103×166 mm; M3.5 holes φ3.9 mm | OCP v1.5 Fig 2 / Fig 14 |
-| 4 copper layers | This generator. Inners reserved. |
-| TEST0–TEST14, TEST_MODE#, RFU, DO_NOT_USE | Named in v1.0; **unmapped** (no net, no copper) |
-| PVREF Conn0 G1/G2 | Module **output**. Never drive. Per-seat nets `OAM0_PVREF` … `OAM7_PVREF`. |
-| X11DPH-T lane budget | SuperMicro: 3× Gen3 x16 + 4× Gen3 x8. Not enough for 8× MI250X. |
-| PCBWay 4-layer coupon 492×372 vs 508×600 | capabilities.html advanced finished ML 508×600 |
+| Shared OCP rails `P48V` `P12V1` `P12V2` `P3V3` `GND` | v1.0 names on all 8. **No VRM.** P12V2 **Unknown / may be NC**. |
+| P48V: 16 Conn0 pads/seat | H59 K59 H60 K60 H61 J61 K61 L61 H62 J62 K62 L62 H63 J63 H64 J64 |
+| Molex 218910-1115 CSA **60 V** at OCP P48V | Written **2026-08-18** Molex engineering via Brian Park / ticket **167157**, COFC **80170713**. Eli ack **2026-08-19**. Published OCP P48V map **already satisfies Skip Pins** — do **not** add extra NC pads. |
+| Connector MPN 218910-1115, hermaphroditic, 5.00 mm | Farnell 2189101115; OCP v1.5 §5/§6.2 |
+| Module PCB 102×165; KOZ 103×166; M3.5 φ3.9 | OCP v1.5 Fig 2 / Fig 14 |
+| PM8536B-FEI package | Microchip PFX table: 96-lane Gen3, **1311-ball 37.5×37.5 mm FCBGA, 1.0 mm pitch** |
+| X11DPH-T lane budget | SuperMicro: 3× Gen3 x16 + 4× Gen3 x8 = 80 Gen3 lanes |
+| HOST_PWRGD | OCP: Power Enable when rails in spec. ≥100 ms after MODULE_PWRGD (v1.5). |
+| PCBWay guest quotes 2026-08-21, 492×372, qty 5, ENIG, 2 oz outer | See `PCBWAY.md`. **Do not upload.** |
 
 ### Pad accounting (one 688+688 map; PCB instantiates it eight times)
 
-| Class | Pads / map | Seats 0–1 | Seats 2–7 |
-|---|---:|---|---|
-| `power_shared` | 728 | named `P48V`/`P12V1`/`P12V2`/`P3V3`/`GND` | **same** (mechanical+power) |
-| `pcie_stub` | 64 | hierarchical labels toward host region; **no CEM** | **no net** |
-| `clock_reset` | 16 | labels only | **no net** |
-| `mgmt_stub` | 17 | named | **no net** |
-| `ocp_sideband` | 19 | named; ID/CONFIG resistors **not placed** | **no net** |
-| `module_output_do_not_drive` | 2 | PVREF | PVREF (still named, never driven) |
-| `serdes_named_not_routed` | 448 | named on pads, **not routed between OAMs** | **no net** |
-| `qsfp_sideband_named_not_routed` | 14 | named, not routed | **no net** |
-| `mgmt_link_named_not_routed` | 8 | named, not routed | **no net** |
-| `named_other` | 1 | `SCALE_DEBUG_EN` | **no net** |
-| `unmapped_nc` | **59** | TEST*/RFU/DO_NOT_USE. **No net.** | **No net.** |
-
-Netted pads: seats 0–1 = **1317 / 1376** each; seats 2–7 = **730 / 1376** each (728 power + 2 PVREF).  
-Unique named nets on the 8-seat PCB: **1187**. Empty pad instances: **3994 / 11008**.
+| Class | Pads / map | All 8 seats |
+|---|---:|---|
+| `power_shared` | 728 | named `P48V`/`P12V1`/`P12V2`/`P3V3`/`GND` |
+| `pcie_stub` | 64 | hierarchical labels toward DNP PM8536 (x8/GCD). **No CEM.** |
+| `clock_reset` | 16 | per-seat REFCLK / PERST# / HOST_PWRGD (+ other OCP clock/reset names) |
+| `mgmt_stub` | 17 | named (SMBus etc.). Overlay still Unknown. |
+| `ocp_sideband` | 19 | named; ID/CONFIG resistors **not placed** |
+| `module_output_do_not_drive` | 2 | PVREF. **Never drive.** |
+| `serdes_named_not_routed` | 448 | **No net.** No xGMI. SERDES_7 as GCD1 PE is **Inferred**, not routed. |
+| `unmapped_nc` | **59** | TEST*/RFU/DO_NOT_USE. **No net.** |
 
 Seat 0 connector centres (match Rev2 2-seat): Conn0 **(71.5, 154.0)**, Conn1 **(71.5, 52.0)** mm.
 
@@ -105,9 +97,10 @@ Seat 0 connector centres (match Rev2 2-seat): Conn0 **(71.5, 154.0)**, Conn1 **(
 | Item | Basis | Do not treat as |
 |---|---|---|
 | 8-GPU floor **412 × 332 mm** | 4×2 tiling of 103×166 mm KOZ | A Universal Baseboard drawing |
-| 20 mm service margin + 40 mm host strip → **492 × 372 mm** | Copied 20 mm idea from 2-seat envelope; host strip is silk REGION | A fab panel drawing or CEM connector |
+| 20 mm service margin + 40 mm host strip → **492 × 372 mm** | Planning envelope | A fab panel drawing or CEM connector |
 | Footprint rotation **180°** | Fig 2 PIN A3 on +X vs candidate land A3 at x=−29.45 | Proven module↔baseboard silk until overlay-checked |
-| AS-4124GQ-TNMI street **~$10.5k–$18k** barebone | Integrator pages 2026-08-21 | A quote, a UBB DXF, or permission to copy their xGMI |
+| x8 per GCD on the v1.0 16-lane PE bus | 8× running plan vs 80 host lanes | AMD overlay / PE_BIF default |
+| GCD1 = Conn1 SERDES_7 | OAM v1.5 “second PE x16 may be SERDES_7” | Proven MI250X mapping |
 
 ---
 
@@ -116,16 +109,16 @@ Seat 0 connector centres (match Rev2 2-seat): Conn0 **(71.5, 154.0)**, Conn1 **(
 | Item | Status |
 |---|---|
 | AMD MI250X 688-pad overlay | **Unknown** (NDA) |
-| Which S1–S7 are xGMI / Infinity Fabric | **Unknown**. Not routed. |
+| Which S1–S7 are xGMI / Infinity Fabric | **Unknown**. **No net.** |
 | Dual-GCD host PCIe 1×16 vs 2×8 / `PE_BIF[1:0]` | **Unknown** |
-| On-board PCIe switch for seats 2–7 | **MPN Unknown** |
 | Host connector in the silk REGION | **Unknown**. Not invented. |
 | P12V2 required on 48 V MI250X | **Unknown**. Do not short to P12V1. |
 | SMBus slave / FRU / PMBus map | **Unknown**. Do not invent 0x50. |
-| HOST_PWRGD delays vs rail windows | AMD timing **Unknown** |
+| HOST_PWRGD delays vs rail windows | AMD timing **Unknown** (OCP ≥100 ms note only) |
 | LINK_CONFIG[4:0] MI250X coding | **Unknown** |
-| OEM air-heatsink height / bolster HS MPN | **Unknown** |
 | PIN A3 footprint rotation 180° | **Inferred** |
+| 1.2 A per used 218910-1115 power contact at 48–59.5 V (2 oz) | **OPEN** (ticket 167157 follow-up) |
+| skip/void is NC on the same MPN | **OPEN** (same follow-up) |
 
 ---
 
@@ -135,37 +128,33 @@ Seat 0 connector centres (match Rev2 2-seat): Conn0 **(71.5, 154.0)**, Conn1 **(
 |---|---|
 | Dell D3000E-S1 | **Verified 12 V CRPS**. Not GPU P48V. Never mix. |
 | OCP P48V window | **Verified** 44–59.5 V |
-| Molex 218910-1115 catalog rating | **Verified 30 V** AC(RMS)/DC max |
-| OCP 44–59.5 V into those pads | **OPEN.** Ticket **167157** / `2189100001-PS-000` |
-| SuperMicro UBB cable CBL-PWEX-1280 | **Verified as a UBB 54 V cable**, not this mezz, not a closed path here |
-| P48V copper pour on this PCB | **Not poured** (deliberate) |
+| Molex 218910-1115 catalog line | Still prints 30 V; **written CSA 60 V** at OCP P48V 2026-08-18 (COFC 80170713) |
+| Skip Pins | Published OCP P48V assignment **already satisfies**; no extra NC pads |
+| 1.2 A/contact at 48–59.5 V, 2 oz | **OPEN** |
+| P48V copper | **Local per-seat F.Cu pours** + SB175 star. **Not** a board-wide 100 A plane |
+| Off-board 48 V PSU / shelf | **Not a PCB BOM item.** Do not shop it here. |
 
-Until ticket **167157** closes with a citable Molex rating for the 16 P48V contacts, do not apply 48 V through 218910-1115 on this board.
-
----
-
-## KiCad CLI (9.0.2) — not a fab sign-off
-
-| Check | Result | Meaning |
-|---|---|---|
-| Schematic ERC | **392** violations: 196 `label_dangling` + 196 `hier_label_mismatch` | Expected: hierarchical labels on a named-net stub, not a wired schematic. |
-| PCB DRC | **16** `lib_footprint_mismatch` (one per 218910-1115; pads carry nets the library does not) + **499** unconnected items | Expected: no tracks. Do not “Update PCB from Schematic”. |
-| Previews | `docs/previews/*-top.png` `*.svg` `*.pdf`; 3D `*-top-render.png`; layer SVG in `docs/kicad_reports/` | Visual only. |
-
+Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow-up still blocks energize.** Keep silk **DO NOT ENERGIZE P48V**.
 
 ---
 
-## Blockers before an order (all still open)
+## KiCad CLI — not a fab sign-off
 
-1. **Molex 30 V catalog vs OCP 44–59.5 V** — ticket **167157** / `2189100001-PS-000` not in hand.
+See `docs/kicad_reports/`. Hierarchical labels on a named-net stub produce expected ERC dangling/mismatch. DRC footprint-mismatch (pads carry nets the library does not) and unconnected items (no PE tracks; fused P48V islands; DNP switches) are expected. Do not “Update PCB from Schematic”.
+
+---
+
+## Blockers before an order (still open)
+
+1. **Molex 1.2 A/contact at 48–59.5 V (2 oz)** — ticket **167157** current follow-up not in hand. Silk stays DO NOT ENERGIZE.
 2. **AMD overlay** (TEST*, dual-GCD PE, xGMI S1–S7, SMBus) still Unknown.
-3. **No copper**: no PCIe / SerDes / clock routing; no P48V pour.
-4. **Seats 2–7** need an on-board PCIe switch — **MPN Unknown**. X11DPH-T has too few lanes for 8× MI250X.
+3. **No PE / SerDes / clock tracks** yet — nets and keepouts only.
+4. **PM8536B-FEI not purchased / not stuffed** (DNP courtyards). 8× running needs them (or a documented alt).
 5. **No CEM / host-connector MPN** in the host region (deliberate).
-6. **218910-1115 BGA/mezz attach** is a factory process, not a default PCBWay stack.
+6. **218910-1115 BGA/mezz attach** is a factory process, not a default PCBWay stack. SMT of 16× 688-ball is Unknown.
 7. **PIN A3 orientation** still Inferred (180°).
-8. **No 48 V harness**, no HOST_PWRGD sequencer, no REFCLK generator.
-9. Cooling HS that mates the OAM bolster is Unknown. Do not clamp a custom cold plate on bare die.
-10. Do **not** reuse the old **220 × 120 mm** qty-5 MFC quote.
+8. **No 48 V harness** on this BOM, no HOST_PWRGD sequencer, no REFCLK generator.
+9. Do **not** reuse the old **220 × 120 mm** qty-5 MFC quote.
+10. Guest quotes used **6/6 mil + 0.3 mm hole**; a 1.0 mm-pitch 1311-ball escape likely needs finer rules and will cost more.
 
-**Cannot PCBWay. Cannot energize OAMs. Cannot replace AS-4124GQ-TNMI with this stub today.**
+**Do not upload to PCBWay. Do not energize OAMs.**

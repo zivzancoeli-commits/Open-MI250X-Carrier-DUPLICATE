@@ -1,25 +1,27 @@
-# Rev3 — 8-seat MI250X PCBWay chassis stub (NOT fab-ready)
+# Rev3 — 8-seat MI250X PCBWay chassis (NOT fab-ready)
 
-**DO NOT FABRICATE. DO NOT ENERGIZE P48V.** Not an order. Not a UBB. Title block on every sheet says the same.
+**DO NOT FABRICATE. DO NOT ENERGIZE P48V** until AMD overlay + Molex 1.2 A/contact follow-up are written. Not an order. Not a UBB.
 
-Carrier / UBB-like **PCB** (this tree), not the SendCutSend metal case. 8 identical OAM seats on one board; populate seats 0–1 now, 2–7 later.
+Chamber B **OAM chassis PCB** only. Compatible with Eli’s 2026-08-21 sheet; does **not** shop GPUs, 48 V shelves, or cooling.
 
-- Pin names: OCP generic **v1.0** (`22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv`). xlsx in `downloads/` wins on mismatch. **v1.x only.** r2.0 is UNUSABLE.
-- 16× **Molex 218910-1115**. 4-layer FR-4. Outline **492 × 372 mm**.
-- 4×2 of **103 × 166 mm** KOZ = **412 × 332 mm** (INFERRED tiling, not a UBB drawing) + 20 mm margin + 40 mm host-stub strip.
-- Seats 0–1: named host PCIe nets toward a documented HOST CONNECTOR REGION. **No CEM cable invented.**
-- Seats 2–7: mechanical + power pads only. Silk: `needs on-board PCIe switch — MPN Unknown`.
-- TEST*/RFU/DO_NOT_USE **unmapped**. PVREF **not driven**. S1–S7 **not routed** between OAMs.
-- Host SuperMicro **X11DPH-T is NOT on this PCB**.
+- Pin names: OCP generic **v1.0**. **v1.x only.** r2.0 is UNUSABLE. P3V3 = Conn0 C1/C2.
+- **8 electrically designed seats** (first stuffing may be 2 modules / 6 DNP — **no respin** for the other six).
+- 16× **Molex 218910-1115**. Outline **492 × 372 mm**. **12-layer 2.0 mm** stuffed-switch **target**. 8L 2.0 mm is a cheaper DNP-switch option only.
+- All 8: named `P48V`/`P12V1`/`P3V3`/`GND`, named PE toward two **PM8536B-FEI DNP** (x8 per GCD; SW0 seats 0–3, SW1 4–7), per-seat REFCLK/PERST#/HOST_PWRGD.
+- Host stub: silk + keepout toward **X11DPH-T** (3× Gen3 x16 + 4× Gen3 x8). Two CPU x16 = switch uplinks. **No CEM invented.**
+- **SB175** + local P48V pours + ~15 A fuse keepouts. **Not** a 100 A flood. **Not** Dell D3000E-S1 (12 V).
+- TEST*/RFU/DO_NOT_USE **unmapped**. PVREF **not driven**. S1–S7 **no net** (no xGMI).
+- X11DPH-T, NH-D9 DX-3647, B550M, GPUs, Mean Well: **NOT on this PCB**.
 
 | File | What |
 |---|---|
-| `docs/STATUS.md` | Verified / Inferred / Unknown. PCBWay size vs 508×600. Why 8-seat PCB vs AS-4124GQ-TNMI. |
-| `docs/PCBWAY.md` | Target size, layers, thickness, finish TBD. Old MFC qty-5 220×120 cart is UNRELATED. |
-| `BOM.md` | 16× 218910-1115 is the only verified connector MPN. |
-| `MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pro` | KiCad 9.0.2 project |
+| `docs/STATUS.md` | Compatibility matrix vs the sheet. Verified / Inferred / Unknown. |
+| `docs/PCBWAY.md` | Guest quotes 2026-08-21. 12L target vs 8L option. Do not upload. |
+| `docs/LAYER_STACK.md` | 12L 2.0 mm generated stack. |
+| `BOM.md` | PCB bill only. 16× 218910-1115. No GPU/PSU/cooling lines. |
+| `MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pro` | KiCad 9 project |
 | `docs/kicad_reports/` | ERC + DRC + layer SVG |
-| `docs/previews/` | PCB top PNG/SVG/PDF |
+| `docs/previews/` | PCB top PNG/SVG |
 
 ```
 python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/generate_from_v10_pinmap.py
