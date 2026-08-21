@@ -1,3 +1,7 @@
+> **DUPLICATE working copy — not the original.**
+> Original: https://github.com/zivzancoeli-commits/Open-MI250X-Carrier
+> Marked duplicate: 2026-08-21
+
 # Open MI250X Carrier
 
 ## Purpose
