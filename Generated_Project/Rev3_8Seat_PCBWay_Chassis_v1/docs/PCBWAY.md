@@ -14,9 +14,9 @@
 |---|---|---|---|
 | Outline | **492 × 372 mm** | Standard multilayer max **560 × 1150 mm**; advanced finished multilayer **508 × 600 mm** (normal process) | **Fits both.** |
 | 8-KOZ reserve | **412 × 332 mm** | n/a (mechanical) | **Inferred** 4×2 tiling of verified 103×166 mm KOZ. |
-| Margin | 20 mm service + 40 mm host-stub strip | n/a | Host strip holds 2× 37.5 mm PM8536 courtyards + cable keepout. |
+| Margin | 20 mm service + 40 mm host-stub strip | n/a | Host strip holds 4× 37.5 mm PM8536 courtyards stacked in Y + cable keepout. |
 | Layers (**no-switch / DNP-switch**) | **8L 2.0 mm** preferred 8L stack | Standard | Live guest quote below. Mezz + local P48V only. |
-| Layers (**stuffed-switch**) | **12L 2.0 mm Standard** preferred (two PM8536B-FEI DNP) | Standard 1–14; 16L is Advanced | **Live guest quote.** Generated KiCad is **12L 2.0 mm**. |
+| Layers (**stuffed-switch**) | **12L 2.0 mm Standard** preferred (four PM8536B-FEI DNP courtyards) | Standard 1–14; 16L is Advanced | **Live guest quote.** Generated KiCad is **12L 2.0 mm**. |
 | Copper | **2 oz outer** (quotes); 1 oz inner on 12L/16L | Outer 1–8 oz; inner 1–4 oz (4–10 L) | Local P48V pours live on **F.Cu 2 oz**. |
 | Finish | ENIG **in the guest quote**; still **TBD** for attach | HASL / ENIG / OSP | Do not pick until Molex attach process is known. |
 | Qty | Guest form **qty 5 min** (qty 1 rejected). **Not ordered.** | — | |
@@ -36,7 +36,7 @@ SMT for **16× 688-ball Molex** is **Unknown** (form only showed an **$88 floor*
 
 ## Live 12L / 16L guest quotes 2026-08-21 (do not upload / do not order)
 
-All: **492 × 372 mm**, **qty 5**, **ENIG**, **2 oz outer / 1 oz inner**. Prefer **12L 2.0 mm** as the stuffed-switch stack (two PM8536B-FEI DNP). Prefer **8L 2.0 mm ($832.74)** as the DNP-switch / mezz+power-only stack.
+All: **492 × 372 mm**, **qty 5**, **ENIG**, **2 oz outer / 1 oz inner**. Prefer **12L 2.0 mm** as the stuffed-switch stack (four PM8536B-FEI DNP courtyards). Prefer **8L 2.0 mm ($832.74)** as the DNP-switch / mezz+power-only stack.
 
 | Stack | PCB | DHL | Total | Days | Use |
 |---|---:|---:|---:|---|---|

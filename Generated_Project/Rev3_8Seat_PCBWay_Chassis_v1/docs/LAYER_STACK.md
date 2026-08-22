@@ -1,6 +1,6 @@
 # Layer stack — planning only (not a PCBWay-signed stackup)
 
-**Generated KiCad:** **12 layer, 2.0 mm** stuffed-switch **target** (8× electrically designed seats + two DNP **PM8536B-FEI PRIMARY**). Plan **12–16L, not 4**. PCBWay can assemble 1.0 mm without HDI.  
+**Generated KiCad:** **12 layer, 2.0 mm** stuffed-switch **target** (8× electrically designed seats + four DNP **PM8536B-FEI PRIMARY**, full-width capable). Plan **12–16L, not 4**. PCBWay can assemble 1.0 mm without HDI.  
 **Documented cheaper option:** **8 layer, 2.0 mm** DNP-switch / mezz+power-only — **not** the 8×-running target.  
 **PEX8780-AB80BI G** is a cheaper 80-lane alt in **docs only** — not placed.  
 **DO NOT ENERGIZE P48V.** Fab zip is in `fab/`. Do not upload from this agent.
@@ -26,7 +26,7 @@ Thickness sum below is **planning**. Dielectric thicknesses are evened to hit ~2
 | 11 | In10.Cu | power | 1 oz | **GND** plane |
 | 12 | B.Cu | signal | 2 oz | Reserved / host-stub |
 
-Guest **8L 2.0 mm $832.74** (qty 5, 7–8 days) is the **preferred 8L / no-switch / DNP-switch** coupon if both PM8536 stay DNP; stuffing them is a **12–16L** job.
+Guest **8L 2.0 mm $832.74** (qty 5, 7–8 days) is the **preferred 8L / no-switch / DNP-switch** coupon if all four PM8536 stay DNP; stuffing them is a **12–16L** job.
 
 **Hypothesis discarded:** a board-wide inner/outer **P48V plane** carrying ~100 A. Replaced by SB175 star + per-seat fuse keepouts + **local** 2 oz F.Cu pours on the 16 verified Conn0 P48V pads.
 
@@ -45,7 +45,7 @@ Inner GND planes are via-stitched at the inlet, bucks, and around each mezz (not
 | 7 | signal | 1 oz | Reserved |
 | 8 | signal | 2 oz | Reserved |
 
-Use only if both PM8536 stay DNP forever and PE is not fanned out. **Not** the 8×-running target. Do not treat this as the PEX8780 stuffed stack — PEX8780 is docs-only.
+Use only if all four PM8536 stay DNP forever and PE is not fanned out. **Not** the 8×-running target. Do not treat this as the PEX8780 stuffed stack — PEX8780 is docs-only.
 
 ## Rules of thumb used
 

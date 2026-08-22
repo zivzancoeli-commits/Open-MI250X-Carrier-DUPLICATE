@@ -46,9 +46,11 @@ Published OCP v1.0 P48V map **already satisfies Skip Pins**. TEST* / RFU / DO_NO
 
 ## Switches / host
 
-- Two **PM8536B-FEI** remain **DNP courtyards**. Public Microchip pages do not give a ball map; do not invent an AMD overlay or a fake BGA pinout.
+- Four **PM8536B-FEI** remain **DNP courtyards** (SW0–SW3). Public Microchip pages do not give a ball map; do not invent an AMD overlay or a fake BGA pinout.
+- Lane math: 8×2×x16 = 256 DS. Two 96-lane switches are enough for 8× x8/GCD, not 8× x16/GCD. Four 96-lane courtyards make the chassis **full-width capable**. Host **X11DPH-T ~80** lanes **cannot light** 256 DS.
+- 16 named x16 PE buses (`PE_Sn_GCD0_x16` / `PE_Sn_GCD1_x16`). GCD1 is named-only (not assigned to S1–S7). No PE tracks this article.
 - If those BGAs are stuffed later, 1.0 mm pitch escape likely needs **finer than 6/6 mil** and a requote. This zip stays on the quoted 6/6 + 0.3 mm hole.
-- Host: silk + keepout toward **X11DPH-T**. No CEM / SlimSAS / MCIO MPN invented (none chosen with a public footprint for this chassis).
+- Host: silk + keepout toward **X11DPH-T**. Four named US x16 keepouts. No CEM / SlimSAS / MCIO MPN invented. Do not swap the host board.
 
 ## SMT / mezz attach
 
@@ -56,4 +58,4 @@ Published OCP v1.0 P48V map **already satisfies Skip Pins**. TEST* / RFU / DO_NO
 
 ## What Eli can upload vs what stays DNP
 
-See `docs/STATUS.md`. Upload the `fab/` zip as a Standard 12L coupon. Do not stuff PM8536. Do not energize P48V.
+See `docs/STATUS.md`. Upload the `fab/` zip as a Standard 12L coupon. Do not stuff PM8536. Do not energize P48V. POWER+MECH still cannot run 8 live GPUs without maps.

@@ -32,11 +32,11 @@ ROW_SPINE = {
         "p3_y0": 353.5, "p3_y1": 356.0},
 }
 
-# 12 V brick cluster: host-strip SOUTH of SW1 keepout (y>=324) and inside
-# x=452–492. THL40 courtyard ≈ 26.9 × 26.9 mm.
-P12_MOD_XY = (470.0, 330.0)  # pin 1; courtyard south of SW1 (y=324), west of x=492
-P3V3_MOD_XY = (454.0, 366.0)
-FP12_XY = (448.0, 336.0)
+# 12 V brick cluster: host-strip SOUTH of SW3 keepout (y>=332).
+# THL40 courtyard ≈ 26.9 × 26.9 mm (pin1-relative -10.95,-3.25 to 15.95,23.65).
+P12_MOD_XY = (470.0, 348.0)  # pin 1; courtyard y 344.75–371.65, west of x=492
+P3V3_MOD_XY = (440.0, 366.0)  # south of row1 KOZ (y=352), west of host strip x=452
+FP12_XY = (458.0, 338.0)      # south of SW3 (y=332), north of THL courtyard
 
 BOARD_W, BOARD_H = 492.0, 372.0
 
@@ -168,7 +168,8 @@ def fuse_xy(oam: int, p48_bbox: tuple[float, float, float, float]) -> tuple[floa
     # Seat 4 (row1 col0) would sit inside the SB175 courtyard at (70, 354).
     if row == 1 and fx < 100:
         fx = 105.0
-        fy = 332.0
+        # Keep row-1 spine Y (336). fy=332 collided with J4_Conn0 NPTH
+        # (hole clearance 0.025 mm vs 0.25 mm). x=105 is east of SB175 courtyard.
     return fx, fy, 0.0
 
 
@@ -234,7 +235,7 @@ def build(nid, p48_bboxes, fuse_centers, conn0_xy, p12_bboxes, p3_bboxes, gnd_vi
     zones.append(zone(n_star, "P48V_STAR", "F.Cu", STAR_CLEAR_MM,
                       rect(16.7, 338, 90, 352), priority=next_star_pri(), min_th=0.5))
     zones.append(zone(n_star, "P48V_STAR", "F.Cu", STAR_CLEAR_MM,
-                      rect(400, 328, FP12_XY[0] - 1.6, 340), priority=next_star_pri(), min_th=0.5))
+                      rect(400, 334, FP12_XY[0] - 1.6, 344), priority=next_star_pri(), min_th=0.5))
 
     # Per-seat P48V tongue (pad 2) + STAR stub (pad 1 → south bus).
     for oam, fx, fy, rot, x0, y0, x1, y1 in fuse_pos:
@@ -256,7 +257,7 @@ def build(nid, p48_bboxes, fuse_centers, conn0_xy, p12_bboxes, p3_bboxes, gnd_vi
 
     # Brick island: F_P12 pad 2 (+2.455) and THL pin 1 (0,0 at P12_MOD_XY)
     zones.append(zone(n_brick, "P48V_BRICK", "F.Cu", STAR_CLEAR_MM,
-                      rect(FP12_XY[0] + 0.8, 326, P12_MOD_XY[0] + 8, 342),
+                      rect(FP12_XY[0] + 0.8, FP12_XY[1] - 4, P12_MOD_XY[0] + 8, P12_MOD_XY[1] + 4),
                       priority=12, min_th=0.4))
 
     # P12V1 alley (x≈15.5) + row spines. Unique priorities where they touch.
@@ -269,7 +270,7 @@ def build(nid, p48_bboxes, fuse_centers, conn0_xy, p12_bboxes, p3_bboxes, gnd_vi
                       rect(16.5, ROW_SPINE[1]["p12_y0"], 400, ROW_SPINE[1]["p12_y1"]),
                       priority=32, min_th=0.35))
     zones.append(zone(n_p12, "P12V1", "F.Cu", 0.25,
-                      rect(400, 349, 488, 368), priority=33, min_th=0.35))
+                      rect(400, 349, 488, 370), priority=33, min_th=0.35))
     alley_vias: set[tuple[float, float]] = set()
     for oam, x0, y0, x1, y1 in p12_bboxes:
         zones.append(zone(n_p12, "P12V1", "F.Cu", MEZZ_ZONE_CLEAR_MM,

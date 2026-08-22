@@ -15,7 +15,7 @@ Host SuperMicro X11DPH-T is **not** on this PCB. GPUs (P41933-001) are **do-not-
 | 1 | F_P12 | Littelfuse **0476002.MR** | Nano2 2 A 125 VDC | **Buy** | THL40 input. Same land. |
 | 1 | U_P12V1 | TRACO **THL 40-4812WI** | 18–75 Vin, 12 V / 3.35 A / 40 W isolated 1×1 | **Buy** | OCP P12V1 ≤50 W; this MPN is the 40 W first-article cap. Returns bonded to board GND. |
 | 1 | U_P3V3 | Murata **OKI-78SR-3.3/1.5-W36-C** | 7–36 Vin, 3.3 V / 1.5 A / 4.95 W SIP | **Buy** | From P12V1. No GPU VRM. |
-| 0 | U_SW0, U_SW1 | **PM8536B-FEI** | 96-lane Gen3 1311-FCBGA 1.0 mm | **DNP** | Courtyard only. Ball map not public. Do not stuff this article. |
+| 0 | U_SW0, U_SW1, U_SW2, U_SW3 | **PM8536B-FEI** | 96-lane Gen3 1311-FCBGA 1.0 mm | **DNP** ×4 | Courtyard only. Ball map not public. SW0=seats 0–1, SW1=2–3, SW2=4–5, SW3=6–7. Do not stuff this article. |
 | 32 | H0{1–4}…H7{1–4} | (NPTH φ3.9 mm) | OAM Fig 2 M3.5 | **Fab** | Not a fastener SKU. |
 | 1 | PCB | 12L 492×372 mm 2.0 mm ENIG 2 oz/1 oz green/white | FR-4 chassis | **Fab zip** | Guest qty-5 **$2237.90 + $68.43 DHL**. See `fab/`. |
 

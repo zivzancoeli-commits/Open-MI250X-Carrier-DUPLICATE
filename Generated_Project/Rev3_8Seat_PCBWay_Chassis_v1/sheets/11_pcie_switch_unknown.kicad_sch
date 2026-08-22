@@ -1,22 +1,164 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "c0cd1ad4-eb21-4a9c-8e8e-b98e8f2022f7")
+	(uuid "5b83d971-0b53-4ffc-a192-044583327373")
 	(paper "A3")
 	(title_block
-		(title "PM8536B-FEI DNP x2 PRIMARY (keepout only)")
+		(title "PM8536B-FEI DNP x4 PRIMARY (keepout only)")
 		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
         (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
         (comment 2 "Documentation sheet — no invented nets")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "TWO PM8536B-FEI KEEPOUTS — PRIMARY, DNP. No fake schematic pins.\n\nU_SW0  PM8536B-FEI  DNP  seats 0-3   16 US + 64 DS   x8 per GCD\nU_SW1  PM8536B-FEI  DNP  seats 4-7   16 US + 64 DS   x8 per GCD\n\nPackage (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA,\n1.0 mm pitch. Street ~$460-475, ~18 wk. PCBWay can assemble 1.0 mm without HDI;\nplan 12-16 layers (not 4). 12L 2.0 mm is the stuffed-switch TARGET.\n8L 2.0 mm is a cheaper DNP-switch / mezz+power option only.\n\nDo NOT populate until Eli buys the parts. Courtyard/keepout only — a DNP box, no fake pins.\n\nCheaper 80-lane alt in docs only (not placed): PEX8780-AB80BI G, 35 mm 1156-FCBGA.\n2-seat alt in docs only (not placed): PM8533B-F3EI (48-lane, 27 mm, 1.0 mm).\n\nEach MI250X GCD has its own PCIe Gen4 x16 (AMD + Hot Chips 34). Host trains Gen3.\nOAM v1.5: one PE x16 on Conn0; a second host x16 may be SERDES_7 on Conn1.\nGCD1 = SERDES_7 is Inferred — NO public AMD overlay proving it. Do NOT route S1-S7.\n\nHost X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.\nTwo CPU x16 become the two switch uplinks (silk + connector keepout, MPN Unknown).\nDo not invent CEM / SlimSAS / MCIO / retimer / xGMI.\n\n8 x 2 x x16 = 256 DS vs 80 host — x16-per-GCD is impossible. x8 per GCD is the plan.\n\nRefclk / PERST# / HOST_PWRGD per seat per OAM v1.5\n(HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.\n"
+	(text "FOUR PM8536B-FEI KEEPOUTS — PRIMARY, DNP. No fake schematic pins. No invented ball map.\n\nU_SW0  PM8536B-FEI  DNP  seats 0-1   16 US + 64 DS   first-stuff pair\nU_SW1  PM8536B-FEI  DNP  seats 2-3   16 US + 64 DS   second-stuff pair\nU_SW2  PM8536B-FEI  DNP  seats 4-5   16 US + 64 DS\nU_SW3  PM8536B-FEI  DNP  seats 6-7   16 US + 64 DS\n\nPackage (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA,\n1.0 mm pitch. Street ~$460-475, ~18 wk. PCBWay can assemble 1.0 mm without HDI;\nplan 12-16 layers (not 4). 12L 2.0 mm is the stuffed-switch TARGET.\n8L 2.0 mm is a cheaper DNP-switch / mezz+power option only.\n\nDo NOT populate until Eli buys the parts. Courtyard/keepout only — a DNP box, no fake pins.\n\nLane math (verified; partition is a hypothesis, not a pinout):\n- 8 x 2 x x16 = 256 DS. 2x96 = 192 — enough for 8x x8/GCD, NOT 8x x16/GCD.\n- 4x96 = 384. Each SW: 16 US + 64 DS (2 seats x 2 GCD x x16) = 80 of 96.\n- 4 x 16 US = 64 host-facing. X11DPH-T has ~80 lanes (3x x16 + 4x x8).\n  Chassis can SIT/WIRE 8 full-width. This host CANNOT LIGHT 256 DS.\n\nNamed PE buses (no routing; ball map not public):\n- PE_S0_GCD0_x16 .. PE_S7_GCD0_x16  (Conn0 OCP PCIE pads)\n- PE_S0_GCD1_x16 .. PE_S7_GCD1_x16  (named only; pins Unknown; not S1-S7)\n- PE_SW0_US_x16 .. PE_SW3_US_x16    (host-facing keepouts; no CEM MPN)\n\nCheaper 80-lane alt in docs only (not placed): PEX8780-AB80BI G, 35 mm 1156-FCBGA.\n2-seat alt in docs only (not placed): PM8533B-F3EI (48-lane, 27 mm, 1.0 mm).\n\nEach MI250X GCD has its own PCIe Gen4 x16 (AMD + Hot Chips 34). Host trains Gen3.\nOAM v1.5: one PE x16 on Conn0; a second host x16 may be SERDES_7 on Conn1.\nGCD1 = SERDES_7 is Inferred — NO public AMD overlay proving it. Do NOT route S1-S7.\n\nHost X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.\nDo not invent CEM / SlimSAS / MCIO / retimer / xGMI. Do not swap the host board.\n\nRefclk / PERST# / HOST_PWRGD per seat per OAM v1.5\n(HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.\n\nPopulate path: seats 0-1 + SW0, then seats 0-3 + SW1, then all 8 + SW2/SW3. Same PCB.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "501e8a96-28b7-4e86-abe3-0610e8e8ff72")
+		(uuid "f4b17843-5a14-4f7a-82b1-402b37746b4f")
 	)
+
+
+	(hierarchical_label "PE_S0_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 150 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fb7a7a1a-354a-4372-b43e-c3860519df95")
+	)
+
+	(hierarchical_label "PE_S0_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 154.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "de6fcfa8-1df3-4c43-acfa-ede8d1631cee")
+	)
+
+	(hierarchical_label "PE_S1_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 159.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0219f649-31a8-4bf8-b426-9287c49c8710")
+	)
+
+	(hierarchical_label "PE_S1_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 163.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fd2739b7-ba98-498b-be76-76fc53e3f2c9")
+	)
+
+	(hierarchical_label "PE_S2_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 168.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "272e966b-594d-4d1d-8bfa-2588725e9d45")
+	)
+
+	(hierarchical_label "PE_S2_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 172.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "15aa07db-bea7-4e9a-99d6-7664d0e0e981")
+	)
+
+	(hierarchical_label "PE_S3_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 177.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4ebdbdad-4f55-4bc3-8292-23d80d74aa84")
+	)
+
+	(hierarchical_label "PE_S3_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 181.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e15e32e7-e99c-4c87-88f5-33e8805c0071")
+	)
+
+	(hierarchical_label "PE_S4_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 186.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a81868a9-5339-41ae-84c4-885284e0ea3c")
+	)
+
+	(hierarchical_label "PE_S4_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 190.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c2a39464-433d-497a-a769-3db7de506954")
+	)
+
+	(hierarchical_label "PE_S5_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 195.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "28947897-82cb-46f6-bb32-a32b2357a2ea")
+	)
+
+	(hierarchical_label "PE_S5_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 199.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "daebe5fe-edb6-46b2-ac7e-50e39d208927")
+	)
+
+	(hierarchical_label "PE_S6_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 204.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8c239f1f-c586-4f4c-80c0-ad4cd49f3a98")
+	)
+
+	(hierarchical_label "PE_S6_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 208.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4b74faaf-a141-41ff-ab67-18c5bd2e97e7")
+	)
+
+	(hierarchical_label "PE_S7_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 213.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "768250cd-f502-4081-a229-f39ea6efa2a8")
+	)
+
+	(hierarchical_label "PE_S7_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 217.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "23df9296-9353-4bd8-8fd0-79d5f0ff1f29")
+	)
+
+	(hierarchical_label "PE_SW0_US_x16"
+		(shape bidirectional)
+		(at 25.4 222.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d6c10771-065e-4f54-8c19-4763d76063e9")
+	)
+
+	(hierarchical_label "PE_SW1_US_x16"
+		(shape bidirectional)
+		(at 25.4 226.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3474fce4-4730-4781-9a0c-3870c8673656")
+	)
+
+	(hierarchical_label "PE_SW2_US_x16"
+		(shape bidirectional)
+		(at 25.4 231.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fda198a5-75e5-479e-8d81-c5694dbcc217")
+	)
+
+	(hierarchical_label "PE_SW3_US_x16"
+		(shape bidirectional)
+		(at 25.4 235.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7cf47b77-5071-4a98-b37e-b7b739245b7b")
+	)
+
 
 	(sheet_instances
 		(path "/"
