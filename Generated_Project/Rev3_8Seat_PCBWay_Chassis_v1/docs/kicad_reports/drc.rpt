@@ -1,5 +1,5 @@
 ** Drc report for MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pcb **
-** Created on 2026-08-21T23:59:44+0000 **
+** Created on 2026-08-22T00:25:32+0000 **
 ** Report includes: Errors, Warnings, Exclusions **
 
 ** Found 54 DRC violations **
@@ -141,12 +141,12 @@
     @(352.1500 mm, 327.5000 mm): Pad L61 [P48V] of J7_Conn0 on F.Cu
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
-    @(71.5000 mm, 334.0000 mm): Reference field of J4_Conn0
-    @(70.0000 mm, 334.0000 mm): Reference field of J_SB175
+    @(472.0000 mm, 170.0000 mm): PCB text 'HOST CABLE KEEPOUT' on F.Silkscreen
+    @(472.0000 mm, 170.0000 mm): PCB text '3x x16 + 4x x8 Gen3  MPN Unknown' on F.Silkscreen
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
-    @(472.0000 mm, 170.0000 mm): PCB text '3x x16 + 4x x8 Gen3  MPN Unknown' on F.Silkscreen
-    @(472.0000 mm, 170.0000 mm): PCB text 'HOST CABLE KEEPOUT' on F.Silkscreen
+    @(70.0000 mm, 334.0000 mm): Reference field of J_SB175
+    @(71.5000 mm, 334.0000 mm): Reference field of J4_Conn0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
     @(71.5000 mm, 154.0000 mm): Footprint J0_Conn0

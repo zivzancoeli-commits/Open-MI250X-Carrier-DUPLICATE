@@ -30,7 +30,7 @@ Guest **8L 2.0 mm $832.74** (qty 5, 7–8 days) is the **preferred 8L / no-switc
 
 **Hypothesis discarded:** a board-wide inner/outer **P48V plane** carrying ~100 A. Replaced by SB175 star + per-seat fuse keepouts + **local** 2 oz F.Cu pours on the 16 verified Conn0 P48V pads.
 
-Inner GND planes do **not** yet via-stitch to SMD GND pads (no via farm on this stub).
+Inner GND planes do **not** yet via-stitch to SMD GND pads (no via farm on this named-net chassis).
 
 ## 8L 2.0 mm — cheaper DNP-switch option (not generated)
 

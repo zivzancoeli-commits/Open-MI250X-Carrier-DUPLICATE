@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Generate the Rev3 8-seat PCBWay chassis stub KiCad project.
+"""Generate the Rev3 8-seat PCBWay named-net chassis KiCad project.
 
 Writes ONLY into Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/.
-Never overwrites Rev1/Rev2/Rev3_2Seat. Never writes the original Open-MI250X-Carrier tree.
+Never overwrites Rev1/Rev2/Rev3_2Seat. Writes only this DUPLICATE checkout.
 
 Pin names: 22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv
 (xlsx in downloads/ wins on mismatch).
@@ -42,8 +42,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if ROOT.name != "Rev3_8Seat_PCBWay_Chassis_v1":
     raise SystemExit(f"refusing to write outside Rev3 8-seat tree: {ROOT}")
-if "Open-MI250X-Carrier" in str(ROOT) and "DUPLICATE" not in str(ROOT) and "omi-dup" not in str(ROOT):
-    raise SystemExit(f"refusing to write the original repo tree: {ROOT}")
+if "Rev1_" in str(ROOT) or "Rev2_" in str(ROOT) or "Rev3_2Seat" in str(ROOT):
+    raise SystemExit(f"refusing to overwrite Rev1/Rev2/2-seat trees: {ROOT}")
 
 REPO = Path(__file__).resolve().parents[3]
 PINMAP = REPO / "22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv"
@@ -354,7 +354,7 @@ def sch_header(title: str, comment: str) -> str:
 	(paper "A3")
 	(title_block
 		(title "{kicad_escape(title)}")
-		(date "2026-08-21")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
         (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
         (comment 2 "{kicad_escape(comment)}")
@@ -367,15 +367,15 @@ def sch_header(title: str, comment: str) -> str:
 SHEETS = [
     ("00_DO_NOT_FABRICATE", "sheets/00_do_not_fabricate.kicad_sch"),
     ("01_Power_Clock_Reset", "sheets/01_power_clock_reset.kicad_sch"),
-    ("02_Host_PCIe_Stub_OAM0_1", "sheets/02_host_pcie_stub.kicad_sch"),
+    ("02_Host_PCIe_Named_8Seat", "sheets/02_host_pcie_stub.kicad_sch"),
     ("03_OAM0_Connectors", "sheets/03_oam0_connectors.kicad_sch"),
     ("04_OAM1_Connectors", "sheets/04_oam1_connectors.kicad_sch"),
-    ("05_OAM2_MechPower", "sheets/05_oam2_connectors.kicad_sch"),
-    ("06_OAM3_MechPower", "sheets/06_oam3_connectors.kicad_sch"),
-    ("07_OAM4_MechPower", "sheets/07_oam4_connectors.kicad_sch"),
-    ("08_OAM5_MechPower", "sheets/08_oam5_connectors.kicad_sch"),
-    ("09_OAM6_MechPower", "sheets/09_oam6_connectors.kicad_sch"),
-    ("10_OAM7_MechPower", "sheets/10_oam7_connectors.kicad_sch"),
+    ("05_OAM2_Connectors", "sheets/05_oam2_connectors.kicad_sch"),
+    ("06_OAM3_Connectors", "sheets/06_oam3_connectors.kicad_sch"),
+    ("07_OAM4_Connectors", "sheets/07_oam4_connectors.kicad_sch"),
+    ("08_OAM5_Connectors", "sheets/08_oam5_connectors.kicad_sch"),
+    ("09_OAM6_Connectors", "sheets/09_oam6_connectors.kicad_sch"),
+    ("10_OAM7_Connectors", "sheets/10_oam7_connectors.kicad_sch"),
     ("11_PM8536_DNP", "sheets/11_pcie_switch_unknown.kicad_sch"),
     ("12_Unmapped_AMD", "sheets/12_unmapped_amd.kicad_sch"),
 ]
@@ -384,7 +384,7 @@ SHEETS = [
 def write_root_sch() -> None:
     p = ROOT / f"{PROJ}.kicad_sch"
     body = sch_header(
-        "Rev3 8-seat PCBWay chassis stub (NOT fab-ready)",
+        "Rev3 8-seat PCBWay named-net chassis (NOT fab-ready)",
         "8 OAM seats. Host X11DPH-T is NOT on this PCB. No CEM cable. No 20-layer UBB.",
     )
     note = (
@@ -833,7 +833,7 @@ def write_pcb(rows: list[dict]) -> None:
     graphics = [
         f'  (gr_rect (start 0 0) (end {BOARD_W:.3f} {BOARD_H:.3f})',
         '    (stroke (width 0.2) (type solid)) (fill none) (layer "Edge.Cuts"))',
-        f'  (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay chassis stub"',
+        f'  (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay named-net chassis"',
         f'    (at {BOARD_W/2:.3f} 6) (layer "F.SilkS")',
         '    (effects (font (size 2.4 2.4) (thickness 0.3))))',
         f'  (gr_text "Molex 218910-1115 x16  |  12L 2.0mm TARGET  |  LOCAL P48V pours  |  2x PM8536B-FEI DNP  |  SB175 star  |  NOT a UBB"',
@@ -1022,8 +1022,8 @@ def write_pcb(rows: list[dict]) -> None:
   (general (thickness {BOARD_THICK_MM}))
   (paper "A1")
   (title_block
-    (title "DO NOT FABRICATE — Rev3 8-seat PCBWay chassis stub")
-    (date "2026-08-21")
+    (title "DO NOT FABRICATE — Rev3 8-seat PCBWay named-net chassis")
+    (date "2026-08-22")
     (rev "Rev3_8Seat_PCBWay_v1")
     (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN.")
     (comment 2 "492 x 372 mm 12-layer 2.0 mm stuffed-switch TARGET. Local P48V. 2x PM8536 DNP PRIMARY. SB175.")
@@ -1151,7 +1151,7 @@ def write_project() -> None:
 
 def write_ipc_netlist(rows: list[dict]) -> None:
     lines = [
-        "# Open-MI250X 8-OAM v1.0 named-net stub (PCBWay chassis)",
+        "# Rev3 8-seat PCBWay named-net chassis (v1.0 map)",
         "# NOT a fabrication netlist. Unmapped pads omitted.",
         "# All 8 seats electrically named. S1-S7 / TEST* omitted. SB175 = P48V_STAR.",
         "# Format: ref.pad  net",

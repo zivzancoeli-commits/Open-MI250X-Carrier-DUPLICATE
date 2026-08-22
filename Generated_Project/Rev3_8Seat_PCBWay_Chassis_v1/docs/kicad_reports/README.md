@@ -1,6 +1,6 @@
 # KiCad 9.0.9 CLI reports (not a fab sign-off)
 
-Run 2026-08-21 on the regenerated **12-layer 2.0 mm** 8-seat chassis. Hierarchical named-net stub: **do not treat these counts as a tape-out.**
+Run 2026-08-22 on the regenerated **12-layer 2.0 mm** 8-seat named-net chassis. Hierarchical named nets, no PE tracks: **do not treat these counts as a tape-out.**
 
 - `erc.rpt` / `erc.json` — **1280** violations, all error: `label_dangling` **640**, `hier_label_mismatch` **640**. Expected (hierarchical labels on named nets, no wires).
 - `drc.rpt` / `drc.json` — **54** violations + **499** unconnected items:

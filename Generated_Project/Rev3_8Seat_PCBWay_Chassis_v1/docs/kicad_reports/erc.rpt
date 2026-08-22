@@ -1,4 +1,4 @@
-ERC report (2026-08-21T23:59:15+0000, Encoding UTF8)
+ERC report (2026-08-22T00:25:18+0000, Encoding UTF8)
 Report includes: Errors, Warnings, Exclusions
 
 ***** Sheet /
@@ -1927,7 +1927,7 @@ Report includes: Errors, Warnings, Exclusions
 
 ***** Sheet /01_Power_Clock_Reset/
 
-***** Sheet /02_Host_PCIe_Stub_OAM0_1/
+***** Sheet /02_Host_PCIe_Named_8Seat/
 [hier_label_mismatch]: Hierarchical label OAM0_PCIE_TX0P has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 130.00 mm): Hierarchical Label 'OAM0_PCIE_TX0P'
@@ -3565,7 +3565,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM1_SMBus_SLV_CLK'
 
-***** Sheet /05_OAM2_MechPower/
+***** Sheet /05_OAM2_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
@@ -3615,7 +3615,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM2_SMBus_SLV_CLK'
 
-***** Sheet /06_OAM3_MechPower/
+***** Sheet /06_OAM3_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
@@ -3665,7 +3665,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM3_SMBus_SLV_CLK'
 
-***** Sheet /07_OAM4_MechPower/
+***** Sheet /07_OAM4_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
@@ -3715,7 +3715,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM4_SMBus_SLV_CLK'
 
-***** Sheet /08_OAM5_MechPower/
+***** Sheet /08_OAM5_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
@@ -3765,7 +3765,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM5_SMBus_SLV_CLK'
 
-***** Sheet /09_OAM6_MechPower/
+***** Sheet /09_OAM6_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'
@@ -3815,7 +3815,7 @@ Report includes: Errors, Warnings, Exclusions
     ; error
     @(25.40 mm, 226.20 mm): Hierarchical Label 'OAM6_SMBus_SLV_CLK'
 
-***** Sheet /10_OAM7_MechPower/
+***** Sheet /10_OAM7_Connectors/
 [hier_label_mismatch]: Hierarchical label P48V has no matching sheet pin in the parent sheet
     ; error
     @(25.40 mm, 150.00 mm): Hierarchical Label 'P48V'

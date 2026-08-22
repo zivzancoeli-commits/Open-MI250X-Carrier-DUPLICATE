@@ -1,4 +1,4 @@
-# Open-MI250X 8-OAM v1.0 named-net stub (PCBWay chassis)
+# Rev3 8-seat PCBWay named-net chassis (v1.0 map)
 # NOT a fabrication netlist. Unmapped pads omitted.
 # All 8 seats electrically named. S1-S7 / TEST* omitted. SB175 = P48V_STAR.
 # Format: ref.pad  net

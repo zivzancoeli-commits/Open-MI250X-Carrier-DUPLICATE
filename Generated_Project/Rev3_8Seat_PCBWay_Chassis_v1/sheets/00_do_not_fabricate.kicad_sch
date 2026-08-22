@@ -1,9 +1,9 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "ac2426a9-8a2e-4267-b2a9-fda270aad166")
+	(uuid "8147ee91-0125-434b-ad20-4be75e42cb97")
 	(paper "A3")
 	(title_block
 		(title "DO NOT FABRICATE")
-		(date "2026-08-21")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
         (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
         (comment 2 "Documentation sheet — no invented nets")
@@ -15,7 +15,7 @@
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "fe50d521-7628-4406-b9dd-1a057639f8fc")
+		(uuid "b1b2f5a9-c0d9-4818-8575-00fa56d0d597")
 	)
 
 	(sheet_instances

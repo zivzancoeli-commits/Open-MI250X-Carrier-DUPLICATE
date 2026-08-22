@@ -92,7 +92,7 @@
     ],
     [
       "sheets/02_host_pcie_stub.kicad_sch",
-      "02_Host_PCIe_Stub_OAM0_1"
+      "02_Host_PCIe_Named_8Seat"
     ],
     [
       "sheets/03_oam0_connectors.kicad_sch",
@@ -104,27 +104,27 @@
     ],
     [
       "sheets/05_oam2_connectors.kicad_sch",
-      "05_OAM2_MechPower"
+      "05_OAM2_Connectors"
     ],
     [
       "sheets/06_oam3_connectors.kicad_sch",
-      "06_OAM3_MechPower"
+      "06_OAM3_Connectors"
     ],
     [
       "sheets/07_oam4_connectors.kicad_sch",
-      "07_OAM4_MechPower"
+      "07_OAM4_Connectors"
     ],
     [
       "sheets/08_oam5_connectors.kicad_sch",
-      "08_OAM5_MechPower"
+      "08_OAM5_Connectors"
     ],
     [
       "sheets/09_oam6_connectors.kicad_sch",
-      "09_OAM6_MechPower"
+      "09_OAM6_Connectors"
     ],
     [
       "sheets/10_oam7_connectors.kicad_sch",
-      "10_OAM7_MechPower"
+      "10_OAM7_Connectors"
     ],
     [
       "sheets/11_pcie_switch_unknown.kicad_sch",

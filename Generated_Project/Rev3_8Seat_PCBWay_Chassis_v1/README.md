@@ -1,4 +1,4 @@
-# Rev3 — 8-seat MI250X PCBWay chassis (NOT fab-ready)
+# Rev3 — 8-seat MI250X PCBWay named-net chassis (NOT fab-ready)
 
 **DO NOT FABRICATE. DO NOT ENERGIZE P48V** until AMD overlay + Molex 1.2 A/contact follow-up are written. Not an order. Not a UBB.
 

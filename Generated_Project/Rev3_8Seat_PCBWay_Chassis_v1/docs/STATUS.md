@@ -1,7 +1,7 @@
 # STATUS — Rev3 8-seat PCBWay chassis PCB
 
 **Tree:** `Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/`  
-**Date:** 2026-08-21  
+**Date:** 2026-08-22  
 **Pin map:** `22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv` (1376 named pads). xlsx in `22_Pinmap_Research/downloads/` wins on mismatch; this generator consumes the CSV (P3V3 = Conn0 C1/C2 checked). **v1.x only.** r2.0 is UNUSABLE.
 
 **DO NOT FABRICATE. DO NOT ENERGIZE P48V** until AMD overlay + Molex 1.2 A/contact follow-up are written. Not a PCBWay upload.
@@ -59,7 +59,7 @@ First stuffing: **2 populated modules / 6 DNP modules** is allowed. The copper/n
 
 ---
 
-## Verified (this stub)
+## Verified (this named-net chassis)
 
 | Item | Evidence |
 |---|---|
@@ -140,7 +140,7 @@ Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow
 
 ## KiCad CLI — not a fab sign-off
 
-See `docs/kicad_reports/` (KiCad **9.0.9**, 2026-08-21). Hierarchical labels on a named-net stub produce expected ERC dangling/mismatch. DRC footprint-mismatch and unconnected items (no PE tracks; fused P48V islands; DNP PRIMARY switches) are expected. Do not “Update PCB from Schematic”.
+See `docs/kicad_reports/` (KiCad **9.0.9**, 2026-08-22). Hierarchical labels on this named-net chassis produce expected ERC dangling/mismatch. DRC footprint-mismatch and unconnected items (no PE tracks; fused P48V islands; DNP PRIMARY switches) are expected. Do not “Update PCB from Schematic”.
 
 ---
 
