@@ -50,7 +50,7 @@ python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/generate_from_v10_p
 | Seat grid | col pitch 103 mm, row pitch 166 mm. Row 0 (Y=20): seats **0 1 2 3**. Row 1 (Y=186): seats **4 5 6 7**. |
 | Connectors | **16×** Molex **218910-1115** (2 per seat), rot 180 **Inferred** |
 | Holes | **32×** M3.5 NPTH φ3.9 mm (Fig 2), 8 mm MIN land |
-| Layers | **12**, 2.0 mm, 2 oz outer / 1 oz inner **planning** (stuffed-switch). **8L 2.0 mm $832.74** is the **no-switch / DNP-switch** preferred 8L stack. |
+| Layers | **12L 2.0 mm** stuffed-switch **prefer** (guest **$2237.90 + $68.43 DHL = $2306.33**, 14–15 days). **8L 2.0 mm $832.74** is the DNP-switch / mezz+power prefer. 16L Advanced **$2937.84**. |
 | P48V | Anderson **SB175** on the long edge → star + Kelvin sense → per-seat **~15 A fuse keepouts** → **local F.Cu pours** on the 16 verified Conn0 P48V pads. **Not** a 100 A flood plane. |
 | Switches | **U_SW0** / **U_SW1** **PM8536B-FEI DNP PRIMARY** keepouts (x8 per GCD; SW0 seats 0–3, SW1 seats 4–7) |
 | Host region | X=452–492 mm strip. Silk + cable keepout. **No CEM invented.** |
@@ -73,7 +73,7 @@ First stuffing: **2 populated modules / 6 DNP modules** is allowed. The copper/n
 | PM8536B-FEI package | Microchip PFX: 96-lane Gen3, **1311-ball 37.5×37.5 mm FCBGA, 1.0 mm pitch**. PCBWay can assemble 1.0 mm without HDI. ~$460–475, ~18 wk. PRIMARY DNP. |
 | X11DPH-T lane budget | SuperMicro: 3× Gen3 x16 + 4× Gen3 x8 = 80 Gen3 lanes |
 | HOST_PWRGD | OCP: Power Enable when rails in spec. ≥100 ms after MODULE_PWRGD (v1.5). |
-| PCBWay guest quotes 2026-08-21, 492×372, qty 5 min (qty 1 rejected), ENIG, 2 oz outer | See `PCBWAY.md`. **8L 2.0 mm $832.74 + $68.43 DHL** = no-switch / DNP-switch. **12–16L** = stuffed-switch (separate fetch). Prefer 2.0 mm. SMT 16× 688-ball Unknown ($88 floor). **Do not upload.** |
+| PCBWay guest quotes 2026-08-21, 492×372, qty 5, ENIG, 2 oz outer / 1 oz inner (12L/16L) | See `PCBWAY.md`. **Prefer 12L 2.0 mm stuffed-switch: PCB $2237.90 + DHL $68.43 = $2306.33**, 14–15 days (two PM8536 DNP). **Prefer 8L 2.0 mm DNP-switch: $832.74 + $68.43**. Caveat: quotes are **6/6 mil + 0.3 mm hole**; 1.0 mm 1311-ball escape will cost more. SMT 16× 688-ball Unknown ($88 floor). **Do not upload.** |
 
 ### Pad accounting (one 688+688 map; PCB instantiates it eight times)
 
