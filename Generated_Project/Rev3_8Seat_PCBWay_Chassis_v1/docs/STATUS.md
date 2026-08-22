@@ -188,8 +188,10 @@ Seat 0 connector centres (match Rev2 2-seat): Conn0 **(71.5, 154.0)**, Conn1 **(
 | HOST_PWRGD delays vs rail windows | AMD timing **Unknown** (OCP ≥100 ms note only) |
 | LINK_CONFIG[4:0] MI250X coding | **Unknown** |
 | PIN A3 footprint rotation 180° | **Inferred** |
-| 1.2 A per used 218910-1115 power contact at 48–59.5 V (2 oz) | **OPEN** (ticket 167157 follow-up) |
+| 1.2 A per used 218910-1115 power contact at 48–59.5 V (2 oz) | **OPEN** (ticket 167157 follow-up). Public hunt **2026-08-22: not found** — see `docs/HUNT_MOLEX_PLUG_COOL.md`. |
 | skip/void is NC on the same MPN | **OPEN** (same follow-up) |
+| Host plug 218910-1115 → CEM x16 catalog path | **Not found** (same hunt). MCIO-to-CEM exists; starts at MCIO. CBL-MCIO-1278 is UBB-only. **No PE-to-CEM map invented.** |
+| Buyable MI250X OAM cold plate / HS MPN at 500–560 W | **Not found** (same hunt). MCP-310-45802-0B = mylar shroud; CoolIT CP-AMD-MI250-GPU = series name; HPE/ORNL DLC is welded. **No cooler MPN invented.** |
 
 ---
 
@@ -232,7 +234,7 @@ See `docs/kicad_reports/` (KiCad **9.0.9**). ERC dangling hierarchical labels ar
 
 ## Still open (not a reason to withhold the zip)
 
-1. **Molex 1.2 A/contact at 48–59.5 V (2 oz)** — silk stays DO NOT ENERGIZE.
+1. **Molex 1.2 A/contact at 48–59.5 V (2 oz)** — silk stays DO NOT ENERGIZE. Public hunt **not found** (`docs/HUNT_MOLEX_PLUG_COOL.md`).
 2. **AMD overlay** still Unknown. Do not invent it.
 3. **PM8536B-FEI** ×4 DNP until a public/legal ball map exists. 1.0 mm escape will need finer than **6/6 mil** and a requote.
 4. **No CEM / MCIO host MPN** (deliberate). Two GCD0 x16 fit the host; two full-width modules do not.
