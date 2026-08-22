@@ -140,7 +140,7 @@ Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow
 
 ## KiCad CLI — not a fab sign-off
 
-See `docs/kicad_reports/`. Hierarchical labels on a named-net stub produce expected ERC dangling/mismatch. DRC footprint-mismatch (pads carry nets the library does not) and unconnected items (no PE tracks; fused P48V islands; DNP switches) are expected. Do not “Update PCB from Schematic”.
+See `docs/kicad_reports/` (KiCad **9.0.9**, 2026-08-21). Hierarchical labels on a named-net stub produce expected ERC: **1280** (`label_dangling` 640 + `hier_label_mismatch` 640). DRC: **54** violations (`clearance` 32 P48V 0.64 mm vs 0.40 mm mezz pitch; `lib_footprint_mismatch` 17; SB175 `copper_edge_clearance` 2) + **499** unconnected items (no PE tracks; fused P48V islands; DNP switches). Do not “Update PCB from Schematic”.
 
 ---
 
