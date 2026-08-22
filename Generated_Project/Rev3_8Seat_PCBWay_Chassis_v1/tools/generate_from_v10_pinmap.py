@@ -1038,7 +1038,7 @@ def write_pcb(rows: list[dict]) -> None:
         f'    (at {hx0+HOST_STRIP/2-8:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 0.85 0.85) (thickness 0.1))))',
         f'  (gr_text "X11DPH-T 3x x16+4x x8  two GCD0 FIT  4x x16 do NOT"',
-        f'    (at {hx0+HOST_STRIP/2+0:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        f'    (at {hx0+HOST_STRIP/2-16:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 0.8 0.8) (thickness 0.1))))',
         f'  (gr_text "NO CEM / SlimSAS / MCIO invented  MPN Unknown"',
         f'    (at {hx0+HOST_STRIP/2+8:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',

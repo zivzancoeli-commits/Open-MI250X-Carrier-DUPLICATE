@@ -1,12 +1,8 @@
 ** Drc report for MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pcb **
-** Created on 2026-08-22T04:35:16+0000 **
+** Created on 2026-08-22T04:40:51+0000 **
 ** Report includes: Errors, Warnings, Exclusions **
 
-** Found 39 DRC violations **
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; warning
-    @(472.0000 mm, 177.0000 mm): PCB text 'HOST CABLE KEEPOUT' on F.Silkscreen
-    @(472.0000 mm, 177.0000 mm): PCB text 'X11DPH-T 3x x16+4x x8  two GCD0 FIT  4x x16 do NOT' on F.Silkscreen
+** Found 38 DRC violations **
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
     @(43.4500 mm, 336.3000 mm): Rectangle of J_SB175 on F.Silkscreen

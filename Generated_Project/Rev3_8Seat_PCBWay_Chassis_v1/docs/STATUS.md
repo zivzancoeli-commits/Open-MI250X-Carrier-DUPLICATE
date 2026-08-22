@@ -190,7 +190,7 @@ Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow
 
 ## KiCad CLI
 
-See `docs/kicad_reports/` (KiCad **9.0.9**). ERC dangling hierarchical labels are expected. DRC on fabricated copper: **0 errors**. Remaining warnings are `lib_footprint_mismatch` (placed pads carry nets the library copy does not), silk, and a few isolated-copper islands. Unconnected PE / REFCLK / PERST# nets are expected (four DNP switches). Do not “Update PCB from Schematic”.
+See `docs/kicad_reports/` (KiCad **9.0.9**). ERC dangling hierarchical labels are expected. DRC on fabricated copper: **0 errors**, **38** warnings (lib footprint mismatch, leftover silk at SB175, isolated copper). Unconnected PE / REFCLK / PERST# nets are expected (four DNP switches). Do not “Update PCB from Schematic”.
 
 ---
 

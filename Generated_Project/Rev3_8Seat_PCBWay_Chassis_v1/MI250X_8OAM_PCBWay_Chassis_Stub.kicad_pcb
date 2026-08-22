@@ -79049,7 +79049,7 @@
 		)
 	)
 	(gr_text "X11DPH-T 3x x16+4x x8  two GCD0 FIT  4x x16 do NOT"
-		(at 472 177 90)
+		(at 456 177 90)
 		(layer "F.SilkS")
 		(uuid "bf5e5eff-fbd1-4a9f-bba8-f24ce4e67a9e")
 		(effects
