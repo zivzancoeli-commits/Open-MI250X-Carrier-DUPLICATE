@@ -20,6 +20,8 @@ Chamber B **OAM chassis PCB** only. Not a motherboard. Do not swap X11DPH-T.
 | `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` | Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM |
 | `docs/STATUS.md` | What Eli can upload vs what stays DNP |
 | `docs/CONCEPT_8x_FULL_WIDTH.md` | Pointer to 8× full-width **CONCEPT** (ideas only) |
+| `docs/LATE_BIND.md` | Pointer: reserved vs later-spin (**respin**, not silk ECO) |
+| [`../Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md`](../Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md) | Late-bind table. **DO NOT FABRICATE** live PE. |
 | [`../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`](../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md) | 8× full-width fabric sketch. **DO NOT FABRICATE.** X11DPH-T cannot light 256 DS. |
 | `docs/FAB_NOTES.md` | Stackup, skip-pin NC, do-not-energize |
 | `docs/PCBWAY.md` | Guest quotes 2026-08-21. Agent does not upload. |
@@ -31,6 +33,6 @@ python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/generate_from_v10_p
 python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/export_fab.py
 ```
 
-Do not “Update PCB from Schematic”. Do not stuff PM8536 on this article. Do not upload to PCBWay from this tree. First article still cannot run 2 live GPUs without maps.
+Do not “Update PCB from Schematic”. Do not stuff PM8536 on this article. Do not upload to PCBWay from this tree. First article still cannot run 2 live GPUs without maps. **This zip will not work as a live GPU chassis if sent to PCBWay.**
 
-**8× full-width CONCEPT** (sibling folder): ideas only. **DO NOT FABRICATE** as live PE. **DO NOT ENERGIZE.** Host stays X11DPH-T and **cannot light 8× full-width**.
+**8× full-width CONCEPT** (sibling folder): ideas only. **DO NOT FABRICATE** as live PE. **DO NOT ENERGIZE.** Host stays X11DPH-T and **cannot light 8× full-width**. Routing 16× x16 + four 1311-ball escapes is a **respin** (`LATE_BIND.md`).

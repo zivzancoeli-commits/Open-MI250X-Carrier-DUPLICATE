@@ -9,6 +9,8 @@ Gerbers + drill + IPC-D-356 + pick-and-place for a **12-layer, 2.0 mm, 492 × 37
 
 Silk keeps **DO NOT ENERGIZE P48V**. “DO NOT FABRICATE” is dropped on this first article because POWER+MECH copper DRC is **0 errors** after zone fill. PE / switch balls are **not** routed.
 
+**This zip will not work as a live GPU chassis if sent to PCBWay.** It is sit-only (mech + named P48V). Routing **16× x16 PE** and escaping four **1311-ball** BGAs is a **respin**, not a silk ECO — see `docs/LATE_BIND.md`. The 8× full-width CONCEPT stays **DO NOT FABRICATE**.
+
 ## Stackup (planning, matches the quoted coupon)
 
 | Layer | KiCad | Cu | Use |

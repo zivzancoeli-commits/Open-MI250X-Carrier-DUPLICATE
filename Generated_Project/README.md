@@ -66,7 +66,7 @@ Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/
 
 Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target. First article: seats **0–1** GCD0 x16. Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
 
-**8× full-width CONCEPT** (ideas only, **DO NOT FABRICATE** as live PE): `Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`. X11DPH-T **cannot light 8× full-width**. Do not invent overlay / ball maps / CEM/MCIO. **DO NOT ENERGIZE.**
+**8× full-width CONCEPT** (ideas only, **DO NOT FABRICATE** as live PE): `Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`. Late-bind reservations: `Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md` (**16× x16 + four BGA escapes = respin**). X11DPH-T **cannot light 8× full-width**. Do not invent overlay / ball maps / CEM/MCIO. **DO NOT ENERGIZE.** The POWER+MECH zip will **not** work as a live GPU chassis if sent to PCBWay.
 
 ## Exhaustive public-source hunt (copied tree, 2026-08-17)
 

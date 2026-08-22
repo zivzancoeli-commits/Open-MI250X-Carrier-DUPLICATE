@@ -204,6 +204,8 @@ No invented cable MPN. No CEM / SlimSAS / MCIO pinout. SuperMicro CBL-MCIO is a 
 5. Cooling — off this PCB.
 6. A host that can actually light 256 DS if the goal is 8× full-width **host-equivalent** PE. X11DPH-T is not that host. This folder does **not** design that board.
 
+See **[LATE_BIND.md](LATE_BIND.md)**: what is reserved vs what a later spin must add. **16× x16 PE + four 1311-ball escapes = respin, not a silk ECO.** Do not claim the POWER+MECH zip works as a live GPU chassis if sent to PCBWay.
+
 ---
 
 ## Can / cannot (this CONCEPT)

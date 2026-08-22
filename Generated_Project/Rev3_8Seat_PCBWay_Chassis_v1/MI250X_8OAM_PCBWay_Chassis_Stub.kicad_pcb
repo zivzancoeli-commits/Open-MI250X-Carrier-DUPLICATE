@@ -79631,6 +79631,50 @@
 			)
 		)
 	)
+	(gr_rect
+		(start 105 138)
+		(end 452 178)
+		(stroke
+			(width 0.18)
+			(type dash)
+		)
+		(fill none)
+		(layer "Dwgs.User")
+		(uuid "a1b2c3d4-e5f6-4789-a012-3456789abcde")
+	)
+	(gr_text "LATE BIND note: PE_S0/S1_GCD0 toward host keepout. NO COPPER. NO FAKE PINS. 16x x16 route = RESPIN not silk ECO."
+		(at 278.5 158 0)
+		(layer "Cmts.User")
+		(uuid "b2c3d4e5-f617-4890-b123-456789abcdef")
+		(effects
+			(font
+				(size 0.9 0.9)
+				(thickness 0.1)
+			)
+		)
+	)
+	(gr_rect
+		(start 105 22)
+		(end 452 56)
+		(stroke
+			(width 0.18)
+			(type dash)
+		)
+		(fill none)
+		(layer "Dwgs.User")
+		(uuid "c3d4e5f6-0718-4901-c234-56789abcdef0")
+	)
+	(gr_text "LATE BIND note: PE_S0/S1_GCD0 toward SW0 courtyard. NO COPPER. 1311-ball escape = RESPIN. See LATE_BIND.md."
+		(at 278.5 39 0)
+		(layer "Cmts.User")
+		(uuid "d4e5f607-1829-4012-d345-6789abcdef01")
+		(effects
+			(font
+				(size 0.9 0.9)
+				(thickness 0.1)
+			)
+		)
+	)
 	(gr_text "Off-board 48V: 240V/50A single-phase class. NOT RST-5000-48 (3-phase). NOT D3000E-S1 12V."
 		(at 246 354 0)
 		(layer "Cmts.User")

@@ -85,6 +85,25 @@ Lane arithmetic (not a pinout): 256 DS + 64 US vs 4×96 = 384. Each SW hypothesi
 
 ---
 
+## Late bind (maps later — not a silk ECO)
+
+Eli wants the chassis ready so overlay / switch balls / host-plug MPNs need only small changes. **Honest bound:** named nets, DNP courtyards, host keepout, and comment-layer corridors are reserved. **Routing 16× x16 PE and escaping four 1311-ball BGAs is a copper respin, not a silkscreen ECO.** This zip will **not** work as a live GPU chassis if sent to PCBWay.
+
+Canonical: [`Generated_Project/Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md`](../../Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md) (also `docs/LATE_BIND.md`).
+
+| Missing doc | Already reserved | Later spin must add |
+|---|---|---|
+| **Overlay** | GCD0 = public Conn0 `PCIE_*` named on every seat. GCD1 **named-only**. S1–S7 **no net**. | Assign GCD1 from overlay; **route**. No guessed tracks now. |
+| **PM8536** | Four DNP 40 mm courtyards SW0–SW3. | Footprint + **escape** when a public/NDA map exists. Finer than 6/6 mil; requote. |
+| **Host plug** | Keepout + named US x16 (`PE_SWk_US_x16`) and first-article `PE_S0/S1_GCD0_x16`. | Place a **real** MPN. No CEM/MCIO invented now. |
+| **Molex 1.2 A** | Silk DO NOT ENERGIZE. Ticket 167157 OPEN. | Off-board write-up. Blocks energize. |
+| **Cooling** | Not on this PCB. | Off-board. Do not shop onto the chassis BOM. |
+| **2→4→8** | Same **492×372** outline, 8 seats, star + per-seat fuses. | Populate more seats. Still no live PE until routes exist. |
+
+Comment-layer corridors (Dwgs.User / Cmts.User, **no copper**): seats 0–1 GCD0 toward host keepout and toward SW0. Not fake pins.
+
+---
+
 ## What this tree is
 
 8 electrically designed OAM seats on one **12-layer, 2.0 mm** FR-4 chassis. **First article = seats 0–1.** Later 4- and 8-seat names stay on the same copper.
@@ -194,14 +213,14 @@ Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow
 
 | Eli can upload / buy onto this PCB | Stays DNP / not this zip |
 |---|---|
-| `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` (Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM, top preview) | **Do not upload from this agent.** Eli uploads if he accepts. |
+| `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` (Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM, top preview) | **Sit-only POWER+MECH.** Will **not** work as a live GPU chassis. **Do not upload from this agent.** |
 | 12L 2.0 mm 492×372 ENIG 2 oz/1 oz green/white qty 5 — guest **$2237.90 + $68.43 DHL** | 8L DNP-switch coupon is cheaper if he never stuffs switches |
 | 16× **218910-1115**, 32× M3.5 NPTH, Anderson **6325G1** + **2× 1382**, **0476015.MR** ×8, **0476002.MR**, **THL 40-4812WI**, **OKI-78SR-3.3/1.5-W36-C** | **PM8536B-FEI** ×4 (courtyard only; ball map not public) |
 | Local P48V / P12V1 / P3V3 copper + GND planes + star/fuses | PE / REFCLK / PERST# **tracks** (named, not routed) |
 | Silk **DO NOT ENERGIZE P48V** | Host CEM connector (keepout only; no MPN invented) |
 | Skip-pin NC (TEST*/RFU/DO_NOT_USE have no net) | AMD overlay, xGMI S1–S7, PVREF drive, D3000E-S1 |
 
-**Energize is still blocked** on Molex 1.2 A/contact (ticket 167157). First article is POWER+MECH.
+**Energize is still blocked** on Molex 1.2 A/contact (ticket 167157). First article is POWER+MECH **sit-only**. Routing 16× x16 / four BGA escapes is a **respin** — see `LATE_BIND.md`.
 
 ---
 

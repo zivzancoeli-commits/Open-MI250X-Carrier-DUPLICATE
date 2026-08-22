@@ -7,6 +7,7 @@ This is **not** a KiCad project to tape out and **not** the POWER+MECH first-art
 | File | What |
 |---|---|
 | [CONCEPT.md](CONCEPT.md) | Architecture: public fact vs hypothesis vs missing, mermaid + ASCII, can/cannot |
+| [LATE_BIND.md](LATE_BIND.md) | Reserved vs later spin. **16× x16 + four BGA escapes = respin, not silk ECO.** |
 | [concept_fabric.svg](concept_fabric.svg) | Block diagram (same story as the mermaid) |
 | `../Rev3_8Seat_PCBWay_Chassis_v1/` | Existing 8-seat board (seats 0–1 first article). Four PM8536 DNP courtyards already placed. |
 

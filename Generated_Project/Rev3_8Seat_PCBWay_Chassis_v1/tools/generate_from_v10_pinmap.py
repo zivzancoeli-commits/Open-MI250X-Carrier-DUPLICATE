@@ -33,6 +33,9 @@ Architecture:
   8x FULL-WIDTH is CONCEPT only (../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md).
   DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. xGMI = XGMI_Sn_P*
   boxes/port names — do NOT assign S1-S7. Do not claim DRC-clean live PE.
+  LATE BIND: named nets + DNP courtyards + comment-layer PE corridors (seats 0-1
+  GCD0 toward host keepout and SW0). NO guessed tracks. 16x x16 + four 1311-ball
+  escapes are a RESPIN, not a silk ECO. See LATE_BIND.md.
 - Molex 2026-08-18: 2189101115 CSA 60 V (COFC 80170713) at OCP P48V; published
   OCP P48V map already satisfies Skip Pins — do NOT add extra NC pads.
   Residual OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE until written.
@@ -1066,6 +1069,17 @@ def write_pcb(rows: list[dict]) -> None:
         f'  (gr_text "CONCEPT 8x FULL-WIDTH: see Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md — DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. GCD1 named-only. xGMI=XGMI_Sn_P* boxes only, not S1-S7."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-26:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
+        # Late-bind corridors: notes only. No copper, no fake pins, not fab silk.
+        '  (gr_rect (start 105.000 138.000) (end 452.000 178.000)',
+        '    (stroke (width 0.18) (type dash)) (fill none) (layer "Dwgs.User"))',
+        '  (gr_text "LATE BIND note: PE_S0/S1_GCD0 toward host keepout. NO COPPER. NO FAKE PINS. 16x x16 route = RESPIN not silk ECO."',
+        '    (at 278.500 158.000) (layer "Cmts.User")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
+        '  (gr_rect (start 105.000 22.000) (end 452.000 56.000)',
+        '    (stroke (width 0.18) (type dash)) (fill none) (layer "Dwgs.User"))',
+        '  (gr_text "LATE BIND note: PE_S0/S1_GCD0 toward SW0 courtyard. NO COPPER. 1311-ball escape = RESPIN. See LATE_BIND.md."',
+        '    (at 278.500 39.000) (layer "Cmts.User")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
         f'  (gr_text "Off-board 48V: 240V/50A single-phase class. NOT RST-5000-48 (3-phase). NOT D3000E-S1 12V."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-18:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
@@ -1372,6 +1386,10 @@ def main() -> None:
         "host_gen3_lanes": 80,
         "chassis_can_wire_8_full_width": True,
         "host_can_light_8_full_width": False,
+        "late_bind_doc": "Generated_Project/Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md",
+        "late_bind_16x16_and_four_bga": "copper_respin_not_silk_eco",
+        "pcbway_zip_is_live_gpu_chassis": False,
+        "late_bind_corridors": "Dwgs.User/Cmts.User only; seats 0-1 GCD0 toward host keepout and SW0; no copper; no fake pins",
         "connectors_per_seat": 2,
         "molex_mpn": "218910-1115",
         "molex_qty": 16,
