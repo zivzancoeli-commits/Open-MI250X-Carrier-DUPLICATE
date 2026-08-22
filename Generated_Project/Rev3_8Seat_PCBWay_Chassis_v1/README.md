@@ -19,6 +19,8 @@ Chamber B **OAM chassis PCB** only. Not a motherboard. Do not swap X11DPH-T.
 |---|---|
 | `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` | Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM |
 | `docs/STATUS.md` | What Eli can upload vs what stays DNP |
+| `docs/CONCEPT_8x_FULL_WIDTH.md` | Pointer to 8× full-width **CONCEPT** (ideas only) |
+| [`../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`](../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md) | 8× full-width fabric sketch. **DO NOT FABRICATE.** X11DPH-T cannot light 256 DS. |
 | `docs/FAB_NOTES.md` | Stackup, skip-pin NC, do-not-energize |
 | `docs/PCBWAY.md` | Guest quotes 2026-08-21. Agent does not upload. |
 | `BOM.md` | PCB bill with buyable MPNs |
@@ -30,3 +32,5 @@ python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/export_fab.py
 ```
 
 Do not “Update PCB from Schematic”. Do not stuff PM8536 on this article. Do not upload to PCBWay from this tree. First article still cannot run 2 live GPUs without maps.
+
+**8× full-width CONCEPT** (sibling folder): ideas only. **DO NOT FABRICATE** as live PE. **DO NOT ENERGIZE.** Host stays X11DPH-T and **cannot light 8× full-width**.

@@ -68,6 +68,23 @@ Hypothesis **verified** from `22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_
 
 ---
 
+## 8× full-width CONCEPT (ideas only — DO NOT FABRICATE)
+
+Eli asked for an **8× MI250X full-width chassis CONCEPT** to build ideas on. It is **not** this zip, **not** a new CPU board, and **not** a live PE design.
+
+Canonical doc: [`Generated_Project/Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`](../../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md) (also `docs/CONCEPT_8x_FULL_WIDTH.md`).
+
+| | |
+|---|---|
+| What | 8 seats, 16 named x16 PE, four DNP PM8536 courtyards already on this board, xGMI as **boxes + port names** (`XGMI_Sn_P*`) only |
+| Host | Still **X11DPH-T** (~80 lanes). **This CONCEPT cannot light 8× full-width on that host** (256 DS). 4× named US x16 = 64 **fit as an uplink budget only**. |
+| Do not | Invent overlay pads, PM8536 balls, CEM/MCIO, r2.0, S1–S7, TEST\*/RFU/DO_NOT_USE, or a cable MPN |
+| Silk / comments | CONCEPT / DO NOT FABRICATE on **Cmts.User** (not fab silk). **Do not claim DRC-clean live PE.** **DO NOT ENERGIZE.** |
+
+Lane arithmetic (not a pinout): 256 DS + 64 US vs 4×96 = 384. Each SW hypothesis: 2 seats × 2 GCD × x16 DS + one x16 US.
+
+---
+
 ## What this tree is
 
 8 electrically designed OAM seats on one **12-layer, 2.0 mm** FR-4 chassis. **First article = seats 0–1.** Later 4- and 8-seat names stay on the same copper.

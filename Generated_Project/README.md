@@ -64,7 +64,9 @@ Shopping list: `20_System_BOM/SHOPPING.md`. Pin map authority: `22_Pinmap_Resear
 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/
 ```
 
-Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target (two DNP **PM8536B-FEI PRIMARY**; 8L 2.0 mm is a cheaper DNP-switch option in docs only). Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
+Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target. First article: seats **0–1** GCD0 x16. Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
+
+**8× full-width CONCEPT** (ideas only, **DO NOT FABRICATE** as live PE): `Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`. X11DPH-T **cannot light 8× full-width**. Do not invent overlay / ball maps / CEM/MCIO. **DO NOT ENERGIZE.**
 
 ## Exhaustive public-source hunt (copied tree, 2026-08-17)
 

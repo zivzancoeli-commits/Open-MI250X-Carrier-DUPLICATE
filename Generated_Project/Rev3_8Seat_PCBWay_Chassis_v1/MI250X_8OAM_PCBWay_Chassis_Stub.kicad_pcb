@@ -79620,6 +79620,17 @@
 			)
 		)
 	)
+	(gr_text "CONCEPT 8x FULL-WIDTH: see Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md — DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. GCD1 named-only. xGMI=XGMI_Sn_P* boxes only, not S1-S7."
+		(at 246 346 0)
+		(layer "Cmts.User")
+		(uuid "c8f1a0e2-4b7d-4e91-9c3a-2d6e8f0b1a47")
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.12)
+			)
+		)
+	)
 	(gr_text "Off-board 48V: 240V/50A single-phase class. NOT RST-5000-48 (3-phase). NOT D3000E-S1 12V."
 		(at 246 354 0)
 		(layer "Cmts.User")

@@ -30,6 +30,9 @@ Architecture:
   P3V3: Murata OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM.
 - PM8536B-FEI ball map is not public — DNP courtyards. POWER+MECH first article.
   2-module path does NOT require stuffing SW0 (GCD0 names toward host keepout).
+  8x FULL-WIDTH is CONCEPT only (../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md).
+  DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. xGMI = XGMI_Sn_P*
+  boxes/port names — do NOT assign S1-S7. Do not claim DRC-clean live PE.
 - Molex 2026-08-18: 2189101115 CSA 60 V (COFC 80170713) at OCP P48V; published
   OCP P48V map already satisfies Skip Pins — do NOT add extra NC pads.
   Residual OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE until written.
@@ -457,6 +460,7 @@ def write_root_sch() -> None:
         "Host keepout: two x16 names toward X11DPH-T. Two GCD0 x16 FIT. Two full-width modules do NOT. No CEM/MCIO MPN.\\n"
         "16x Molex 218910-1115. 12L 2.0 mm. Outline 492 x 372 mm. 4x2 of 103x166 mm KOZ INFERRED (not a UBB).\\n"
         "Later seats keep 16x x16 PE names + SW0-SW3 DNP. Do not swap or design the host board.\\n"
+        "8x FULL-WIDTH is CONCEPT only (Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md). DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.\\n"
         "S1-S7 NOT routed (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\\n"
         "P48V: SB175 (6325G1+2x1382) + 0476015.MR 15A/seat + LOCAL pours. First stuff F0/F1. NOT a 100A flood.\\n"
         "Off-board 48V: 240 V / 50 A single-phase wall class (DPU-3200-48 class). NOT RST-5000-48 (3-phase).\\n"
@@ -667,6 +671,9 @@ Do NOT invent a CEM cable, SlimSAS, MCIO, or retimer BOM.
 Do NOT invent PE pin numbers.
 
 Later seats keep 8-seat names (PE_S2..S7 GCD0/GCD1 + PE_SWk_US_x16) and SW0-SW3 DNP.
+
+8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md
+DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. Do not claim DRC-clean live PE.
 2-module first article does not require stuffing SW0.
 
 X11DPH-T is NOT a part on this PCB. Do not swap or design a host board.
@@ -751,6 +758,10 @@ not an X11DPH-T CEM map. No MCIO-on-carrier MPN placed (none chosen with a publi
 footprint AND without inventing OAM↔MCIO).
 
 Populate: seats 0-1 first (no switch), then 0-3, then all 8 + SW0-SW3. Same PCB.
+
+8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md
+DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.
+xGMI = boxes and XGMI_Sn_P* names only. Do NOT assign S1-S7.
 """
     write_text_sheet("sheets/11_pcie_switch_unknown.kicad_sch", "PM8536B-FEI DNP x4 (later path; not stuffed for 2-mod)", text)
     append_hier_labels("sheets/11_pcie_switch_unknown.kicad_sch", pe_named_buses(), y0=150, dy=4.5)
@@ -1052,6 +1063,9 @@ def write_pcb(rows: list[dict]) -> None:
         f'  (gr_text "2-mod first article: seats 0-1 + F0/F1. Later 0-3 then 8. Same PCB. SW0-SW3 DNP. No signal tracks."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-22:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.1 1.1) (thickness 0.12))))',
+        f'  (gr_text "CONCEPT 8x FULL-WIDTH: see Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md — DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. GCD1 named-only. xGMI=XGMI_Sn_P* boxes only, not S1-S7."',
+        f'    (at {BOARD_W/2:.3f} {BOARD_H-26:.3f}) (layer "Cmts.User")',
+        '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
         f'  (gr_text "Off-board 48V: 240V/50A single-phase class. NOT RST-5000-48 (3-phase). NOT D3000E-S1 12V."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-18:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.2 1.2) (thickness 0.14))))',

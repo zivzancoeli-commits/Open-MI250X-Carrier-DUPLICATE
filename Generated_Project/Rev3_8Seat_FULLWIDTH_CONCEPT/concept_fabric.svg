@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="DejaVu Sans, Arial, sans-serif">
+  <rect width="980" height="620" fill="#111111"/>
+  <text x="490" y="28" fill="#ffcc33" font-size="18" text-anchor="middle">CONCEPT 8x MI250X full-width chassis fabric -- DO NOT FABRICATE -- DO NOT ENERGIZE</text>
+  <text x="490" y="50" fill="#ff8888" font-size="13" text-anchor="middle">Host of record X11DPH-T (~80 lanes) CANNOT light 8x full-width (256 DS). Ideas only. No overlay / balls / CEM / S1-S7.</text>
+
+  <rect x="20" y="70" width="200" height="90" fill="#1b1b1b" stroke="#888888" stroke-dasharray="6 4"/>
+  <text x="120" y="98" fill="#dddddd" font-size="13" text-anchor="middle">X11DPH-T</text>
+  <text x="120" y="118" fill="#aaaaaa" font-size="11" text-anchor="middle">NOT on this PCB</text>
+  <text x="120" y="138" fill="#ff6666" font-size="11" text-anchor="middle">~80 Gen3  !=  256 DS</text>
+
+  <rect x="260" y="70" width="700" height="90" fill="#1b1b1b" stroke="#ffcc33"/>
+  <text x="610" y="98" fill="#ffcc33" font-size="13" text-anchor="middle">Host keepout -- named US only -- NO cable MPN</text>
+  <text x="340" y="132" fill="#88ccff" font-size="11" text-anchor="middle">PE_SW0_US_x16</text>
+  <text x="520" y="132" fill="#88ccff" font-size="11" text-anchor="middle">PE_SW1_US_x16</text>
+  <text x="700" y="132" fill="#88ccff" font-size="11" text-anchor="middle">PE_SW2_US_x16</text>
+  <text x="870" y="132" fill="#88ccff" font-size="11" text-anchor="middle">PE_SW3_US_x16</text>
+
+  <g font-size="11" fill="#cccccc">
+    <rect x="260" y="190" width="160" height="70" fill="#222222" stroke="#aa66ff"/>
+    <text x="340" y="218" text-anchor="middle" fill="#cc99ff">U_SW0 DNP</text>
+    <text x="340" y="236" text-anchor="middle">PM8536 -- no balls</text>
+    <text x="340" y="252" text-anchor="middle">seats 0-1 -- 64DS+16US</text>
+
+    <rect x="440" y="190" width="160" height="70" fill="#222222" stroke="#aa66ff"/>
+    <text x="520" y="218" text-anchor="middle" fill="#cc99ff">U_SW1 DNP</text>
+    <text x="520" y="236" text-anchor="middle">seats 2-3</text>
+
+    <rect x="620" y="190" width="160" height="70" fill="#222222" stroke="#aa66ff"/>
+    <text x="700" y="218" text-anchor="middle" fill="#cc99ff">U_SW2 DNP</text>
+    <text x="700" y="236" text-anchor="middle">seats 4-5</text>
+
+    <rect x="800" y="190" width="160" height="70" fill="#222222" stroke="#aa66ff"/>
+    <text x="880" y="218" text-anchor="middle" fill="#cc99ff">U_SW3 DNP</text>
+    <text x="880" y="236" text-anchor="middle">seats 6-7</text>
+  </g>
+
+  <g font-size="11">
+    <rect x="40" y="300" width="110" height="88" fill="#182018" stroke="#66cc66"/>
+    <text x="95" y="328" fill="#66cc66" text-anchor="middle">SEAT 0</text>
+    <text x="95" y="346" fill="#88ff88" text-anchor="middle">GCD0 Conn0</text>
+    <text x="95" y="362" fill="#888888" text-anchor="middle">GCD1 named</text>
+    <text x="95" y="378" fill="#666666" text-anchor="middle">XGMI_S0_P*</text>
+
+    <rect x="160" y="300" width="110" height="88" fill="#182018" stroke="#66cc66"/>
+    <text x="215" y="328" fill="#66cc66" text-anchor="middle">SEAT 1</text>
+    <text x="215" y="362" fill="#888888" text-anchor="middle">GCD1 named</text>
+
+    <rect x="280" y="300" width="110" height="88" fill="#181818" stroke="#555555"/>
+    <text x="335" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 2</text>
+    <rect x="400" y="300" width="110" height="88" fill="#181818" stroke="#555555"/>
+    <text x="455" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 3</text>
+    <rect x="520" y="300" width="110" height="88" fill="#181818" stroke="#555555"/>
+    <text x="575" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 4</text>
+    <rect x="640" y="300" width="110" height="88" fill="#181818" stroke="#555555"/>
+    <text x="695" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 5</text>
+    <rect x="760" y="300" width="110" height="88" fill="#181818" stroke="#555555"/>
+    <text x="815" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 6</text>
+    <rect x="880" y="300" width="80" height="88" fill="#181818" stroke="#555555"/>
+    <text x="920" y="328" fill="#aaaaaa" text-anchor="middle">SEAT 7</text>
+  </g>
+
+  <text x="490" y="430" fill="#ffcc33" font-size="13" text-anchor="middle">xGMI mesh = BOXES + PORT NAMES only (XGMI_Sn_P0..P3). Not mapped to S1-S7.</text>
+  <text x="490" y="452" fill="#88ccff" font-size="12" text-anchor="middle">16 named x16 PE  --  256 DS + 64 US vs 4x96=384  --  GCD0 = public Conn0 PCIE_*  --  GCD1 named-only</text>
+  <text x="490" y="478" fill="#aaaaaa" font-size="12" text-anchor="middle">P48V: existing SB175 star + per-seat fuses. Wall 240 V / 50 A single-phase -&gt; DPU-3200-48 class. NOT RST-5000-48.</text>
+  <text x="490" y="510" fill="#ff6666" font-size="14" text-anchor="middle">DO NOT FABRICATE this CONCEPT as live PE. DO NOT ENERGIZE P48V. DO NOT upload to PCBWay.</text>
+  <text x="490" y="540" fill="#888888" font-size="12" text-anchor="middle">Canonical: Generated_Project/Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md</text>
+  <text x="490" y="568" fill="#666666" font-size="11" text-anchor="middle">First article on the Rev3 board remains seats 0-1 GCD0 x16. Same PCB populate 2 then 4 then 8.</text>
+  <text x="490" y="592" fill="#666666" font-size="11" text-anchor="middle">Missing: overlay, switch balls, host plug, cooling, Molex 1.2 A/contact.</text>
+</svg>
