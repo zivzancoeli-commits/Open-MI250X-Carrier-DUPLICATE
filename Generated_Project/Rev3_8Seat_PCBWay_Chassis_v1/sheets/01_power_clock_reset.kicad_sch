@@ -1,5 +1,5 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "284855e9-e179-4222-b7d8-91f9906f6838")
+	(uuid "b487ff8c-d28a-44f9-b989-9c56a0276456")
 	(paper "A3")
 	(title_block
 		(title "Power / clock / reset stub")
@@ -20,11 +20,11 @@
 		(pin power_in line (at 0 0 90) (length 0) (name "P48V" (effects (font (size 1.27 1.27)))) (number "1" (effects (font (size 1.27 1.27)))))
 	)
 
-	(text "PURPOSE: Named power / clock / reset stubs from OAM v1.0 pin map.\n\nSTAR-FED P48V (NOT a board-wide 100 A plane):\n- Board entry: Anderson SB175 (175 A / 600 V) on the long edge, 2 AWG landing.\n  Net P48V_STAR. Kelvin+ / Kelvin- pads at the star. Off-board 48 V is NOT a PCB BOM item.\n- Dell D3000E-S1 is 12 V CRPS — do not tie OAM P48V to it. 1000 W ATX/EPS is HOST only.\n- Per seat: Littelfuse 0476015.MR (15 A, 125 VDC Nano2), then the 16 verified OCP v1.0 Conn0\n  P48V pads. Local 2 oz F.Cu pour around those 16 pads only. No extra NC/skip pads.\n  Seat nets are P48V / P48V_S1..S7 so the fuses actually isolate.\n- Molex 2026-08-18 written yes: CSA 60 V (COFC 80170713) at OCP P48V.\n  OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE.\n\nSHARED RAILS (OCP names, pads on every seat):\n- P48V  Conn0 16 pads  44-59.5 V  up to 700 W class (pin list). MI250X 500/560 W.\n        LOCAL pours only. Module has the 48 V core VRMs — no GPU multiphase here.\n- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Carrier supplies THL 40-4812WI (40 W first article).\n        No GPU VRM.\n- P12V2 Conn0 27 pads  12 V main for 12V-based OAM. MI250X is 48 V class.\n        Unknown / may be NC. Do NOT short to P12V1. Do not invent a P12V2 supply.\n- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Carrier supplies OKI-78SR-3.3/1.5-W36-C from P12V1.\n- GND   Conn0 majority. Inner GND planes (In1, In4), 2 oz planning.\n- PVREF Conn0 G1,G2    MODULE OUTPUT. NEVER drive from carrier. Per-OAM nets.\n\nCLOCK / RESET named on ALL 8 seats (no respin to light 2-7):\n- PE_REFCLKP/N, PERST#, HOST_PWRGD (ENABLE), plus WARMRST# / MODULE_PWRGD / PWRBRK# / PRSNT*\n- HOST_PWRGD is ENABLE (OCP: Power Enable when P48V/P12V1/P12V2/P3V3 are in spec).\n\nFirst stuffing may populate 2 modules / 6 DNP (seats 0-1), then 0-3, then all 8. Same nets.\n\nDO NOT: invent VRMs, mix 12 V CRPS into P48V, drive PVREF, pour a 100 A P48V plane,\nshop a 48 V shelf onto this BOM, or attach a guessed clock chip.\n"
+	(text "PURPOSE: Named power / clock / reset stubs from OAM v1.0 pin map.\n\nSTAR-FED P48V (NOT a board-wide 100 A plane):\n- Board entry: Anderson SB175 (175 A / 600 V) on the long edge, 2 AWG landing.\n  Net P48V_STAR. Kelvin+ / Kelvin- pads at the star. Off-board 48 V is NOT a PCB BOM item.\n- Dell D3000E-S1 is 12 V CRPS — do not tie OAM P48V to it. 1000 W ATX/EPS is HOST only.\n- Per seat: Littelfuse 0476015.MR (15 A, 125 VDC Nano2), then the 16 verified OCP v1.0 Conn0\n  P48V pads. Local 2 oz F.Cu pour around those 16 pads only. No extra NC/skip pads.\n  Seat nets are P48V / P48V_S1..S7 so the fuses actually isolate.\n- Molex 2026-08-18 written yes: CSA 60 V (COFC 80170713) at OCP P48V.\n  OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE.\n\nSHARED RAILS (OCP names, pads on every seat):\n- P48V  Conn0 16 pads  44-59.5 V  up to 700 W class (pin list). MI250X 500/560 W.\n        LOCAL pours only. Module has the 48 V core VRMs — no GPU multiphase here.\n- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Carrier supplies THL 40-4812WI (40 W first article).\n        No GPU VRM.\n- P12V2 Conn0 27 pads  12 V main for 12V-based OAM. MI250X is 48 V class.\n        Unknown / may be NC. Do NOT short to P12V1. Do not invent a P12V2 supply.\n- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Carrier supplies OKI-78SR-3.3/1.5-W36-C from P12V1.\n- GND   Conn0 majority. Inner GND planes (In1, In4), 2 oz planning.\n- PVREF Conn0 G1,G2    MODULE OUTPUT. NEVER drive from carrier. Per-OAM nets.\n\nCLOCK / RESET named on ALL 8 seats (no respin to light 2-7):\n- PE_REFCLKP/N, PERST#, HOST_PWRGD (ENABLE), plus WARMRST# / MODULE_PWRGD / PWRBRK# / PRSNT*\n- HOST_PWRGD is ENABLE (OCP: Power Enable when P48V/P12V1/P12V2/P3V3 are in spec).\n\nFirst stuffing may populate 2 modules on seats 0-1 (F0/F1). Then 0-3, then all 8. Same nets.\n\nDO NOT: invent VRMs, mix 12 V CRPS into P48V, drive PVREF, pour a 100 A P48V plane,\nshop a 48 V shelf onto this BOM, or attach a guessed clock chip.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "aaa9da61-61f8-4780-9e30-432fd881859d")
+		(uuid "583ee6d6-c607-480e-8031-70106a4caf54")
 	)
 
 
@@ -36,7 +36,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ad0de67d-ded0-46ec-af5c-ed3d4f146066")
+		(uuid "5ce48ab7-6ee8-43b0-9a27-e307fdd4ac26")
 		(property "Reference" "#PWRP48V_STAR"
 			(at 30.48 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -46,11 +46,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "83fcf845-3dec-458f-b2f8-98b19a420d11")
+			(uuid "2066c6c1-4ba1-42cf-804f-eea4714def5e")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWRP48V_STAR")
 					(unit 1)
 				)
@@ -60,7 +60,7 @@
 	(label "P48V_STAR"
 		(at 30.48 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "8bc3e87a-dc37-442e-8287-77b8f0c8f4c4")
+		(uuid "88b92138-08cf-439e-899f-23bbefeb7f95")
 	)
 
 	(symbol
@@ -71,7 +71,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4ad8c4c9-f805-4597-889e-8a5a23cd1d0f")
+		(uuid "1f574973-27cd-44c8-9622-766c710e9518")
 		(property "Reference" "#PWRP48V"
 			(at 55.879999999999995 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -81,11 +81,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "fde5bb26-d6d1-4884-8e76-8b6fe4d8eeea")
+			(uuid "f7c7437d-cdea-4820-9336-a2241e623a07")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWRP48V")
 					(unit 1)
 				)
@@ -95,7 +95,7 @@
 	(label "P48V"
 		(at 55.879999999999995 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "c30cb967-a49d-48d1-836c-f5ff20e9538a")
+		(uuid "2676f893-42c8-4191-8725-a2b4ed15f676")
 	)
 
 	(symbol
@@ -106,7 +106,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "39d13c9b-ddba-4333-b927-4a9831f92f37")
+		(uuid "73d13d5e-04f3-430c-b6b3-8354063dabe2")
 		(property "Reference" "#PWRP12V1"
 			(at 81.28 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -116,11 +116,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "22f6b3d5-3ee9-415d-8994-436045627c91")
+			(uuid "294bc91f-0999-4a80-8226-13ae4aa4ea26")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWRP12V1")
 					(unit 1)
 				)
@@ -130,7 +130,7 @@
 	(label "P12V1"
 		(at 81.28 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "c3ecef44-7656-4f70-a405-4586c3751136")
+		(uuid "684f1d53-6617-43b7-9a55-6c3524b5ca46")
 	)
 
 	(symbol
@@ -141,7 +141,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "60acd0eb-8284-47a0-8585-e7e51652edb0")
+		(uuid "a1749e1e-5085-4b2c-82ba-077bb9940e51")
 		(property "Reference" "#PWRP12V2"
 			(at 106.68 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -151,11 +151,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "6a93c01d-4262-440e-9cdf-fd46f8855cee")
+			(uuid "52121338-8720-4913-b106-02d3803ee4ca")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWRP12V2")
 					(unit 1)
 				)
@@ -165,7 +165,7 @@
 	(label "P12V2"
 		(at 106.68 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "103429d5-951c-4a7c-a15e-e46546979a6a")
+		(uuid "ec86175a-3682-43fe-a8f8-0091ba078e5c")
 	)
 
 	(symbol
@@ -176,7 +176,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9b4c3554-1d55-4d99-ba8c-105d8afb929f")
+		(uuid "b2117624-36fd-4e30-ae19-acac085b53fe")
 		(property "Reference" "#PWR3V3"
 			(at 132.08 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -186,11 +186,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "39bff652-5c96-4ebb-8ee4-97f626c107dd")
+			(uuid "931e5dcc-b5e0-4298-90b5-2bcf4f8535d1")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWR3V3")
 					(unit 1)
 				)
@@ -200,7 +200,7 @@
 	(label "P3V3"
 		(at 132.08 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "d537e2e3-3854-4335-bdc2-8186ee164476")
+		(uuid "ff4cc98b-b092-4581-906e-62f0079c0ded")
 	)
 
 	(symbol
@@ -211,7 +211,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ec7a8652-805b-4470-9a1f-d9047d8e057d")
+		(uuid "7201ec20-cf36-4be0-ae32-3df672225cd9")
 		(property "Reference" "#PWRGND"
 			(at 157.48000000000002 135 0)
 			(effects (font (size 1.27 1.27)) hide)
@@ -221,11 +221,11 @@
 			(effects (font (size 1.27 1.27)))
 		)
 		(pin "1"
-			(uuid "37233b6b-7003-4cc6-9b2a-3c6a7c6ca811")
+			(uuid "67c84b7b-c43a-426e-b8e9-96f64f2b10c3")
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/284855e9-e179-4222-b7d8-91f9906f6838"
+				(path "/b487ff8c-d28a-44f9-b989-9c56a0276456"
 					(reference "#PWRGND")
 					(unit 1)
 				)
@@ -235,7 +235,7 @@
 	(label "GND"
 		(at 157.48000000000002 145.1 0)
 		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "86d1fb64-1edf-4eb8-b455-1ec45cd8b38d")
+		(uuid "c3c74faa-8cd0-4b47-af2b-318beb127a5c")
 	)
 
 
@@ -244,336 +244,336 @@
 		(shape bidirectional)
 		(at 25.4 170 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "2e586434-aa7e-4803-a360-78fcfd2e5caa")
+		(uuid "f8975581-c631-485b-b4d3-6829b2633d14")
 	)
 
 	(hierarchical_label "OAM0_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 174.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c8b42894-e390-4f77-a042-9de7f1e16165")
+		(uuid "3e18cc1b-590b-4cfa-8e07-46a50ddd76ac")
 	)
 
 	(hierarchical_label "OAM0_PERST#"
 		(shape bidirectional)
 		(at 25.4 179.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "753436ab-7a24-4d9b-aa8b-cf9bead5d085")
+		(uuid "2ad35f12-3c20-46a2-9ed1-3227f5358565")
 	)
 
 	(hierarchical_label "OAM0_HOST_PWRGD"
 		(shape bidirectional)
 		(at 25.4 183.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "be9927f8-6128-4186-a96d-ab59e5f71967")
+		(uuid "63f607e4-3c3f-4484-b64b-2286a1c96607")
 	)
 
 	(hierarchical_label "OAM0_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 25.4 188.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9335ddc8-c71e-4612-a450-fa796704095f")
+		(uuid "5fb4d6bd-e070-4b55-81fc-7ffc83fc118c")
 	)
 
 	(hierarchical_label "OAM0_PVREF"
 		(shape bidirectional)
 		(at 25.4 192.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "16961915-5669-4ca2-970e-71ee3806972a")
+		(uuid "01e838ab-2a3e-4f5d-9a26-0968345876b3")
 	)
 
 	(hierarchical_label "OAM1_PE_REFCLKP"
 		(shape bidirectional)
 		(at 25.4 197.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d184b7a4-148f-490b-abed-84ca89892ad6")
+		(uuid "d829e52a-d9a6-4156-b974-061835a926fc")
 	)
 
 	(hierarchical_label "OAM1_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 201.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "45a3a264-ec22-46c0-8402-23822bee897d")
+		(uuid "aee136d1-4d4d-4722-8eed-e2028dc17c18")
 	)
 
 	(hierarchical_label "OAM1_PERST#"
 		(shape bidirectional)
 		(at 25.4 206.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "70ed102a-7aed-4265-abc7-0fda7602df34")
+		(uuid "91f54fb5-b3e0-46ae-aeea-042dc39eecf1")
 	)
 
 	(hierarchical_label "OAM1_HOST_PWRGD"
 		(shape bidirectional)
 		(at 25.4 210.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3df7b7a9-53e7-4ff8-8fc9-dea997e1679d")
+		(uuid "b59d2815-0654-40f2-bbf7-4c6bd5bbcf79")
 	)
 
 	(hierarchical_label "OAM1_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 25.4 215.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "92d82859-8629-41f0-b147-d1efc69e41e0")
+		(uuid "0b7ed7af-5d93-4393-a7df-6965ab598cbc")
 	)
 
 	(hierarchical_label "OAM1_PVREF"
 		(shape bidirectional)
 		(at 25.4 219.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9df962b9-abf9-4e68-a81d-41d75ff25c11")
+		(uuid "e70c79e6-7869-4d86-8f5e-6c13b65e0f1c")
 	)
 
 	(hierarchical_label "OAM2_PE_REFCLKP"
 		(shape bidirectional)
 		(at 25.4 224.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "bca0924a-c567-435a-829a-633650440af4")
+		(uuid "ecb50833-ddce-430b-97fb-865e46224c2d")
 	)
 
 	(hierarchical_label "OAM2_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 228.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "06ba39ba-0f24-43ef-94d1-2699192c0a85")
+		(uuid "64544342-5421-44c2-915a-8102ffb05f97")
 	)
 
 	(hierarchical_label "OAM2_PERST#"
 		(shape bidirectional)
 		(at 25.4 233.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "927928dd-a7f6-4b88-b899-9e2b9bbee486")
+		(uuid "a3bda8fc-7696-435a-9d2f-4cb36ffa97c5")
 	)
 
 	(hierarchical_label "OAM2_HOST_PWRGD"
 		(shape bidirectional)
 		(at 25.4 237.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a78e09b3-e0f9-4863-9254-12cff6493ad3")
+		(uuid "1632ad59-db47-4bfc-821b-b342047091eb")
 	)
 
 	(hierarchical_label "OAM2_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 25.4 242.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "682eda05-617f-420a-8e83-2952401a53da")
+		(uuid "bacb0baa-8254-4fa1-a10f-5d8a2aef8440")
 	)
 
 	(hierarchical_label "OAM2_PVREF"
 		(shape bidirectional)
 		(at 25.4 246.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9d07fe4f-14e4-4f86-81b1-079186095fdb")
+		(uuid "c2916fb9-4163-4e12-9033-aa2ec7ce81cd")
 	)
 
 	(hierarchical_label "OAM3_PE_REFCLKP"
 		(shape bidirectional)
 		(at 25.4 251.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5cf4d1ad-552e-49c9-b361-0bdaa8fcf4b0")
+		(uuid "ce4cb2f6-9eed-40c3-b8cb-b45253463a4c")
 	)
 
 	(hierarchical_label "OAM3_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 255.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f0da70c5-2f42-4233-b499-6a885b6542f2")
+		(uuid "2272ba14-4395-4f4c-b9a5-c55cdc940029")
 	)
 
 	(hierarchical_label "OAM3_PERST#"
 		(shape bidirectional)
 		(at 25.4 260.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9b298f39-6324-4407-9266-d5a5b8fbff8b")
+		(uuid "6d5e35bd-b7ac-44a0-aa1d-39ac5ee59e59")
 	)
 
 	(hierarchical_label "OAM3_HOST_PWRGD"
 		(shape bidirectional)
 		(at 95.4 170 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8d16b550-8bfa-4a95-ab6d-7c940669287b")
+		(uuid "a25f4d85-18ad-4876-8247-9bb094d73596")
 	)
 
 	(hierarchical_label "OAM3_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 95.4 174.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f1303f6c-5ad1-418f-ba17-81df9854f897")
+		(uuid "d1f3196f-81d9-426d-af73-c97bc7b0443b")
 	)
 
 	(hierarchical_label "OAM3_PVREF"
 		(shape bidirectional)
 		(at 95.4 179.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c75ce628-4ad1-4239-8d72-a5f8b218405b")
+		(uuid "cf85b07c-1cf6-46bc-b4ef-3dfb5d5d9e67")
 	)
 
 	(hierarchical_label "OAM4_PE_REFCLKP"
 		(shape bidirectional)
 		(at 95.4 183.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ad534add-fb5e-4676-a663-52a26330f5ba")
+		(uuid "0076653a-d1ca-4163-9449-5757b8d6e655")
 	)
 
 	(hierarchical_label "OAM4_PE_REFCLKN"
 		(shape bidirectional)
 		(at 95.4 188.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ca97a90c-21fd-41f6-9700-bfcabf3b2097")
+		(uuid "c22f5a26-bbd1-4277-b92a-ac44df444af3")
 	)
 
 	(hierarchical_label "OAM4_PERST#"
 		(shape bidirectional)
 		(at 95.4 192.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "0978e0c1-363b-4f08-99f1-dc0b1d99ef2b")
+		(uuid "6a0ad7fb-34e4-46d2-96fa-b997e6592825")
 	)
 
 	(hierarchical_label "OAM4_HOST_PWRGD"
 		(shape bidirectional)
 		(at 95.4 197.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7bc4da4c-f76f-4113-8f1d-76968a36168a")
+		(uuid "93bb7292-005d-49db-83a3-bd240fae26ab")
 	)
 
 	(hierarchical_label "OAM4_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 95.4 201.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9b36bc9e-df6e-4aac-8d9c-e7a3684c8670")
+		(uuid "1badb06c-0cf4-4b14-a005-343a852fb121")
 	)
 
 	(hierarchical_label "OAM4_PVREF"
 		(shape bidirectional)
 		(at 95.4 206.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "17f83b73-dcc2-4fb8-857b-989e38c40427")
+		(uuid "78d4a4c7-42f7-4ccb-b1bd-01ab01697e0e")
 	)
 
 	(hierarchical_label "OAM5_PE_REFCLKP"
 		(shape bidirectional)
 		(at 95.4 210.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e9d942cd-006d-4a09-9b38-916f840fe056")
+		(uuid "7d9a79d6-7e3a-4d86-b431-c87eae3c93f4")
 	)
 
 	(hierarchical_label "OAM5_PE_REFCLKN"
 		(shape bidirectional)
 		(at 95.4 215.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "2cd0d364-b310-4276-8d51-1008f8ded38d")
+		(uuid "e237e921-fb04-4804-9cc3-9faf43db0afd")
 	)
 
 	(hierarchical_label "OAM5_PERST#"
 		(shape bidirectional)
 		(at 95.4 219.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "89e453ca-a658-4376-8d94-3ff39693f6e5")
+		(uuid "6dbff20b-8a29-4391-b2aa-c42ded44868a")
 	)
 
 	(hierarchical_label "OAM5_HOST_PWRGD"
 		(shape bidirectional)
 		(at 95.4 224.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1f2361ec-bd81-47e0-977a-ade04e048342")
+		(uuid "cd96a591-45bd-451d-b290-981a376271a3")
 	)
 
 	(hierarchical_label "OAM5_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 95.4 228.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "2fe17947-5657-481c-9837-ecad28a868cf")
+		(uuid "468c4591-33ea-4892-b2d7-6d3fcf52d6b3")
 	)
 
 	(hierarchical_label "OAM5_PVREF"
 		(shape bidirectional)
 		(at 95.4 233.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3c050361-59d0-486c-995d-4df19e4b6328")
+		(uuid "84739aa7-bf2f-4b42-9fcf-62f171a0323d")
 	)
 
 	(hierarchical_label "OAM6_PE_REFCLKP"
 		(shape bidirectional)
 		(at 95.4 237.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "56493cbd-b0c3-4219-b1ac-b150bd15420c")
+		(uuid "3e8bc678-5d4d-418b-ba1d-25a28d99f2a8")
 	)
 
 	(hierarchical_label "OAM6_PE_REFCLKN"
 		(shape bidirectional)
 		(at 95.4 242.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e45552b7-3f29-4468-99b1-19a65d6ad3ce")
+		(uuid "5372a606-edc3-4e2e-9837-44867fd5fe9a")
 	)
 
 	(hierarchical_label "OAM6_PERST#"
 		(shape bidirectional)
 		(at 95.4 246.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e08fef83-ceff-44ef-b4e2-6215c4d1c57e")
+		(uuid "ef8a1eef-4384-4316-80b0-d40ed26d39c4")
 	)
 
 	(hierarchical_label "OAM6_HOST_PWRGD"
 		(shape bidirectional)
 		(at 95.4 251.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7d73ce15-16ea-477e-8783-70eea203e575")
+		(uuid "d17cb7e7-9754-46b9-b29f-af01e52f582f")
 	)
 
 	(hierarchical_label "OAM6_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 95.4 255.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "100a0827-d4f4-4521-a389-dce8a0f6ce65")
+		(uuid "8456fa27-bfd5-4e27-baaf-ddf54f9898bb")
 	)
 
 	(hierarchical_label "OAM6_PVREF"
 		(shape bidirectional)
 		(at 95.4 260.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c199d20e-059a-4694-919c-9dc4ec62c32e")
+		(uuid "ddcef3a9-e116-4074-abb3-e8e610089f6e")
 	)
 
 	(hierarchical_label "OAM7_PE_REFCLKP"
 		(shape bidirectional)
 		(at 165.4 170 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3ad27a93-8bc8-4400-872a-3fac9f239e69")
+		(uuid "8d04a9f7-0e69-4865-9ac6-7971e322a1ac")
 	)
 
 	(hierarchical_label "OAM7_PE_REFCLKN"
 		(shape bidirectional)
 		(at 165.4 174.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "30d9cc2d-0b65-4412-b2de-a42963a91a49")
+		(uuid "d0ec6bff-8f2f-4ea8-911f-f151a1d2e91c")
 	)
 
 	(hierarchical_label "OAM7_PERST#"
 		(shape bidirectional)
 		(at 165.4 179.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "30f60cf3-a5c5-4399-9acb-4a1a2fe6f62e")
+		(uuid "d3403f93-6321-4251-a6e7-bf5642aa973e")
 	)
 
 	(hierarchical_label "OAM7_HOST_PWRGD"
 		(shape bidirectional)
 		(at 165.4 183.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "746dd62f-506e-458a-a0cc-81c5644b8bcd")
+		(uuid "4cccf075-9f32-450c-bd38-76426e02ef4e")
 	)
 
 	(hierarchical_label "OAM7_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 165.4 188.0 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f7bd43c6-582b-4dac-ac08-3b4bd0c5f205")
+		(uuid "cf17fafa-f7e8-492f-8d19-de0412435ea0")
 	)
 
 	(hierarchical_label "OAM7_PVREF"
 		(shape bidirectional)
 		(at 165.4 192.5 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "28507271-bfdd-4dc5-b901-39826fa6e22c")
+		(uuid "2dda9ed0-6411-44a8-801b-36307e469e19")
 	)
 
 

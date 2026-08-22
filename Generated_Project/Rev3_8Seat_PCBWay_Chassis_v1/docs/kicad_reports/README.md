@@ -1,6 +1,6 @@
 # KiCad 9.0.9 CLI reports (not a fab sign-off)
 
-Run 2026-08-22 on the **12-layer 2.0 mm** POWER+MECH first article after zone fill (full-width architecture: 4× PM8536 DNP courtyards).
+Run 2026-08-22 on the **12-layer 2.0 mm** POWER+MECH first article after zone fill (**2-module target: seats 0–1 GCD0 x16**).
 
 - `drc.rpt` / `drc.json` — **0 errors**, **39** warnings, **268** unconnected items:
   - `lib_footprint_mismatch` **28** (warning): 16× 218910-1115 + SB175 + fuses/bucks (placed pads carry nets the library footprint does not).

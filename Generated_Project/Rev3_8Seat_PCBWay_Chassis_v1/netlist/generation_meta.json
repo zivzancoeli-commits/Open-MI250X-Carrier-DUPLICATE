@@ -57,6 +57,18 @@
     6,
     7
   ],
+  "first_article_target": "seats 0-1 two modules; GCD0 x16 each toward host keepout",
+  "first_article_uplinks": [
+    "PE_S0_GCD0_x16",
+    "PE_S1_GCD0_x16"
+  ],
+  "first_article_means": "two modules can sit; at most GCD0 on each (2 GCDs); not 2x full-width (4 GCDs)",
+  "gcd0_legal_path": "Conn0 OCP v1.0 PCIE_TX/RX0-15 = PETp/n+PERp/n host link; 64 pads; Conn1 has 0 PCIE_*",
+  "gcd1_status": "named-only; not assigned to S1-S7; SERDES_7 Inferred only",
+  "host_two_gcd0_x16_fit": true,
+  "host_two_full_width_modules_fit": false,
+  "mcio_on_carrier_placed": false,
+  "offboard_48v": "240 V / 50 A single-phase wall class; DPU-3200-48 class; NOT RST-5000-48 3-phase",
   "first_stuff_seats": [
     0,
     1
@@ -67,7 +79,7 @@
     2,
     3
   ],
-  "populate_path": "seats 0-1 + SW0, then 0-3 + SW1, then all 8 + SW2/SW3; same PCB",
+  "populate_path": "seats 0-1 first (no stuffed switch), then 0-3, then all 8 + SW0-SW3; same PCB",
   "sw0_seats": [
     0,
     1
@@ -179,7 +191,7 @@
   "pcie_switch_alt_docs_only": "PEX8780-AB80BI G 80-lane 35 mm cheaper alt, not placed",
   "pcie_switch_2seat_alt_docs_only": "PM8533B-F3EI 48-lane 27 mm, not placed",
   "host_connector_mpn": "Unknown",
-  "host_uplinks": "four named US x16 keepouts toward X11DPH-T; host ~80 lanes cannot light 256 DS",
+  "host_uplinks": "first article: PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward X11DPH-T keepout; later PE_SWk_US_x16 names kept; no CEM MPN",
   "xgmi_routed": false,
   "no_gpu_vrm": true,
   "pvref_driven": false,

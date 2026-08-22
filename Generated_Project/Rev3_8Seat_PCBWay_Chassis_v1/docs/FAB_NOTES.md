@@ -36,6 +36,7 @@ Published OCP v1.0 P48V map **already satisfies Skip Pins**. TEST* / RFU / DO_NO
 - Per seat: Littelfuse **0476015.MR** (15 A, 125 VDC Nano2) then a **local** F.Cu island on the 16 verified Conn0 P48V pads.
 - Brick input: Littelfuse **0476002.MR** (2 A, 125 VDC) into THL 40-4812WI.
 - **Dell D3000E-S1 is 12 V — never tie to OAM P48V.**
+- First populate: seats **0–1** / fuses **F0–F1**. Off-board 48 V is 240 V / 50 A **single-phase** class (DPU-3200-48 class). **Not** RST-5000-48 (3-phase). Not a PCB BOM item.
 - Mezz pad-to-pad gap is **0.40 mm** (Molex 0.9 mm pitch). OCP 25 mil (0.64 mm) is held on star/fuse copper. Custom DRC waives vendor pitch on mezz pads only.
 
 ## P12V1 / P3V3
@@ -46,11 +47,10 @@ Published OCP v1.0 P48V map **already satisfies Skip Pins**. TEST* / RFU / DO_NO
 
 ## Switches / host
 
-- Four **PM8536B-FEI** remain **DNP courtyards** (SW0–SW3). Public Microchip pages do not give a ball map; do not invent an AMD overlay or a fake BGA pinout.
-- Lane math: 8×2×x16 = 256 DS. Two 96-lane switches are enough for 8× x8/GCD, not 8× x16/GCD. Four 96-lane courtyards make the chassis **full-width capable**. Host **X11DPH-T ~80** lanes **cannot light** 256 DS.
-- 16 named x16 PE buses (`PE_Sn_GCD0_x16` / `PE_Sn_GCD1_x16`). GCD1 is named-only (not assigned to S1–S7). No PE tracks this article.
-- If those BGAs are stuffed later, 1.0 mm pitch escape likely needs **finer than 6/6 mil** and a requote. This zip stays on the quoted 6/6 + 0.3 mm hole.
-- Host: silk + keepout toward **X11DPH-T**. Four named US x16 keepouts. No CEM / SlimSAS / MCIO MPN invented. Do not swap the host board.
+- **2-module first article** does **not** stuff PM8536. Four **PM8536B-FEI** courtyards stay DNP for the later 8-seat path.
+- Legal named host PE: Conn0 OCP `PCIE_*` = `PE_S0_GCD0_x16` + `PE_S1_GCD0_x16` toward the existing host keepout. GCD1 named-only (Conn1 has 0 `PCIE_*`; not S1–S7).
+- Host **X11DPH-T**: two GCD0 x16 **fit**; two full-width modules (4× x16) **do not**. No CEM / SlimSAS / MCIO MPN invented. Do not swap the host board.
+- Later-seat 16× x16 names remain. No PE tracks this article.
 
 ## SMT / mezz attach
 

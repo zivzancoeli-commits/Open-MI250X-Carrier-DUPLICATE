@@ -1,39 +1,39 @@
 ** Drc report for MI250X_8OAM_PCBWay_Chassis_Stub.kicad_pcb **
-** Created on 2026-08-22T03:08:23+0000 **
+** Created on 2026-08-22T04:35:16+0000 **
 ** Report includes: Errors, Warnings, Exclusions **
 
 ** Found 39 DRC violations **
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
+    @(472.0000 mm, 177.0000 mm): PCB text 'HOST CABLE KEEPOUT' on F.Silkscreen
+    @(472.0000 mm, 177.0000 mm): PCB text 'X11DPH-T 3x x16+4x x8  two GCD0 FIT  4x x16 do NOT' on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(43.4500 mm, 336.3000 mm): Rectangle of J_SB175 on F.Silkscreen
     @(30.0000 mm, 354.0000 mm): PCB text 'P48V STAR / Kelvin sense' on F.Silkscreen
-    @(30.0000 mm, 354.0000 mm): Reference field of J_SB175
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
     @(43.4500 mm, 336.3000 mm): Rectangle of J_SB175 on F.Silkscreen
     @(30.0000 mm, 360.0000 mm): Footprint text of J_SB175 (6325G1 + 2x 1382 — Kelvin sense — DO NOT ENERGIZE P48V)
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; warning
+    @(30.0000 mm, 354.0000 mm): Reference field of J_SB175
     @(30.0000 mm, 354.0000 mm): PCB text 'P48V STAR / Kelvin sense' on F.Silkscreen
-    @(43.4500 mm, 336.3000 mm): Rectangle of J_SB175 on F.Silkscreen
-[silk_overlap]: Silkscreen overlap
-    Rule: board setup constraints silk; warning
-    @(472.0000 mm, 177.0000 mm): PCB text 'HOST CABLE KEEPOUT' on F.Silkscreen
-    @(472.0000 mm, 177.0000 mm): PCB text '3x x16 + 4x x8 Gen3 ~80 lanes  MPN Unknown' on F.Silkscreen
 [text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
     @(458.0000 mm, 334.0000 mm): PCB text 'F_P12 0476002.MR 2A' on F.Silkscreen
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(174.5000 mm, 218.0000 mm): Footprint J5_Conn1
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(277.5000 mm, 320.0000 mm): Footprint J6_Conn0
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
-    @(361.0500 mm, 169.5000 mm): Footprint F3
+    @(52.0500 mm, 169.5000 mm): Footprint F0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(71.5000 mm, 154.0000 mm): Footprint J0_Conn0
+    @(71.5000 mm, 218.0000 mm): Footprint J4_Conn1
+[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
+    Local override; warning
+    @(458.0000 mm, 338.0000 mm): Footprint F_P12
+[lib_footprint_mismatch]: Footprint 'Converter_DCDC_Murata_OKI-78SR_Vertical' does not match copy in library 'footprints'.
+    Local override; warning
+    @(440.0000 mm, 366.0000 mm): Footprint U_P3V3
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
     @(361.0500 mm, 336.0000 mm): Footprint F7
@@ -42,70 +42,70 @@
     @(380.5000 mm, 320.0000 mm): Footprint J7_Conn0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(277.5000 mm, 52.0000 mm): Footprint J2_Conn1
-[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
-    Local override; warning
-    @(258.0500 mm, 336.0000 mm): Footprint F6
-[lib_footprint_mismatch]: Footprint 'Converter_DCDC_TRACO_THL40-xxxxWI_THT' does not match copy in library 'footprints'.
-    Local override; warning
-    @(470.0000 mm, 348.0000 mm): Footprint U_P12V1
+    @(380.5000 mm, 154.0000 mm): Footprint J3_Conn0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(380.5000 mm, 52.0000 mm): Footprint J3_Conn1
+    @(277.5000 mm, 320.0000 mm): Footprint J6_Conn0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
     @(174.5000 mm, 154.0000 mm): Footprint J1_Conn0
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
-    @(52.0500 mm, 169.5000 mm): Footprint F0
+    @(361.0500 mm, 169.5000 mm): Footprint F3
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(71.5000 mm, 218.0000 mm): Footprint J4_Conn1
+    @(71.5000 mm, 154.0000 mm): Footprint J0_Conn0
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
     @(71.5000 mm, 320.0000 mm): Footprint J4_Conn0
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(277.5000 mm, 218.0000 mm): Footprint J6_Conn1
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(71.5000 mm, 52.0000 mm): Footprint J0_Conn1
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(174.5000 mm, 320.0000 mm): Footprint J5_Conn0
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(380.5000 mm, 154.0000 mm): Footprint J3_Conn0
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
-    @(458.0000 mm, 338.0000 mm): Footprint F_P12
+    @(105.0000 mm, 336.0000 mm): Footprint F4
+[lib_footprint_mismatch]: Footprint 'Converter_DCDC_TRACO_THL40-xxxxWI_THT' does not match copy in library 'footprints'.
+    Local override; warning
+    @(470.0000 mm, 348.0000 mm): Footprint U_P12V1
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
-    @(155.0500 mm, 169.5000 mm): Footprint F1
-[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
-    Local override; warning
-    @(174.5000 mm, 52.0000 mm): Footprint J1_Conn1
+    @(155.0500 mm, 336.0000 mm): Footprint F5
 [lib_footprint_mismatch]: Footprint 'Anderson_SB175_2pole' does not match copy in library 'footprints'.
     Local override; warning
     @(70.0000 mm, 354.0000 mm): Footprint J_SB175
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(277.5000 mm, 154.0000 mm): Footprint J2_Conn0
+    @(380.5000 mm, 218.0000 mm): Footprint J7_Conn1
 [lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
     Local override; warning
     @(258.0500 mm, 169.5000 mm): Footprint F2
-[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
-    Local override; warning
-    @(105.0000 mm, 336.0000 mm): Footprint F4
-[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
-    Local override; warning
-    @(155.0500 mm, 336.0000 mm): Footprint F5
 [lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(380.5000 mm, 218.0000 mm): Footprint J7_Conn1
-[lib_footprint_mismatch]: Footprint 'Converter_DCDC_Murata_OKI-78SR_Vertical' does not match copy in library 'footprints'.
+    @(71.5000 mm, 52.0000 mm): Footprint J0_Conn1
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
     Local override; warning
-    @(440.0000 mm, 366.0000 mm): Footprint U_P3V3
+    @(174.5000 mm, 52.0000 mm): Footprint J1_Conn1
+[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
+    Local override; warning
+    @(155.0500 mm, 169.5000 mm): Footprint F1
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(380.5000 mm, 52.0000 mm): Footprint J3_Conn1
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(277.5000 mm, 218.0000 mm): Footprint J6_Conn1
+[lib_footprint_mismatch]: Footprint 'Fuse_Littelfuse-NANO2-451_453' does not match copy in library 'footprints'.
+    Local override; warning
+    @(258.0500 mm, 336.0000 mm): Footprint F6
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(277.5000 mm, 154.0000 mm): Footprint J2_Conn0
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(174.5000 mm, 320.0000 mm): Footprint J5_Conn0
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(174.5000 mm, 218.0000 mm): Footprint J5_Conn1
+[lib_footprint_mismatch]: Footprint '218910-1115_candidate' does not match copy in library 'footprints'.
+    Local override; warning
+    @(277.5000 mm, 52.0000 mm): Footprint J2_Conn1
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
     @(0.0000 mm, 0.0000 mm): Rectangle on Edge.Cuts
@@ -115,6 +115,9 @@
     @(16.5000 mm, 179.0000 mm): Zone [P12V1] on F.Cu, priority 31
 [isolated_copper]: Isolated copper fill
     Local override; warning
+    @(6.0000 mm, 8.0000 mm): Zone [P48V_STAR] on F.Cu, priority 11
+[isolated_copper]: Isolated copper fill
+    Local override; warning
     @(16.5000 mm, 183.5000 mm): Zone [P3V3] on F.Cu, priority 51
 [isolated_copper]: Isolated copper fill
     Local override; warning
@@ -122,9 +125,6 @@
 [isolated_copper]: Isolated copper fill
     Local override; warning
     @(16.5000 mm, 353.5000 mm): Zone [P3V3] on F.Cu, priority 52
-[isolated_copper]: Isolated copper fill
-    Local override; warning
-    @(6.0000 mm, 8.0000 mm): Zone [P48V_STAR] on F.Cu, priority 11
 
 ** Found 268 unconnected pads **
 [unconnected_items]: Missing connection between items

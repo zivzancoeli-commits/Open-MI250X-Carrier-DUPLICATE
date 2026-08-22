@@ -2,7 +2,8 @@
 # NOT a fabrication netlist. Unmapped pads omitted.
 # All 8 seats electrically named. S1-S7 / TEST* omitted. SB175 = P48V_STAR.
 # PE_Sn_GCD0_x16 = Conn0 OCP PCIE pads. PE_Sn_GCD1_x16 named-only (not on pads).
-# Four PM8536 DNP. Full-width capable chassis; host cannot light 256 DS.
+# First article uplinks: PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward host keepout.
+# Four PM8536 DNP (not stuffed for 2-mod). Do not invent CEM/MCIO.
 # Format: ref.pad  net
 J0_Conn0.C1	P3V3
 J0_Conn0.D1	OAM0_PERST#
