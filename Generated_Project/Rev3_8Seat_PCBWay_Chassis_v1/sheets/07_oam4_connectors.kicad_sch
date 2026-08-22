@@ -1,11 +1,11 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "762dd833-0eea-4326-929d-8ea4cd50dffd")
+	(uuid "84865dab-8e0c-45d4-9df6-e9affe804bb6")
 	(paper "A3")
 	(title_block
 		(title "OAM4 connectors")
 		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-        (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
         (comment 2 "Documentation sheet — no invented nets")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
         (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
@@ -15,7 +15,7 @@
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "39a96d9a-da60-4c87-adc6-468dcd6c30cf")
+		(uuid "c05f8c51-ab72-4fcf-8f16-7c39d04fa62f")
 	)
 
 
@@ -23,112 +23,112 @@
 		(shape bidirectional)
 		(at 25.4 150 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1d583d19-b8a7-4dab-9810-b880aede25a2")
+		(uuid "4d8ded2e-c1ad-4fe4-ad13-9802638611da")
 	)
 
 	(hierarchical_label "P12V1"
 		(shape bidirectional)
 		(at 25.4 155.08 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ab4cc7d6-0741-478d-8339-9611f1cd6cbe")
+		(uuid "9eb771af-7898-4917-89bd-c068093de2be")
 	)
 
 	(hierarchical_label "P12V2"
 		(shape bidirectional)
 		(at 25.4 160.16000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "dbccffd9-5400-4112-8ce4-d575b856f7a5")
+		(uuid "3ffe8280-d586-4af6-95b1-ba84a75eebe9")
 	)
 
 	(hierarchical_label "P3V3"
 		(shape bidirectional)
 		(at 25.4 165.24000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3cc6e424-3a24-472c-b903-c32a5a389a57")
+		(uuid "e36a5929-039f-4ab9-8814-7cc7676822e6")
 	)
 
 	(hierarchical_label "GND"
 		(shape bidirectional)
 		(at 25.4 170.32000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "4af27d12-f61d-45b4-aff5-bc7149ae7de8")
+		(uuid "d93a76ea-8b8e-4019-88a5-23548cad17a4")
 	)
 
 	(hierarchical_label "OAM4_PVREF"
 		(shape bidirectional)
 		(at 25.4 175.40000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f6b9645e-3294-4159-9f48-273825a91fbf")
+		(uuid "92130c17-53e5-4e3e-8d33-06bc288270f3")
 	)
 
 	(hierarchical_label "OAM4_PE_REFCLKP"
 		(shape bidirectional)
 		(at 25.4 180.48000000000008 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a4ef1837-8851-4e2b-be4f-f3dd1973a871")
+		(uuid "fade3ab2-af1a-4d9b-8246-2d85f0c6a48e")
 	)
 
 	(hierarchical_label "OAM4_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 185.5600000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "bc74b5d3-c4d3-4e71-b94e-21c29f33a0d0")
+		(uuid "08693c66-1303-497c-9673-e2a53159e444")
 	)
 
 	(hierarchical_label "OAM4_PERST#"
 		(shape bidirectional)
 		(at 25.4 190.6400000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "88644947-72ff-46d3-ba12-f4730cf3c13d")
+		(uuid "29733582-e50c-4e8c-8a72-9580de49c982")
 	)
 
 	(hierarchical_label "OAM4_HOST_PWRGD"
 		(shape bidirectional)
 		(at 25.4 195.7200000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f5b1154f-8785-40cf-a61e-c5565ddbc630")
+		(uuid "731bd5b4-ead7-488a-aa34-861f525ae4a3")
 	)
 
 	(hierarchical_label "OAM4_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 25.4 200.80000000000013 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fa013aa5-9cd2-4070-bfbf-130f6fd0df2f")
+		(uuid "3386344a-a158-46ad-ac45-f748b69149fa")
 	)
 
 	(hierarchical_label "OAM4_WARMRST#"
 		(shape bidirectional)
 		(at 25.4 205.88000000000014 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f24d84a6-c7bd-47b9-b6e3-61011720e509")
+		(uuid "a24640be-215e-48de-8923-d80cd8b35029")
 	)
 
 	(hierarchical_label "OAM4_PWRBRK#"
 		(shape bidirectional)
 		(at 25.4 210.96000000000015 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1e0c27c8-fd0e-45d7-bb35-1a5c488fdb72")
+		(uuid "053b7f69-3e33-428c-9df6-804f46f88896")
 	)
 
 	(hierarchical_label "OAM4_PRSNT0#"
 		(shape bidirectional)
 		(at 25.4 216.04000000000016 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6a96e2b6-6fcc-4e6d-a142-66d9f26f5509")
+		(uuid "1812fbfb-f39a-4d5e-bf57-0c81ae8b1106")
 	)
 
 	(hierarchical_label "OAM4_SMBus_SLV_D"
 		(shape bidirectional)
 		(at 25.4 221.12000000000018 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fd5fe75e-a18a-4153-be59-a9f24e96bec6")
+		(uuid "c421812d-0095-483d-8be5-d10c0f64fa5d")
 	)
 
 	(hierarchical_label "OAM4_SMBus_SLV_CLK"
 		(shape bidirectional)
 		(at 25.4 226.2000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f9e40897-1539-4535-b0ad-f67f43704e98")
+		(uuid "3b9926e2-4833-42a8-b9d9-476a153f888a")
 	)
 
 

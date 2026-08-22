@@ -1,10 +1,12 @@
-# PCBWay target (planning only — DO NOT UPLOAD / DO NOT ORDER)
+# PCBWay target (planning + first-article zip)
 
-**Date:** 2026-08-21  
+**Date:** 2026-08-21 quotes; fab zip generated 2026-08-22.  
 **Source of limits:** https://www.pcbway.com/capabilities.html (Standard PCB + Advanced PCB tables).  
 **Guest quotes:** live PCBWay guest cart 2026-08-21, outline **492 × 372 mm**, **qty 5 minimum** (**qty 1 rejected**), **2 oz outer OK**, **ENIG**.  
 **Prefer 2.0 mm thickness.**  
-**This tree is not a gerber package.** Every schematic/PCB title block: **DO NOT FABRICATE**. **Do not upload. Do not order.**
+**Do not upload from this agent.** Eli uploads `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` if he accepts it.
+
+## Target coupon
 
 ## Target coupon
 
@@ -51,7 +53,7 @@ A previous qty-**5** MFC/PCBWay-style cart for a **220 × 120 mm** board is **no
 
 - Do **not** reuse that quote, that qty, or that outline.
 - This board is **492 × 372 mm**, 16× 218910-1115, 8 electrically designed seats.
-- Do **not** upload gerbers. Do **not** click order.
+- **Do not upload from this agent.** Eli uploads the `fab/` zip if he accepts it.
 
 ## Layer stack
 
@@ -60,4 +62,4 @@ See `docs/LAYER_STACK.md`.
 - **8L 2.0 mm ($832.74)** = preferred DNP-switch / mezz+power-only.
 - **12L 2.0 mm Standard ($2237.90 + $68.43 DHL = $2306.33)** = preferred stuffed-switch (generated KiCad).
 
-**Do not upload. Do not order.**
+**Do not upload. Do not order from this agent.**

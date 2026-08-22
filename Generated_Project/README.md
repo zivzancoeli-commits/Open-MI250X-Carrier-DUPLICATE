@@ -56,9 +56,9 @@ Generated_Project/Rev2_MI250X_Carrier_BuyableFirstSystem_v1/
 
 Shopping list: `20_System_BOM/SHOPPING.md`. Pin map authority: `22_Pinmap_Research/` (OCP generic v1.0, 688 contacts, not r2.0).
 
-## Rev3 8-seat PCBWay chassis (Chamber B PCB only, 2026-08-21)
+## Rev3 8-seat PCBWay chassis (Chamber B PCB only, 2026-08-22)
 
-**DO NOT FABRICATE. DO NOT ENERGIZE P48V.** Not a PCBWay upload. Does not overwrite Rev1 or Rev2 trees.
+**DO NOT ENERGIZE P48V.** POWER+MECH first-article zip is in `Rev3_8Seat_PCBWay_Chassis_v1/fab/`. Do not upload from this agent. Does not overwrite Rev1 or Rev2 trees.
 
 ```
 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/

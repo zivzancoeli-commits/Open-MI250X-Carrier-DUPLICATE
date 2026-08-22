@@ -3,7 +3,7 @@
 **Generated KiCad:** **12 layer, 2.0 mm** stuffed-switch **target** (8× electrically designed seats + two DNP **PM8536B-FEI PRIMARY**). Plan **12–16L, not 4**. PCBWay can assemble 1.0 mm without HDI.  
 **Documented cheaper option:** **8 layer, 2.0 mm** DNP-switch / mezz+power-only — **not** the 8×-running target.  
 **PEX8780-AB80BI G** is a cheaper 80-lane alt in **docs only** — not placed.  
-**Do not fabricate. Do not upload.**
+**DO NOT ENERGIZE P48V.** Fab zip is in `fab/`. Do not upload from this agent.
 
 PCBWay: 12L is inside Standard 1–14. Outline 492×372 < advanced finished ML **508×600**. Guest quotes 2026-08-21 used **2 oz outer / 1 oz inner**, ENIG, qty 5. See `PCBWAY.md`.
 
@@ -30,7 +30,7 @@ Guest **8L 2.0 mm $832.74** (qty 5, 7–8 days) is the **preferred 8L / no-switc
 
 **Hypothesis discarded:** a board-wide inner/outer **P48V plane** carrying ~100 A. Replaced by SB175 star + per-seat fuse keepouts + **local** 2 oz F.Cu pours on the 16 verified Conn0 P48V pads.
 
-Inner GND planes do **not** yet via-stitch to SMD GND pads (no via farm on this named-net chassis).
+Inner GND planes are via-stitched at the inlet, bucks, and around each mezz (not via-in-pad).
 
 ## 8L 2.0 mm — cheaper DNP-switch option (not generated)
 
@@ -49,6 +49,7 @@ Use only if both PM8536 stay DNP forever and PE is not fanned out. **Not** the 8
 
 ## Rules of thumb used
 
-- P48V zone clearance **0.64 mm** (OCP UBB v1.5 >40 V internal 25 mil). Mezz 0.9 mm pitch will still DRC against that — expected, not a sign-off.
+- P48V star/fuse copper clearance **0.64 mm** (OCP UBB v1.5 >40 V internal 25 mil). Mezz pad islands use **0.20 mm** (vendor 0.9 mm pitch). Custom DRC waives vendor pitch on mezz pads only.
 - GND zone clearance **0.25 mm**.
-- Min trace in project **0.1 mm / 4 mil**. Guest quote was **6/6 mil** — a 1.0 mm BGA escape may need finer and will requote.
+- Min geometry in this zip **6/6 mil (0.15 mm)** and **0.3 mm** drill — the quoted form. A 1.0 mm 1311-ball PM8536 escape will need finer than 6/6 and a requote; switches stay DNP on this article.
+- Inner GND planes are via-stitched at KOZ interiors, bucks, and the P12V1/P3V3 alley (not via-in-pad).

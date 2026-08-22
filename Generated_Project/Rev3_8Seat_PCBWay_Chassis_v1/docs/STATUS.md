@@ -4,7 +4,7 @@
 **Date:** 2026-08-22  
 **Pin map:** `22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv` (1376 named pads). xlsx in `22_Pinmap_Research/downloads/` wins on mismatch; this generator consumes the CSV (P3V3 = Conn0 C1/C2 checked). **v1.x only.** r2.0 is UNUSABLE.
 
-**DO NOT FABRICATE. DO NOT ENERGIZE P48V** until AMD overlay + Molex 1.2 A/contact follow-up are written. Not a PCBWay upload.
+**DO NOT ENERGIZE P48V.** POWER+MECH first-article Gerbers are in `fab/`. **Do not upload from this agent.** Eli uploads if he accepts the zip.
 
 Labels: **Verified** / **Inferred** / **Unknown**. Do not treat Inferred as a pin assignment.
 
@@ -51,8 +51,9 @@ python3 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/tools/generate_from_v10_p
 | Connectors | **16×** Molex **218910-1115** (2 per seat), rot 180 **Inferred** |
 | Holes | **32×** M3.5 NPTH φ3.9 mm (Fig 2), 8 mm MIN land |
 | Layers | **12L 2.0 mm** stuffed-switch **prefer** (guest **$2237.90 + $68.43 DHL = $2306.33**, 14–15 days). **8L 2.0 mm $832.74** is the DNP-switch / mezz+power prefer. 16L Advanced **$2937.84**. |
-| P48V | Anderson **SB175** on the long edge → star + Kelvin sense → per-seat **~15 A fuse keepouts** → **local F.Cu pours** on the 16 verified Conn0 P48V pads. **Not** a 100 A flood plane. |
-| Switches | **U_SW0** / **U_SW1** **PM8536B-FEI DNP PRIMARY** keepouts (x8 per GCD; SW0 seats 0–3, SW1 seats 4–7) |
+| P48V | Anderson **6325G1** + 2× **1382** → star + Kelvin → per-seat **0476015.MR** 15 A → **local F.Cu pours**. **Not** a 100 A flood. |
+| P12V1 / P3V3 | **THL 40-4812WI** (40 W from 48 V) + **OKI-78SR-3.3/1.5-W36-C** (4.95 W from P12V1). No GPU VRM. |
+| Switches | **U_SW0** / **U_SW1** **PM8536B-FEI DNP** courtyards (ball map not public). |
 | Host region | X=452–492 mm strip. Silk + cable keepout. **No CEM invented.** |
 
 First stuffing: **2 populated modules / 6 DNP modules** is allowed. The copper/netlist already covers all eight.
@@ -138,23 +139,35 @@ Voltage/skip-pin is no longer a 30 V catalog brick wall. **Current-rating follow
 
 ---
 
-## KiCad CLI — not a fab sign-off
+## What Eli can upload vs what stays DNP
 
-See `docs/kicad_reports/` (KiCad **9.0.9**, 2026-08-22). Hierarchical labels on this named-net chassis produce expected ERC dangling/mismatch. DRC footprint-mismatch and unconnected items (no PE tracks; fused P48V islands; DNP PRIMARY switches) are expected. Do not “Update PCB from Schematic”.
+| Eli can upload / buy onto this PCB | Stays DNP / not this zip |
+|---|---|
+| `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` (Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM, top preview) | **Do not upload from this agent.** Eli uploads if he accepts. |
+| 12L 2.0 mm 492×372 ENIG 2 oz/1 oz green/white qty 5 — guest **$2237.90 + $68.43 DHL** | 8L DNP-switch coupon is cheaper if he never stuffs switches |
+| 16× **218910-1115**, 32× M3.5 NPTH, Anderson **6325G1** + **2× 1382**, **0476015.MR** ×8, **0476002.MR**, **THL 40-4812WI**, **OKI-78SR-3.3/1.5-W36-C** | **PM8536B-FEI** ×2 (courtyard only; ball map not public) |
+| Local P48V / P12V1 / P3V3 copper + GND planes + star/fuses | PE / REFCLK / PERST# **tracks** (named, not routed) |
+| Silk **DO NOT ENERGIZE P48V** | Host CEM connector (keepout only; no MPN invented) |
+| Skip-pin NC (TEST*/RFU/DO_NOT_USE have no net) | AMD overlay, xGMI S1–S7, PVREF drive, D3000E-S1 |
+
+**Energize is still blocked** on Molex 1.2 A/contact (ticket 167157). First article is POWER+MECH.
 
 ---
 
-## Blockers before an order (still open)
+## KiCad CLI
 
-1. **Molex 1.2 A/contact at 48–59.5 V (2 oz)** — ticket **167157** current follow-up not in hand. Silk stays DO NOT ENERGIZE.
-2. **AMD overlay** (TEST*, dual-GCD PE, xGMI S1–S7, SMBus) still Unknown.
-3. **No PE / SerDes / clock tracks** yet — nets and keepouts only.
-4. **PM8536B-FEI not purchased / not stuffed** (two DNP PRIMARY courtyards). 8× running needs them. PEX8780 is docs-only cheaper 80-lane alt.
-5. **No CEM / host-connector MPN** in the host region (deliberate).
-6. **218910-1115 BGA/mezz attach** is a factory process, not a default PCBWay stack. SMT of 16× 688-ball is Unknown.
-7. **PIN A3 orientation** still Inferred (180°).
-8. **No 48 V harness** on this BOM, no HOST_PWRGD sequencer, no REFCLK generator.
-9. Do **not** reuse the old **220 × 120 mm** qty-5 MFC quote.
-10. Guest quotes used **6/6 mil + 0.3 mm hole**; a 1.0 mm-pitch 1311-ball escape likely needs finer rules and will cost more.
+See `docs/kicad_reports/` (KiCad **9.0.9**). ERC dangling hierarchical labels are expected. DRC on fabricated copper: **0 errors**. Remaining warnings are `lib_footprint_mismatch` (placed pads carry nets the library copy does not), silk, and a few isolated-copper islands. Unconnected PE / REFCLK / PERST# nets are expected (DNP switches). Do not “Update PCB from Schematic”.
 
-**Do not upload to PCBWay. Do not energize OAMs.**
+---
+
+## Still open (not a reason to withhold the zip)
+
+1. **Molex 1.2 A/contact at 48–59.5 V (2 oz)** — silk stays DO NOT ENERGIZE.
+2. **AMD overlay** still Unknown. Do not invent it.
+3. **PM8536B-FEI** DNP until a public/legal ball map exists. 1.0 mm escape will need finer than **6/6 mil** and a requote.
+4. **No CEM host MPN** (deliberate).
+5. **218910-1115 mezz attach** is a factory process.
+6. **PIN A3** rotation 180° still Inferred.
+7. P12V1 first-article module is **40 W** (THL 40-4812WI) vs OCP ≤50 W.
+
+**Do not energize OAMs. Do not stuff the DNP switches on this article.**

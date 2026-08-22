@@ -19,8 +19,11 @@ Architecture:
   Two CPU x16 = switch uplinks. Do NOT invent a CEM MPN.
 - Do not route S1-S7 (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. Never drive PVREF.
 - HOST_PWRGD is ENABLE. No GPU multiphase VRM on this PCB.
-- P48V: Anderson SB175 + per-seat ~15 A fuse keepouts + LOCAL pours on the 16
-  verified Conn0 P48V pads. NOT a board-wide 100 A plane. Do not tie to D3000E-S1 (12 V).
+- P48V: Anderson 6325G1 + 2x 1382 (SB175) + per-seat Littelfuse 0476015.MR 15 A
+  + LOCAL pours on the 16 verified Conn0 P48V pads. NOT a board-wide 100 A plane.
+- P12V1: TRACO THL 40-4812WI from 48 V (40 W first-article; OCP allows <=50 W).
+  P3V3: Murata OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM.
+- PM8536B-FEI ball map is not public — DNP courtyards. POWER+MECH first article.
 - Molex 2026-08-18: 2189101115 CSA 60 V (COFC 80170713) at OCP P48V; published
   OCP P48V map already satisfies Skip Pins — do NOT add extra NC pads.
   Residual OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE until written.
@@ -38,6 +41,8 @@ import shutil
 import uuid
 from collections import defaultdict
 from pathlib import Path
+
+from fab_copper import MEZZ_ZONE_CLEAR_MM, build as build_fab_copper, p48_net
 
 ROOT = Path(__file__).resolve().parents[1]
 if ROOT.name != "Rev3_8Seat_PCBWay_Chassis_v1":
@@ -65,6 +70,8 @@ P48V_PADS = {
     "H62", "J62", "K62", "L62",
     "H63", "J63", "H64", "J64",
 }
+P12V1_PADS = {"A59", "A60", "A61", "A62", "B62"}
+P3V3_PADS = {"C1", "C2"}
 
 N_SEATS = 8
 N_COLS = 4
@@ -102,8 +109,8 @@ OZ2_UM = 0.070
 OZ1_UM = 0.035
 P48V_CLEAR_MM = 0.64  # OCP UBB v1.5 >40 V internal 25 mil
 GND_CLEAR_MM = 0.25
-# Long-edge SB175 (DS-SB175 2-pole envelope 53.1 x 35.4 mm). Body hangs off Y=372.
-SB175_AT = (70.0, 362.0)
+# SB175 on-board in the south margin (NPTH copper inside Edge.Cuts). Housing 6325G1.
+SB175_AT = (70.0, 354.0)
 # PRIMARY: Microchip PM8536B-FEI DNP x2. Switchtec PFX 96-lane Gen3,
 # 1311-ball 37.5 mm FCBGA, 1.0 mm pitch. ~$460-475, ~18 wk.
 # Architecture: x8 per GCD. SW0 seats 0-3 (16 US + 64 DS). SW1 seats 4-7.
@@ -183,6 +190,8 @@ def net_name(oam: int, signal: str) -> str | None:
     if cls in NO_NET_CLASSES:
         return None
     if signal in SHARED_RAILS:
+        if signal == "P48V":
+            return p48_net(oam)
         return sig
     if cls in NAMED_ON_ALL:
         return f"OAM{oam}_{sig}"
@@ -302,7 +311,7 @@ def build_conn_symbol(conn: str, rows: list[dict]) -> str:
         f'  (property "Value" "{sym}" (at 0 2.54 0) (effects (font (size 1.27 1.27))))',
         f'  (property "Footprint" "footprints:218910-1115_candidate" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
         f'  (property "Datasheet" "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
-        f'  (property "ki_description" "OCP generic v1.0 {conn} 688-contact map. NOT AMD MI250X overlay. DO NOT FABRICATE." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
+        f'  (property "ki_description" "OCP generic v1.0 {conn} 688-contact map. NOT AMD MI250X overlay. DO NOT ENERGIZE P48V." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
         f'  (property "ki_fp_filters" "218910-1115*" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
     ]
     for unit, classes in unit_map.items():
@@ -356,7 +365,7 @@ def sch_header(title: str, comment: str) -> str:
 		(title "{kicad_escape(title)}")
 		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-        (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
         (comment 2 "{kicad_escape(comment)}")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
         (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
@@ -384,11 +393,11 @@ SHEETS = [
 def write_root_sch() -> None:
     p = ROOT / f"{PROJ}.kicad_sch"
     body = sch_header(
-        "Rev3 8-seat PCBWay named-net chassis (NOT fab-ready)",
+        "Rev3 8-seat PCBWay POWER+MECH first article (DO NOT ENERGIZE P48V)",
         "8 OAM seats. Host X11DPH-T is NOT on this PCB. No CEM cable. No 20-layer UBB.",
     )
     note = (
-        "DO NOT FABRICATE / DO NOT ENERGIZE P48V\\n"
+        "DO NOT ENERGIZE P48V — POWER+MECH first article (PM8536 DNP)\\n"
         "8 electrically designed OAM seats (first stuffing: 2 modules / 6 DNP OK — no respin).\\n"
         "16x Molex 218910-1115, 5.00 mm stack. 12-layer 2.0 mm stuffed-switch TARGET. Outline 492 x 372 mm.\\n"
         "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling (not a UBB drawing).\\n"
@@ -396,7 +405,7 @@ def write_root_sch() -> None:
         "Host stub: X11DPH-T 3x Gen3 x16 + 4x Gen3 x8 keepout. Two CPU x16 = switch uplinks.\\n"
         "X11DPH-T / NH-D9 DX-3647 / B550M are NOT on this PCB. Chamber A mATX is not this PCB.\\n"
         "S1-S7 NOT routed (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\\n"
-        "P48V: SB175 long-edge entry + ~15A fuse/seat + LOCAL pours on 16 Conn0 pads. NOT a 100A flood.\\n"
+        "P48V: SB175 (6325G1+2x1382) + 0476015.MR 15A/seat + LOCAL pours. NOT a 100A flood.\\n"
         "Molex 2026-08-18: CSA 60V (COFC 80170713) at OCP P48V; skip pins = published map, no extra NC.\\n"
         "OPEN: 1.2 A/contact at 48-59.5 V (2 oz). HOST_PWRGD is ENABLE. No GPU VRM. P12V2 Unknown/may be NC.\\n"
         "Dell D3000E-S1 is 12 V CRPS — do not mix into P48V. P3V3 = Conn0 C1/C2 only. Never r2.0."
@@ -477,7 +486,7 @@ def append_hier_labels(rel: str, labels: list[str], x: float = 25.4, y0: float =
 
 
 def write_do_not_fab_sheet() -> None:
-    text = """GATE LIST — all must be closed before fabrication or applying power to an MI250X.
+    text = """GATE LIST — energize / stuffing. POWER+MECH Gerbers are in fab/. Eli uploads; this agent does not.
 
 1. 48V source identified AND harnessed to the SB175. Dell D3000E-S1 is 12 V CRPS —
    do not tie OAM P48V to it. No PSU shopping on this PCB BOM.
@@ -493,17 +502,17 @@ def write_do_not_fab_sheet() -> None:
    Chamber A mATX B550M 244x244 is NOT on this PCB.
 6. PCIe: all 8 seats named toward 2x PM8536B-FEI DNP PRIMARY (x8 per GCD).
    SW0 seats 0-3, SW1 seats 4-7. Two CPU x16 uplinks. PEX8780 is docs-only cheaper 80-lane alt.
-   No CEM cable invented. Host MPN Unknown (silk keepout only).
+   No CEM cable invented. Host MPN Unknown (silk keepout only). Do not stuff PM8536 this article.
 7. HOST_PWRGD is ENABLE. Sequencing vs P48V/P12V1/P3V3 — OCP + AMD overlay only.
 8. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.
-9. Per-seat ~15 A fuse MPN still Unknown (keepout only). P12V1 <=50 W and P3V3 <=5 W
-   sources are keepouts — no GPU multiphase VRM on this PCB.
-10. Do not upload to PCBWay. 12L 2.0 mm is the stuffed-switch target (plan 12-16L, not 4);
+9. Per-seat fuse Littelfuse 0476015.MR 15 A. P12V1 = THL 40-4812WI (40 W first article).
+   P3V3 = OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM on this PCB.
+10. Do not upload to PCBWay from this agent. 12L 2.0 mm stuffed-switch TARGET (plan 12-16L, not 4);
     8L 2.0 mm is a cheaper DNP-switch option only.
 
-Until then this KiCad tree is a mapping artifact. Do not send to PCBWay. DO NOT ENERGIZE P48V.
+Fab zip is POWER+MECH. Do not stuff the DNP switches. DO NOT ENERGIZE P48V.
 """
-    write_text_sheet("sheets/00_do_not_fabricate.kicad_sch", "DO NOT FABRICATE", text)
+    write_text_sheet("sheets/00_do_not_fabricate.kicad_sch", "ENERGIZE / STUFFING GATES (fab zip in fab/)", text)
 
 
 def write_power_clock_sheet() -> None:
@@ -513,19 +522,20 @@ STAR-FED P48V (NOT a board-wide 100 A plane):
 - Board entry: Anderson SB175 (175 A / 600 V) on the long edge, 2 AWG landing.
   Net P48V_STAR. Kelvin+ / Kelvin- pads at the star. Off-board 48 V is NOT a PCB BOM item.
 - Dell D3000E-S1 is 12 V CRPS — do not tie OAM P48V to it. 1000 W ATX/EPS is HOST only.
-- Per seat: ~15 A fuse keepout (MPN Unknown), then the 16 verified OCP v1.0 Conn0
+- Per seat: Littelfuse 0476015.MR (15 A, 125 VDC Nano2), then the 16 verified OCP v1.0 Conn0
   P48V pads. Local 2 oz F.Cu pour around those 16 pads only. No extra NC/skip pads.
+  Seat nets are P48V / P48V_S1..S7 so the fuses actually isolate.
 - Molex 2026-08-18 written yes: CSA 60 V (COFC 80170713) at OCP P48V.
   OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE.
 
 SHARED RAILS (OCP names, pads on every seat):
 - P48V  Conn0 16 pads  44-59.5 V  up to 700 W class (pin list). MI250X 500/560 W.
         LOCAL pours only. Module has the 48 V core VRMs — no GPU multiphase here.
-- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Carrier supplies <=50 W.
-        Keepout only; no VRM MPN invented.
+- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Carrier supplies THL 40-4812WI (40 W first article).
+        No GPU VRM.
 - P12V2 Conn0 27 pads  12 V main for 12V-based OAM. MI250X is 48 V class.
         Unknown / may be NC. Do NOT short to P12V1. Do not invent a P12V2 supply.
-- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Carrier supplies <=5 W. 2 pins — v1.5 Table 4.
+- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Carrier supplies OKI-78SR-3.3/1.5-W36-C from P12V1.
 - GND   Conn0 majority. Inner GND planes (In1, In4), 2 oz planning.
 - PVREF Conn0 G1,G2    MODULE OUTPUT. NEVER drive from carrier. Per-OAM nets.
 
@@ -737,12 +747,23 @@ def write_pcb(rows: list[dict]) -> None:
         raise SystemExit(f"expected 688 footprint pads, got {len(pads)}")
 
     p48_local: list[tuple[float, float]] = []
+    p12_local: list[tuple[float, float]] = []
+    p3_local: list[tuple[float, float]] = []
     for pad, at, _size, _layers in pads:
+        xs = at.split()
+        xy = (float(xs[0]), float(xs[1]))
         if pad in P48V_PADS:
-            xs = at.split()
-            p48_local.append((float(xs[0]), float(xs[1])))
+            p48_local.append(xy)
+        if pad in P12V1_PADS:
+            p12_local.append(xy)
+        if pad in P3V3_PADS:
+            p3_local.append(xy)
     if len(p48_local) != 16:
         raise SystemExit(f"expected 16 Conn0 P48V pads in footprint, got {len(p48_local)}")
+    if len(p12_local) != 5:
+        raise SystemExit(f"expected 5 Conn0 P12V1 pads in footprint, got {len(p12_local)}")
+    if len(p3_local) != 2:
+        raise SystemExit(f"expected 2 Conn0 P3V3 pads in footprint, got {len(p3_local)}")
 
     pad_sig = {(r["connector"], r["pin"]): r["signal"] for r in rows}
     p48_csv = [r["pin"] for r in rows if r["connector"] == "Conn0" and r["signal"] == "P48V"]
@@ -756,7 +777,9 @@ def write_pcb(rows: list[dict]) -> None:
             nets[name] = len(nets) + 1
         return nets[name]
 
-    for n in ["GND", "P48V", "P12V1", "P12V2", "P3V3", "P48V_STAR"]:
+    for n in ["GND", "P48V", "P12V1", "P12V2", "P3V3", "P48V_STAR", "P48V_BRICK"] + [
+        p48_net(s) for s in range(1, N_SEATS)
+    ]:
         nid(n)
 
     seats_meta = []
@@ -790,7 +813,7 @@ def write_pcb(rows: list[dict]) -> None:
                 f'    (pad "{pad}" smd circle (at {at}) (size {size}) (layers {layers}){extra})'
             )
         fp_blocks.append(f'''  (footprint "footprints:218910-1115_candidate" (layer "F.Cu") (at {x:.3f} {y:.3f} {rot})
-    (descr "v1.0 mapped geometry candidate — DO NOT FABRICATE")
+    (descr "v1.0 mapped Molex 218910-1115. Skip-pin NC. DO NOT ENERGIZE P48V.")
     (property "Reference" "{ref}" (at 0 -14) (layer "F.SilkS") (effects (font (size 1.2 1.2) (thickness 0.15))))
     (property "Value" "218910-1115" (at 0 14) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
     (property "Sheetfile" "{PROJ}.kicad_sch" (at 0 0) (layer "F.Fab") (effects (font (size 1 1)) hide))
@@ -804,10 +827,10 @@ def write_pcb(rows: list[dict]) -> None:
     p48_id = nid("P48V")
     sx, sy = SB175_AT
     fp_blocks.append(f'''  (footprint "footprints:Anderson_SB175_2pole" (layer "F.Cu") (at {sx:.3f} {sy:.3f})
-    (descr "Anderson SB175 175A/600V long-edge entry. 2 AWG landing. DO NOT ENERGIZE. Not D3000E-S1.")
-    (property "Reference" "J_SB175" (at 0 -28) (layer "F.SilkS") (effects (font (size 1.2 1.2) (thickness 0.15))))
-    (property "Value" "SB175_175A_600V" (at 0 24) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
-    (fp_text user "2 AWG from shelf — Kelvin sense at star — DO NOT ENERGIZE P48V" (at 0 -22) (layer "F.SilkS")
+    (descr "Anderson 6325G1 + 2x 1382 SB175 175A/600V on-board landing. DO NOT ENERGIZE. Not D3000E-S1.")
+    (property "Reference" "J_SB175" (at -40 0) (layer "F.SilkS") (effects (font (size 1.2 1.2) (thickness 0.15))))
+    (property "Value" "6325G1_SB175" (at 0 24) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
+    (fp_text user "6325G1 + 2x 1382 — Kelvin sense — DO NOT ENERGIZE P48V" (at -40 6) (layer "F.SilkS")
       (effects (font (size 0.8 0.8) (thickness 0.1))))
     (fp_rect (start -26.55 -17.7) (end 26.55 17.7) (stroke (width 0.15) (type solid)) (fill none) (layer "F.SilkS"))
     (fp_rect (start -27.5 -18.5) (end 27.5 18.5) (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
@@ -819,7 +842,7 @@ def write_pcb(rows: list[dict]) -> None:
     (pad "" np_thru_hole circle (at 14.3 8) (size 8.00 8.00) (drill 6.60) (layers "*.Cu" "*.Mask"))
   )''')
 
-    net_decls = "\n".join(f'  (net {i} "{name}")' for name, i in sorted(nets.items(), key=lambda kv: kv[1]))
+    net_decls = ""  # rebuilt after fab copper assigns P48V_BRICK etc.
     hole_blocks = []
     for ref, hx, hy in holes:
         hole_blocks.append(
@@ -833,7 +856,7 @@ def write_pcb(rows: list[dict]) -> None:
     graphics = [
         f'  (gr_rect (start 0 0) (end {BOARD_W:.3f} {BOARD_H:.3f})',
         '    (stroke (width 0.2) (type solid)) (fill none) (layer "Edge.Cuts"))',
-        f'  (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay named-net chassis"',
+        f'  (gr_text "DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay POWER+MECH first article"',
         f'    (at {BOARD_W/2:.3f} 6) (layer "F.SilkS")',
         '    (effects (font (size 2.4 2.4) (thickness 0.3))))',
         f'  (gr_text "Molex 218910-1115 x16  |  12L 2.0mm TARGET  |  LOCAL P48V pours  |  2x PM8536B-FEI DNP  |  SB175 star  |  NOT a UBB"',
@@ -846,21 +869,34 @@ def write_pcb(rows: list[dict]) -> None:
 
     fuse_centers: list[tuple[int, float, float]] = []
     p48_bboxes: list[tuple[int, float, float, float, float]] = []
+    p12_bboxes: list[tuple[int, float, float, float, float]] = []
+    p3_bboxes: list[tuple[int, float, float, float, float]] = []
+    gnd_via_pts: list[tuple[float, float]] = []
     margin_p = 1.4
     for oam in range(N_SEATS):
         fx, fy = conn0_xy[oam]
-        world = [fp_to_world(fx, fy, ROT, px, py) for px, py in p48_local]
-        xs = [p[0] for p in world]
-        ys = [p[1] for p in world]
-        x0, y0 = min(xs) - margin_p, min(ys) - margin_p
-        x1, y1 = max(xs) + margin_p, max(ys) + margin_p
+        def _bbox(locals_xy):
+            world = [fp_to_world(fx, fy, ROT, px, py) for px, py in locals_xy]
+            xs = [p[0] for p in world]
+            ys = [p[1] for p in world]
+            return (min(xs) - margin_p, min(ys) - margin_p, max(xs) + margin_p, max(ys) + margin_p)
+        x0, y0, x1, y1 = _bbox(p48_local)
         p48_bboxes.append((oam, x0, y0, x1, y1))
-        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
-        dx, dy = cx - fx, cy - fy
-        nrm = math.hypot(dx, dy) or 1.0
-        fuse_cx = cx + 11.0 * dx / nrm
-        fuse_cy = cy + 11.0 * dy / nrm
+        p12_bboxes.append((oam, *_bbox(p12_local)))
+        p3_bboxes.append((oam, *_bbox(p3_local)))
+        row = oam // 4
+        fuse_cx = x1 + 5.5
+        fuse_cy = 169.5 if row == 0 else 336.0
         fuse_centers.append((oam, fuse_cx, fuse_cy))
+    # Unique GND stitch vias in KOZ interior (not the south channel / P12 spines).
+    seen = set()
+    for oam in range(N_SEATS):
+        kx, ky = koz_origin(oam)
+        for a, b in ((10, 10), (KOZ_W - 10, 10), (10, 70), (KOZ_W - 10, 70)):
+            pt = (round(kx + a, 3), round(ky + b, 3))
+            if pt not in seen:
+                seen.add(pt)
+                gnd_via_pts.append(pt)
 
     for oam in range(N_SEATS):
         kx, ky = koz_origin(oam)
@@ -952,45 +988,29 @@ def write_pcb(rows: list[dict]) -> None:
         f'    (at {BOARD_W/2:.3f} {BOARD_H-18:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
         f'  (gr_text "P48V STAR / Kelvin sense"',
-        f'    (at {sx:.3f} {sy-32:.3f}) (layer "F.SilkS")',
+        f'    (at {sx - 40:.3f} {sy:.3f}) (layer "F.SilkS")',
         '    (effects (font (size 1.4 1.4) (thickness 0.16))))',
         f'  (gr_text "off-board 48V via 2 AWG  |  NOT D3000E-S1 12V"',
         f'    (at {sx+55:.3f} {sy:.3f}) (layer "F.SilkS")',
         '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
-        f'  (gr_rect (start 118 {BOARD_H-18:.3f}) (end 148 {BOARD_H-6:.3f})',
-        '    (stroke (width 0.15) (type dash)) (fill none) (layer "F.CrtYd"))',
-        f'  (gr_text "P12V1 in <=50W  MPN Unknown  no VRM"',
-        f'    (at 133 {BOARD_H-12:.3f}) (layer "F.SilkS")',
-        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
-        f'  (gr_rect (start 152 {BOARD_H-18:.3f}) (end 182 {BOARD_H-6:.3f})',
-        '    (stroke (width 0.15) (type dash)) (fill none) (layer "F.CrtYd"))',
-        f'  (gr_text "P3V3 in <=5W  MPN Unknown  no VRM"',
-        f'    (at 167 {BOARD_H-12:.3f}) (layer "F.SilkS")',
-        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
         f'  (gr_text "P12V2 pads named v1.0 — Unknown / may be NC — do not short to P12V1"',
         f'    (at 280 {BOARD_H-12:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
     ]
 
-    fw, fh = 20.0, 12.0
     for oam, fcx, fcy in fuse_centers:
         graphics += [
-            f'  (gr_rect (start {fcx-fw/2:.3f} {fcy-fh/2:.3f}) (end {fcx+fw/2:.3f} {fcy+fh/2:.3f})',
-            '    (stroke (width 0.2) (type dash)) (fill none) (layer "F.CrtYd"))',
-            f'  (gr_rect (start {fcx-fw/2:.3f} {fcy-fh/2:.3f}) (end {fcx+fw/2:.3f} {fcy+fh/2:.3f})',
-            '    (stroke (width 0.15) (type dash)) (fill none) (layer "Dwgs.User"))',
-            f'  (gr_text "~15A FUSE S{oam}  MPN Unknown"',
-            f'    (at {fcx:.3f} {fcy:.3f}) (layer "F.SilkS")',
-            '    (effects (font (size 0.8 0.8) (thickness 0.1))))',
             f'  (gr_line (start {sx:.3f} {sy-8:.3f}) (end {fcx:.3f} {fcy:.3f})',
             '    (stroke (width 0.12) (type dash)) (layer "Dwgs.User"))',
         ]
 
     zones = []
-    # Local P48V pours — F.Cu only, one island per seat, 16 verified pads. Not a flood.
+    # Local P48V pours — F.Cu only, one island per seat. Mezz clearance is vendor 0.9 mm pitch.
+    # Star copper lives in fab_copper (0.64 mm / 25 mil). Not a 100 A flood.
     for oam, x0, y0, x1, y1 in p48_bboxes:
+        nname = p48_net(oam)
         zones.append(zone(
-            p48_id, "P48V", "F.Cu", P48V_CLEAR_MM,
+            nid(nname), nname, "F.Cu", MEZZ_ZONE_CLEAR_MM,
             [(x0, y0), (x1, y0), (x1, y1), (x0, y1)],
             priority=20,
         ))
@@ -998,9 +1018,6 @@ def write_pcb(rows: list[dict]) -> None:
             f'  (gr_rect (start {x0:.3f} {y0:.3f}) (end {x1:.3f} {y1:.3f})',
             '    (stroke (width 0.12) (type solid)) (fill none) (layer "Dwgs.User"))',
         ]
-    # Star copper at SB175 only (P48V_STAR), not tied to seat P48V until fuse is placed.
-    star_poly = [(sx - 22, sy - 22), (sx + 22, sy - 22), (sx + 22, sy + 6), (sx - 22, sy + 6)]
-    zones.append(zone(star_id, "P48V_STAR", "F.Cu", P48V_CLEAR_MM, star_poly, priority=15))
     # Inner GND planes — board-wide return. Not a P48V flood.
     gnd_poly = [(2.0, 2.0), (BOARD_W - 2.0, 2.0), (BOARD_W - 2.0, BOARD_H - 2.0), (2.0, BOARD_H - 2.0)]
     zones.append(zone(gnd_id, "GND", "In1.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
@@ -1008,25 +1025,30 @@ def write_pcb(rows: list[dict]) -> None:
     zones.append(zone(gnd_id, "GND", "In7.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
     zones.append(zone(gnd_id, "GND", "In10.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
 
+    fab_fps, fab_tracks, fab_vias, fab_zones, fab_gfx = build_fab_copper(
+        nid, p48_bboxes, fuse_centers, conn0_xy, p12_bboxes, p3_bboxes, gnd_via_pts,
+    )
+    fp_blocks.extend(fab_fps)
+    zones.extend(fab_zones)
+    graphics.extend(fab_gfx)
+
     keepouts = [
         keepout_rect(*SW0_KEEPOUT),
         keepout_rect(*SW1_KEEPOUT),
         keepout_rect(*HOST_CABLE_KEEPOUT),
     ]
-    for oam, fcx, fcy in fuse_centers:
-        keepouts.append(keepout_rect(fcx - fw / 2, fcy - fh / 2, fcx + fw / 2, fcy + fh / 2))
-    keepouts.append(keepout_rect(118.0, BOARD_H - 18.0, 148.0, BOARD_H - 6.0))
-    keepouts.append(keepout_rect(152.0, BOARD_H - 18.0, 182.0, BOARD_H - 6.0))
+
+    net_decls = "\n".join(f'  (net {i} "{name}")' for name, i in sorted(nets.items(), key=lambda kv: kv[1]))
 
     pcb = f'''(kicad_pcb (version {PCB_VER}) (generator "{GEN}") (generator_version "9.0")
   (general (thickness {BOARD_THICK_MM}))
   (paper "A1")
   (title_block
-    (title "DO NOT FABRICATE — Rev3 8-seat PCBWay named-net chassis")
+    (title "DO NOT ENERGIZE P48V — Rev3 8-seat PCBWay POWER+MECH first article")
     (date "2026-08-22")
     (rev "Rev3_8Seat_PCBWay_v1")
-    (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN.")
-    (comment 2 "492 x 372 mm 12-layer 2.0 mm stuffed-switch TARGET. Local P48V. 2x PM8536 DNP PRIMARY. SB175.")
+    (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN. Skip-pin NC. Not D3000E-S1.")
+    (comment 2 "492 x 372 mm 12-layer 2.0 mm. Local P48V. 2x PM8536 DNP. SB175 6325G1. THL40+OKI.")
   )
   (layers
     (0 "F.Cu" signal)
@@ -1041,6 +1063,8 @@ def write_pcb(rows: list[dict]) -> None:
     (9 "In9.Cu" signal)
     (10 "In10.Cu" power)
     (31 "B.Cu" signal)
+    (32 "B.Paste" user)
+    (33 "F.Paste" user)
     (37 "F.SilkS" user)
     (36 "B.SilkS" user)
     (39 "F.Mask" user)
@@ -1083,6 +1107,8 @@ def write_pcb(rows: list[dict]) -> None:
 {chr(10).join(graphics)}
 {chr(10).join(hole_blocks)}
 {chr(10).join(fp_blocks)}
+{chr(10).join(fab_tracks)}
+{chr(10).join(fab_vias)}
 {chr(10).join(zones)}
 {chr(10).join(keepouts)}
 )
@@ -1102,6 +1128,7 @@ def write_pcb(rows: list[dict]) -> None:
         for (n, oam, conn), plist in sorted(grouped.items()):
             w.writerow([n, oam, conn, " ".join(plist)])
         w.writerow(["P48V_STAR", "", "J_SB175", "1 K+"])
+        w.writerow(["P48V_BRICK", "", "U_P12V1", "1"])
 
 
 def write_project() -> None:
@@ -1120,9 +1147,17 @@ def write_project() -> None:
                     "courtyard_line_width": 0.05,
                     "silk_line_width": 0.12,
                 },
-                "rules": {"min_clearance": 0.1, "min_track_width": 0.1},
-                "track_widths": [0.1, 0.2, 0.5, 1.0, 2.0],
+                "rules": {"min_clearance": 0.15, "min_track_width": 0.15, "min_via_diameter": 0.6, "min_through_hole_diameter": 0.3},
+                "track_widths": [0.15, 0.2, 0.5, 1.0, 2.0],
                 "via_dimensions": [{"diameter": 0.6, "drill": 0.3}],
+                "custom_rules": (
+                    "(version 1)\n"
+                    "(rule \"mezz Molex 0.9mm vendor pitch\"\n"
+                    "  (constraint clearance (min 0.20mm))\n"
+                    "  (condition \"A.Type == 'Pad' && B.Type == 'Pad' && "
+                    "A.Parent.Reference =~ 'J[0-7]_Conn.*' && "
+                    "B.Parent.Reference =~ 'J[0-7]_Conn.*'\"))\n"
+                ),
             }
         },
         "boards": [],
@@ -1132,8 +1167,12 @@ def write_project() -> None:
         "net_settings": {
             "classes": [
                 {"name": "Default", "clearance": 0.2, "track_width": 0.25},
-                {"name": "P48V", "clearance": 0.64, "track_width": 2.0, "nets": ["P48V", "P48V_STAR"]},
+                {"name": "P48V", "clearance": 0.20, "track_width": 1.0,
+                 "nets": ["P48V"] + [f"P48V_S{i}" for i in range(1, 8)]},
+                {"name": "P48V_STAR", "clearance": 0.64, "track_width": 2.0, "nets": ["P48V_STAR", "P48V_BRICK"]},
                 {"name": "GND", "clearance": 0.25, "track_width": 0.5, "nets": ["GND"]},
+                {"name": "P12V1", "clearance": 0.20, "track_width": 0.5, "nets": ["P12V1"]},
+                {"name": "P3V3", "clearance": 0.20, "track_width": 0.5, "nets": ["P3V3"]},
             ],
             "meta": {"version": 2},
         },
@@ -1141,7 +1180,7 @@ def write_project() -> None:
         "schematic": {"annotate_start_num": 0},
         "sheets": [[f"{PROJ}.kicad_sch", "Root"]] + [[rel, name] for name, rel in SHEETS],
         "text_variables": {
-            "DO_NOT_FABRICATE": "true",
+            "DO_NOT_FABRICATE": "false",
             "DO_NOT_ENERGIZE": "true",
             "PINMAP": "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map",
         },
@@ -1168,6 +1207,18 @@ def write_ipc_netlist(rows: list[dict]) -> None:
     lines.append("J_SB175.K+\tP48V_STAR")
     lines.append("J_SB175.2\tGND")
     lines.append("J_SB175.K-\tGND")
+    for s in range(N_SEATS):
+        lines.append(f"F{s}.1\tP48V_STAR")
+        lines.append(f"F{s}.2\t{p48_net(s)}")
+    lines.append("F_P12.1\tP48V_STAR")
+    lines.append("F_P12.2\tP48V_BRICK")
+    lines.append("U_P12V1.1\tP48V_BRICK")
+    lines.append("U_P12V1.2\tGND")
+    lines.append("U_P12V1.3\tP12V1")
+    lines.append("U_P12V1.5\tGND")
+    lines.append("U_P3V3.1\tP12V1")
+    lines.append("U_P3V3.2\tGND")
+    lines.append("U_P3V3.3\tP3V3")
     (ROOT / f"netlist/{PROJ}.net").write_text("\n".join(lines) + "\n")
 
 
@@ -1203,7 +1254,7 @@ def main() -> None:
         "named_pads": len(rows),
         "unmapped_signal_names": sorted({r["signal"] for r in rows if is_unmapped(r["signal"])}),
         "shared_rails": sorted(SHARED_RAILS),
-        "do_not_fabricate": True,
+        "do_not_fabricate": False,
         "do_not_energize_p48v": True,
         "rev": "Rev3_8Seat_PCBWay_Chassis_v1",
         "molex_voltage_ticket": "167157",
@@ -1237,11 +1288,16 @@ def main() -> None:
         "npth_m35_count": N_SEATS * 4,
         "p48v_pour": "local_per_seat_F.Cu_not_board_wide_flood",
         "p48v_star_net": "P48V_STAR",
-        "board_entry": "Anderson SB175 175A/600V long edge, 2 AWG",
+        "board_entry": "Anderson 6325G1 housing + 2x 1382 1/0 AWG contacts (SB175 175A/600V)",
         "p48v_not_tied_to": "Dell D3000E-S1 12V CRPS",
         "no_psu_shopping_on_pcb_bom": True,
         "fuse_per_seat_A": 15,
-        "fuse_mpn": "Unknown",
+        "fuse_mpn": "0476015.MR",
+        "fuse_brick_mpn": "0476002.MR",
+        "p12v1_mpn": "THL 40-4812WI",
+        "p12v1_watts_first_article": 40,
+        "p3v3_mpn": "OKI-78SR-3.3/1.5-W36-C",
+        "pm8536_pinout": "not_public_DNP_courtyard",
         "pcie_switch_mpn": "PM8536B-FEI",
         "pcie_switch_status": "PRIMARY_DNP",
         "pcie_switch_qty_dnp": 2,

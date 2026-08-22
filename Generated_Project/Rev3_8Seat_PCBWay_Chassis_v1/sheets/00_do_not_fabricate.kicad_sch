@@ -1,21 +1,21 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "8147ee91-0125-434b-ad20-4be75e42cb97")
+	(uuid "361a555a-f883-4843-aded-25da96a2e5a5")
 	(paper "A3")
 	(title_block
-		(title "DO NOT FABRICATE")
+		(title "ENERGIZE / STUFFING GATES (fab zip in fab/)")
 		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-        (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
         (comment 2 "Documentation sheet — no invented nets")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
         (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "GATE LIST — all must be closed before fabrication or applying power to an MI250X.\n\n1. 48V source identified AND harnessed to the SB175. Dell D3000E-S1 is 12 V CRPS —\n   do not tie OAM P48V to it. No PSU shopping on this PCB BOM.\n2. Molex 218910-1115 voltage/skip-pin: WRITTEN YES 2026-08-18 (Brian Park / ticket 167157).\n   CSA 60 V (COFC 80170713) at OCP P48V. Published OCP P48V map already satisfies Skip Pins\n   — do NOT add extra NC pads. Eli ack 2026-08-19.\n   STILL OPEN: 1.2 A per used power contact at 48-59.5 V (2 oz), and skip/void is NC\n   on the same MPN. DO NOT ENERGIZE until that current follow-up is written.\n3. Connector gender/stack: hermaphroditic 2189101115 mates with itself, 5 mm stack.\n   Confirm PIN A3 orientation on a plot before tape-out (rotation 180 Inferred).\n4. AMD overlay unknowns (TEST*, dual-GCD PE vs SERDES_7, SMBus map, P12V2 need, xGMI S1-S7).\n5. Host X11DPH-T is NOT on this PCB. Cooler on the host is NH-D9 DX-3647 (NOT U14S).\n   Chamber A mATX B550M 244x244 is NOT on this PCB.\n6. PCIe: all 8 seats named toward 2x PM8536B-FEI DNP PRIMARY (x8 per GCD).\n   SW0 seats 0-3, SW1 seats 4-7. Two CPU x16 uplinks. PEX8780 is docs-only cheaper 80-lane alt.\n   No CEM cable invented. Host MPN Unknown (silk keepout only).\n7. HOST_PWRGD is ENABLE. Sequencing vs P48V/P12V1/P3V3 — OCP + AMD overlay only.\n8. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.\n9. Per-seat ~15 A fuse MPN still Unknown (keepout only). P12V1 <=50 W and P3V3 <=5 W\n   sources are keepouts — no GPU multiphase VRM on this PCB.\n10. Do not upload to PCBWay. 12L 2.0 mm is the stuffed-switch target (plan 12-16L, not 4);\n    8L 2.0 mm is a cheaper DNP-switch option only.\n\nUntil then this KiCad tree is a mapping artifact. Do not send to PCBWay. DO NOT ENERGIZE P48V.\n"
+	(text "GATE LIST — energize / stuffing. POWER+MECH Gerbers are in fab/. Eli uploads; this agent does not.\n\n1. 48V source identified AND harnessed to the SB175. Dell D3000E-S1 is 12 V CRPS —\n   do not tie OAM P48V to it. No PSU shopping on this PCB BOM.\n2. Molex 218910-1115 voltage/skip-pin: WRITTEN YES 2026-08-18 (Brian Park / ticket 167157).\n   CSA 60 V (COFC 80170713) at OCP P48V. Published OCP P48V map already satisfies Skip Pins\n   — do NOT add extra NC pads. Eli ack 2026-08-19.\n   STILL OPEN: 1.2 A per used power contact at 48-59.5 V (2 oz), and skip/void is NC\n   on the same MPN. DO NOT ENERGIZE until that current follow-up is written.\n3. Connector gender/stack: hermaphroditic 2189101115 mates with itself, 5 mm stack.\n   Confirm PIN A3 orientation on a plot before tape-out (rotation 180 Inferred).\n4. AMD overlay unknowns (TEST*, dual-GCD PE vs SERDES_7, SMBus map, P12V2 need, xGMI S1-S7).\n5. Host X11DPH-T is NOT on this PCB. Cooler on the host is NH-D9 DX-3647 (NOT U14S).\n   Chamber A mATX B550M 244x244 is NOT on this PCB.\n6. PCIe: all 8 seats named toward 2x PM8536B-FEI DNP PRIMARY (x8 per GCD).\n   SW0 seats 0-3, SW1 seats 4-7. Two CPU x16 uplinks. PEX8780 is docs-only cheaper 80-lane alt.\n   No CEM cable invented. Host MPN Unknown (silk keepout only). Do not stuff PM8536 this article.\n7. HOST_PWRGD is ENABLE. Sequencing vs P48V/P12V1/P3V3 — OCP + AMD overlay only.\n8. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.\n9. Per-seat fuse Littelfuse 0476015.MR 15 A. P12V1 = THL 40-4812WI (40 W first article).\n   P3V3 = OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM on this PCB.\n10. Do not upload to PCBWay from this agent. 12L 2.0 mm stuffed-switch TARGET (plan 12-16L, not 4);\n    8L 2.0 mm is a cheaper DNP-switch option only.\n\nFab zip is POWER+MECH. Do not stuff the DNP switches. DO NOT ENERGIZE P48V.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "b1b2f5a9-c0d9-4818-8575-00fa56d0d597")
+		(uuid "8fbd6f66-34a5-4c03-b6ce-6772a1058fd3")
 	)
 
 	(sheet_instances
