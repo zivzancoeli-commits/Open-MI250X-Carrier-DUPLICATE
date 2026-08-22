@@ -56,6 +56,18 @@ Generated_Project/Rev2_MI250X_Carrier_BuyableFirstSystem_v1/
 
 Shopping list: `20_System_BOM/SHOPPING.md`. Pin map authority: `22_Pinmap_Research/` (OCP generic v1.0, 688 contacts, not r2.0).
 
+## Rev3 8-seat PCBWay chassis (Chamber B PCB only, 2026-08-22)
+
+**DO NOT ENERGIZE P48V.** POWER+MECH first-article zip is in `Rev3_8Seat_PCBWay_Chassis_v1/fab/`. Do not upload from this agent. Does not overwrite Rev1 or Rev2 trees.
+
+```
+Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/
+```
+
+Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target. First article: seats **0–1** GCD0 x16. Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
+
+**8× full-width CONCEPT** (ideas only, **DO NOT FABRICATE** as live PE): `Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md`. Late-bind reservations: `Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md` (**16× x16 + four BGA escapes = respin**). X11DPH-T **cannot light 8× full-width**. Do not invent overlay / ball maps / CEM/MCIO. **DO NOT ENERGIZE.** The POWER+MECH zip will **not** work as a live GPU chassis if sent to PCBWay.
+
 ## Exhaustive public-source hunt (copied tree, 2026-08-17)
 
 Research only — **not fab-ready**. Findings: `Generated_Project/Rev2_MI250X_Carrier_ExhaustiveSourceHunt_v1/FINDINGS.md`.

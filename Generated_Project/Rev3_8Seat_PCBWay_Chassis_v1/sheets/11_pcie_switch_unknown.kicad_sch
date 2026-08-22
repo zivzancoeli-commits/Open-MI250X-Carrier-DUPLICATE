@@ -1,22 +1,164 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "453627e5-a372-4a37-934f-bc4da528ac81")
+	(uuid "e23abd76-a874-4685-98ee-f0860fd57634")
 	(paper "A3")
 	(title_block
-		(title "PCIe switch MPN Unknown")
-		(date "2026-08-21")
+		(title "PM8536B-FEI DNP x4 (later path; not stuffed for 2-mod)")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "Documentation sheet — no invented nets")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
+        (comment 2 "Documentation sheet — no invented nets")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "SEATS 2-7 HOST I/O — NOT CLOSED.\n\nX11DPH-T (system host, NOT on this PCB):\n  3x PCIe Gen3 x16 + 4x Gen3 x8.\nEach MI250X OAM is 2 GCD and typically presents 2x x16 of host PCIe.\n8 seats therefore need far more host lanes than the locked motherboard has.\n\nThis stub:\n- Seats 0-1: named PCIE_* nets aimed at the HOST CONNECTOR REGION on the PCB.\n  No CEM / SlimSAS / MCIO / retimer MPN is invented.\n- Seats 2-7: mechanical + power pads only. PCIe and S1-S7 have no net.\n\nTo light seats 2-7 later, this carrier would need an on-board PCIe switch\n(and likely a refclk / PERST distribution tree).\n\nneeds on-board PCIe switch — MPN Unknown.\n\nDo not buy a random Broadcom/Microchip switch to \"finish\" this board.\nSI, bifurcation, dual-GCD mapping, and the AMD overlay are all still Unknown.\nDo not route S1-S7 as a pretend xGMI mesh.\n"
+	(text "FOUR PM8536B-FEI KEEPOUTS — DNP, later-seat architecture. No fake pins. No ball map.\n\nFIRST ARTICLE does NOT stuff any switch. Seats 0-1 GCD0 names go toward the host keepout\n(PE_S0_GCD0_x16 + PE_S1_GCD0_x16). Two GCD0 x16 FIT X11DPH-T. Two full-width modules do NOT.\n\nU_SW0  PM8536B-FEI  DNP  seats 0-1   later 8-seat / full-width path\nU_SW1  PM8536B-FEI  DNP  seats 2-3\nU_SW2  PM8536B-FEI  DNP  seats 4-5\nU_SW3  PM8536B-FEI  DNP  seats 6-7\n\nPackage (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA,\n1.0 mm pitch. Courtyard/keepout only. Do NOT populate this article.\n\nGCD1 = SERDES_7 is Inferred — NO public AMD overlay. Do NOT route S1-S7.\nConn1 has ZERO PCIE_* pads. Conn0 PCIE_* is the only legal named host PE.\n\nDo not invent CEM / SlimSAS / MCIO / retimer. SuperMicro CBL-MCIO is a UBB cable,\nnot an X11DPH-T CEM map. No MCIO-on-carrier MPN placed (none chosen with a public\nfootprint AND without inventing OAM↔MCIO).\n\nPopulate: seats 0-1 first (no switch), then 0-3, then all 8 + SW0-SW3. Same PCB.\n\n8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md\nDO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.\nxGMI = boxes and XGMI_Sn_P* names only. Do NOT assign S1-S7.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "7bdd22dc-4e22-4c36-8908-b05666b4c506")
+		(uuid "2e630a04-efd3-4cf1-87ea-5d19e74e4e4b")
 	)
+
+
+	(hierarchical_label "PE_S0_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 150 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c1f904c2-2d09-4ecb-9acb-2d36aa0373e2")
+	)
+
+	(hierarchical_label "PE_S0_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 154.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9cefcd2c-9093-4253-9da8-462ff13159ee")
+	)
+
+	(hierarchical_label "PE_S1_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 159.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2911bff6-4eb1-4975-bac2-1718d9ecade5")
+	)
+
+	(hierarchical_label "PE_S1_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 163.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cadf009c-9632-4394-9310-e2808c327ca5")
+	)
+
+	(hierarchical_label "PE_S2_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 168.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ff5af8d8-ef81-43d4-b386-e4fe57d7d383")
+	)
+
+	(hierarchical_label "PE_S2_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 172.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "09a7670f-8ed5-4a44-b72a-ab9039062f3f")
+	)
+
+	(hierarchical_label "PE_S3_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 177.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "585d6c5a-ba7f-4b26-b9eb-c31bffa8838f")
+	)
+
+	(hierarchical_label "PE_S3_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 181.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d5a67037-a07d-47f5-94fd-59cb21bdaddb")
+	)
+
+	(hierarchical_label "PE_S4_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 186.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e4ea77ca-882f-4cf2-b29c-582b035feadf")
+	)
+
+	(hierarchical_label "PE_S4_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 190.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c51df346-eb0c-4c89-af5f-fa8569400a17")
+	)
+
+	(hierarchical_label "PE_S5_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 195.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8347840b-a36c-49c7-9e1f-aed466efb057")
+	)
+
+	(hierarchical_label "PE_S5_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 199.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ffef9a4b-09d3-4712-b019-8a11c6a0b2a0")
+	)
+
+	(hierarchical_label "PE_S6_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 204.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f1346d41-6582-4c3c-b237-334b05e0d347")
+	)
+
+	(hierarchical_label "PE_S6_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 208.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "808854ed-f202-44f1-b3cd-4d8ccecc5661")
+	)
+
+	(hierarchical_label "PE_S7_GCD0_x16"
+		(shape bidirectional)
+		(at 25.4 213.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "86a0e31d-d9cf-43c2-8e53-660d515e2478")
+	)
+
+	(hierarchical_label "PE_S7_GCD1_x16"
+		(shape bidirectional)
+		(at 25.4 217.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "497e3a4c-837c-4c90-ad6c-44df344eca4c")
+	)
+
+	(hierarchical_label "PE_SW0_US_x16"
+		(shape bidirectional)
+		(at 25.4 222.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f20e43a2-ab67-4edd-9f37-08b845557adb")
+	)
+
+	(hierarchical_label "PE_SW1_US_x16"
+		(shape bidirectional)
+		(at 25.4 226.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e2d93798-70de-46ab-a2fb-4946cfae5df0")
+	)
+
+	(hierarchical_label "PE_SW2_US_x16"
+		(shape bidirectional)
+		(at 25.4 231.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8a9eb75d-fc4c-4280-87d4-59d249bdf521")
+	)
+
+	(hierarchical_label "PE_SW3_US_x16"
+		(shape bidirectional)
+		(at 25.4 235.5 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4a2884b8-34fd-4779-bff5-c6cecb64183c")
+	)
+
 
 	(sheet_instances
 		(path "/"

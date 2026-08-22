@@ -1,21 +1,21 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "676d2c58-9b23-4794-a1f0-d450280bd16a")
+	(uuid "5d11c232-d214-45cd-bda1-f3dcaeaff8db")
 	(paper "A3")
 	(title_block
-		(title "Host PCIe stub (OAM0-OAM1 only)")
-		(date "2026-08-21")
+		(title "Host PE: 2-mod first article GCD0 x16; later-seat names kept")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "Documentation sheet — no invented nets")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
+        (comment 2 "Documentation sheet — no invented nets")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "PURPOSE: Host PCIe stub using ONLY v1.0 names PCIE_TXnP/N and PCIE_RXnP/N (n=0..15).\n\nTHIS SHEET IS SEATS 0 AND 1 ONLY.\n\nOCP pin list (module POV):\n- PETp/n = module TX, host RX. AC caps on motherboard/carrier — not placed.\n- PERp/n = module RX, host TX. AC caps on motherboard/carrier — not placed.\n\nThis sheet does NOT map those pairs onto a CEM x16 connector pinout.\nDo NOT invent a CEM cable, SlimSAS, MCIO, or retimer BOM.\n\nHost: SuperMicro X11DPH-T is PCIe Gen3 (3x x16 + 4x x8).\nEach MI250X module is 2 GCD, typically 2x x16. 8 modules need far more\nhost lanes than X11DPH-T provides. Seats 0-1 are the only named host-facing\nPCIe nets, aimed at a documented HOST CONNECTOR REGION on the PCB (silk/courtyard,\nno connector MPN).\n\nSeats 2-7: see sheet 11. needs on-board PCIe switch — MPN Unknown.\nX11DPH-T is NOT a part on this PCB.\n\nLane order, polarity invert, and dual-GCD (1x16 vs 2x8) need the AMD overlay.\nPE_BIF[1:0] on Conn1 report bifurcation; AMD default Unknown.\n"
+	(text "PURPOSE: Named v1.0 PCIE_TXnP/N and PCIE_RXnP/N (n=0..15) on ALL 8 seats.\n\nFIRST ARTICLE TARGET: seats 0 and 1. Same 8-seat PCB; 2→4→8 later.\n\nPinmap (Verified OCP v1.0 generic map + pin list; NOT an AMD overlay):\n- Conn0 PCIE_TX/RX0-15 P/N = 64 pads = PETp/n + PERp/n [15:0] \"PCIe or equivalent host link\".\n  That is the only legal named host PE today. Call it GCD0 x16 (architectural name).\n- Conn1 has ZERO PCIE_* pads. S7_* = SERDES_7 \"Reserved Link\" — 64 pads, NO NET.\n  GCD1 x16 is named-only. Do NOT assign S1-S7 as GCD1 PE.\n\nWithout overlay, \"2x MI250X\" on this zip:\n- CAN: two modules SIT on seats 0-1 (mech + named P48V/P12V1/P3V3/GND/GCD0 PE).\n- CAN target at most GCD0 on each (2 GCDs) toward the host keepout.\n- CANNOT: 2 modules at full width (4 GCDs). GCD1 pins Unknown.\n- CANNOT: light even those 2 GCD0 links until Molex 1.2 A/contact is written AND\n  a legal host connector exists. This article does not invent CEM/MCIO.\n\nHost X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8.\n- Two GCD0 x16 (PE_S0_GCD0_x16 + PE_S1_GCD0_x16) FIT the host lane budget.\n- Two full-width modules (4x x16) do NOT.\n\nThis sheet does NOT map pairs onto a CEM x16 pinout.\nDo NOT invent a CEM cable, SlimSAS, MCIO, or retimer BOM.\nDo NOT invent PE pin numbers.\n\nLater seats keep 8-seat names (PE_S2..S7 GCD0/GCD1 + PE_SWk_US_x16) and SW0-SW3 DNP.\n\n8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md\nDO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. Do not claim DRC-clean live PE.\n2-module first article does not require stuffing SW0.\n\nX11DPH-T is NOT a part on this PCB. Do not swap or design a host board.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "0e6a60b9-2d1a-4f95-a008-692fadc74638")
+		(uuid "d484b591-f601-44b3-976a-53ae1dd80f16")
 	)
 
 
@@ -23,896 +23,3742 @@
 		(shape bidirectional)
 		(at 25.4 130 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6d408d8b-2b5b-47f0-94d5-1629ba3cf5c5")
+		(uuid "0b850db9-9714-44d7-9c92-1174363d6443")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX0P"
 		(shape bidirectional)
 		(at 25.4 133.81 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "89ebf7c0-2710-4ef8-a1c0-315895e69a11")
+		(uuid "963fb8cc-441f-43c8-85f6-36da06381d0e")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX0N"
 		(shape bidirectional)
 		(at 25.4 137.62 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ca7e9caf-49f2-4752-bc7d-dd1630a119a8")
+		(uuid "53d5b785-060d-4a4f-a1f1-cefd39ec778a")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX0N"
 		(shape bidirectional)
 		(at 25.4 141.43 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9a0f036f-6f7a-4153-86c5-84da71b2fe68")
+		(uuid "63ed5548-a778-4e7f-b9c3-8f1ab24e0670")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX1P"
 		(shape bidirectional)
 		(at 25.4 145.24 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "896ca3ad-960c-43b0-92fc-8a30202f51c9")
+		(uuid "c88b0d95-559c-4130-952b-9ea8dc205b2b")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX1P"
 		(shape bidirectional)
 		(at 25.4 149.05 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "89f78049-1a5c-4ebc-8612-faef529816c0")
+		(uuid "4942c720-090e-46f0-ab1e-16d9c46cbb31")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX1N"
 		(shape bidirectional)
 		(at 25.4 152.86 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "daf198ac-f6a0-4550-b87c-e9e7e1bd4820")
+		(uuid "903b67b5-e8bb-4b44-9165-518cee90b246")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX1N"
 		(shape bidirectional)
 		(at 25.4 156.67000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1cad5e84-4e5b-48cf-8550-77a5e516560b")
+		(uuid "b7b10b1e-d785-4e02-aae7-0317c6288577")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX2P"
 		(shape bidirectional)
 		(at 25.4 160.48000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d6087ce2-b6b5-457b-850c-ed019f086072")
+		(uuid "4397acd8-946c-4b17-afb3-5c2045e08d76")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX2P"
 		(shape bidirectional)
 		(at 25.4 164.29000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "beca7336-91cf-43e3-8642-2249184e0306")
+		(uuid "f6024359-d846-4690-9388-48bb2d74e3ba")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX2N"
 		(shape bidirectional)
 		(at 25.4 168.10000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "264e30d0-22f7-4cb4-ab0e-edd925217c66")
+		(uuid "3713d3ba-656a-478c-9449-e4e01868a70d")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX2N"
 		(shape bidirectional)
 		(at 25.4 171.91000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "dabc8a67-bd0e-4745-a438-49cbb7455a59")
+		(uuid "415c9f20-9299-45af-b43b-ded6b3650817")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX3P"
 		(shape bidirectional)
 		(at 25.4 175.72000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8a40bddb-7efc-4695-a812-861ff8afa270")
+		(uuid "f3b57602-969b-40a0-b8a6-258dad3b37a2")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX3P"
 		(shape bidirectional)
 		(at 25.4 179.53000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e9be9aa3-e314-4ad5-8cc4-bb54e78e7dd8")
+		(uuid "404489e2-7531-4000-aa7d-5b23647fcba0")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX3N"
 		(shape bidirectional)
 		(at 25.4 183.34000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b7e0e8bd-4e5e-4cbb-aaf4-acf89e37df75")
+		(uuid "804590c7-011b-4d65-95da-64d308e166b8")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX3N"
 		(shape bidirectional)
 		(at 25.4 187.15000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "098ca2f8-3408-4ee6-b178-28ef47f05310")
+		(uuid "df84ccbc-fd38-451f-98cd-53707e9d525f")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX4P"
 		(shape bidirectional)
 		(at 25.4 190.96000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b8a08748-d5f5-451e-80c4-1c1299053601")
+		(uuid "a5de8441-fe46-4639-96e3-efa7057ebd9a")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX4P"
 		(shape bidirectional)
 		(at 25.4 194.77000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "32d04596-6291-4565-a053-df6f3d523bb6")
+		(uuid "105ac4e4-9ccd-493a-a515-3976f262c4f9")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX4N"
 		(shape bidirectional)
 		(at 25.4 198.58000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5afab7da-1c09-4cd4-9a71-5390c5e6c207")
+		(uuid "b45e9f85-a428-420a-b501-676c789bb7cd")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX4N"
 		(shape bidirectional)
 		(at 25.4 202.39000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c02fa96c-0bfc-465c-9b7f-e6dc70392e1f")
+		(uuid "530374c7-f978-4a9a-a035-ccd71bfbde98")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX5P"
 		(shape bidirectional)
 		(at 25.4 206.20000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "877431a7-4901-4ce9-a50a-d970b400c82e")
+		(uuid "335c6460-bbe7-4569-aa52-733b3fcffea9")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX5P"
 		(shape bidirectional)
 		(at 25.4 210.01000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7b151eb4-7ed8-4312-b95e-72060a6d37a5")
+		(uuid "84c4d4e9-8de6-45ca-9b9f-83503eb80523")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX5N"
 		(shape bidirectional)
 		(at 25.4 213.82000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "184f2707-ad51-405b-b3c1-78f4eb501658")
+		(uuid "80700382-9394-42e7-8055-862c7a4043ef")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX5N"
 		(shape bidirectional)
 		(at 25.4 217.63000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1ada9a1b-eadf-47df-97cd-f2ca0b1b7243")
+		(uuid "11805b52-32da-41ef-96fc-ba5dfe955ac7")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX6P"
 		(shape bidirectional)
 		(at 25.4 221.44000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5e4930d6-0d7d-488b-8ea8-5835bd0e58a7")
+		(uuid "8b4b1247-01b7-474d-84f3-ed6711be5097")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX6P"
 		(shape bidirectional)
 		(at 25.4 225.25000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6a05161e-2af3-4e1a-bcf4-ec410283ea4e")
+		(uuid "87d793c0-a056-4ddb-891b-e604ac7c27ca")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX6N"
 		(shape bidirectional)
 		(at 25.4 229.06000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6cf14035-18f5-4ec7-8fdc-b4a466c03495")
+		(uuid "8ac0a8dc-7b40-4200-972d-b38aafe85bd2")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX6N"
 		(shape bidirectional)
 		(at 25.4 232.87000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "cfdde6eb-f90b-4512-8f53-5706aba1f702")
+		(uuid "22e4efc4-509a-4f6c-a8fb-9f94d582b858")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX7P"
 		(shape bidirectional)
 		(at 25.4 236.68000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b5ce0048-f224-4629-8ae3-fc81d8e14171")
+		(uuid "34b7da45-dcf1-4c0e-8abf-93ccdbfc86a0")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX7P"
 		(shape bidirectional)
 		(at 25.4 240.49000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fbbaca3a-f9fb-4694-922c-e4200c951414")
+		(uuid "c25d9e3b-fcef-4a18-8a13-31e3d3d66c5f")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX7N"
 		(shape bidirectional)
 		(at 25.4 244.30000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "55372282-b1e3-415f-a4fc-29d0b7470ada")
+		(uuid "e81cad47-ddb9-4d21-9934-d105a261d592")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX7N"
 		(shape bidirectional)
 		(at 25.4 248.11000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8e7b73f3-6875-43bc-a8f2-29bb434abeeb")
+		(uuid "d8370e7d-f411-4919-898b-a2caf1256b25")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX8P"
 		(shape bidirectional)
 		(at 25.4 251.92000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "947d27d8-c30a-42db-8bc1-1eed0d253539")
+		(uuid "c969e998-1b56-4e09-b50b-f96a31005a3d")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX8P"
 		(shape bidirectional)
 		(at 25.4 255.73000000000008 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "141855de-ca15-4769-9a64-40132a06a892")
+		(uuid "05646ff6-2339-4a4e-b923-7c4cb2640378")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX8N"
 		(shape bidirectional)
 		(at 25.4 259.5400000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fd905fdd-c5e8-451e-9a4f-e6c664dd3441")
+		(uuid "82931902-dd56-450b-a05e-81d54adbc290")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX8N"
 		(shape bidirectional)
 		(at 95.4 130 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7632646b-6864-4a50-8fbc-1d23df28949a")
+		(uuid "b405bd0f-35ae-4c78-a1f5-676c6161ab23")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX9P"
 		(shape bidirectional)
 		(at 95.4 133.81 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8bd35c5a-008f-4c68-9158-2e6662be9f4d")
+		(uuid "002d807e-7aaf-427e-8888-06d0a11013bf")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX9P"
 		(shape bidirectional)
 		(at 95.4 137.62 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "38199caa-8fad-414b-bd3b-baea122028ed")
+		(uuid "c46e3bd2-4106-4a1b-b0ea-75aece3df124")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX9N"
 		(shape bidirectional)
 		(at 95.4 141.43 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "be8ae06c-7bb6-4fdd-b846-d356a87b314a")
+		(uuid "04dbd018-e179-417b-a446-a7b38601f4b3")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX9N"
 		(shape bidirectional)
 		(at 95.4 145.24 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "18b1ddc1-e82f-4a4c-b07d-d8aaa08f81b2")
+		(uuid "550ac077-a5fc-4500-beac-45a15ac09921")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX10P"
 		(shape bidirectional)
 		(at 95.4 149.05 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "dbfe0e55-f984-4a7e-93f1-4b0e961e0298")
+		(uuid "9d776dcd-4964-446d-bf21-39de8c616e56")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX10P"
 		(shape bidirectional)
 		(at 95.4 152.86 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "af01c2c0-a9f5-491c-886b-4642cc34bc43")
+		(uuid "5f3ba6fd-9f91-48df-b6ea-233c9fa4e79b")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX10N"
 		(shape bidirectional)
 		(at 95.4 156.67000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "776e6fdc-b0a2-47db-bf47-c41b3a35e7a3")
+		(uuid "2cbf097c-f843-49b8-9482-6f9839058453")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX10N"
 		(shape bidirectional)
 		(at 95.4 160.48000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e9826617-c73b-42ea-828c-b9accde26ba6")
+		(uuid "69fac506-4076-4062-9773-9ee996d9e42c")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX11P"
 		(shape bidirectional)
 		(at 95.4 164.29000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "021081b6-16e5-4f33-98c2-29c0ea52e571")
+		(uuid "619326d6-8ded-4bb5-b467-ed151a0434ca")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX11P"
 		(shape bidirectional)
 		(at 95.4 168.10000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b4be615a-97ce-42c7-ac92-89f8ff49577f")
+		(uuid "d935e7ad-f06c-49ce-ab50-da9efece2913")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX11N"
 		(shape bidirectional)
 		(at 95.4 171.91000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "540abec6-a485-4a74-ab4c-0b39ad590aa2")
+		(uuid "22087532-bdc8-4a0c-b5eb-2668453f4c06")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX11N"
 		(shape bidirectional)
 		(at 95.4 175.72000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "06124f58-2ca7-4c4c-848c-089ee6a30b75")
+		(uuid "4d690816-ace5-4630-8be9-fd4a94e59a73")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX12P"
 		(shape bidirectional)
 		(at 95.4 179.53000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e5d22127-8f3d-4883-9597-faa33333c532")
+		(uuid "bf1ada32-7851-49f4-85f1-c814b35abccc")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX12P"
 		(shape bidirectional)
 		(at 95.4 183.34000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6e91ca20-6460-4115-8a81-7ec44c2ebeb2")
+		(uuid "01e7d17e-fe82-4f55-9062-bb4e1702f0f3")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX12N"
 		(shape bidirectional)
 		(at 95.4 187.15000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d6b54f90-13ca-4d7d-80f6-96f48a1bd25f")
+		(uuid "1f08b147-5c01-4559-932d-78d0f3340be3")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX12N"
 		(shape bidirectional)
 		(at 95.4 190.96000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "84015149-aecc-49df-bbdb-f823350082c5")
+		(uuid "084cfac9-1c10-46f5-80fc-5c3b0d19c644")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX13P"
 		(shape bidirectional)
 		(at 95.4 194.77000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "60319f52-d9f8-4847-9c73-a1b2fece4d6b")
+		(uuid "3a033d59-7846-4bfb-a385-7f8b047d4b62")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX13P"
 		(shape bidirectional)
 		(at 95.4 198.58000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "0f119c86-938b-418e-ac4a-f4a00c9aed73")
+		(uuid "845d7ae0-c72b-4bc4-a209-acc2aa696318")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX13N"
 		(shape bidirectional)
 		(at 95.4 202.39000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "f8e80c91-da0e-4f74-bb1e-5ec202398993")
+		(uuid "df6c4f4f-3f64-454d-9a32-e24449ba052e")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX13N"
 		(shape bidirectional)
 		(at 95.4 206.20000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d49181a1-0bcd-42c6-9a3e-d67503f9973a")
+		(uuid "2dd3f0ca-7b1d-4f08-8f6e-4ee80ba77479")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX14P"
 		(shape bidirectional)
 		(at 95.4 210.01000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "cfbac29d-dbd5-4915-b0a9-1fb6b04dfc55")
+		(uuid "10f61f40-0b01-40b3-886a-2739926f3fc9")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX14P"
 		(shape bidirectional)
 		(at 95.4 213.82000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "21bf0389-9e95-4b6b-93c3-d205f2d75786")
+		(uuid "ceea06bb-b9cb-4c3f-bdce-a375156fd9b4")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX14N"
 		(shape bidirectional)
 		(at 95.4 217.63000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "aef82d1b-8ece-4e88-94ef-167756ca4e05")
+		(uuid "836568b8-f770-44a6-907a-e9ffb561d433")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX14N"
 		(shape bidirectional)
 		(at 95.4 221.44000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "84a020cb-0156-4a3f-9331-4dbb9a414763")
+		(uuid "f3607d52-ebc0-4688-a0db-bd22656e363b")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX15P"
 		(shape bidirectional)
 		(at 95.4 225.25000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c80ab6a4-8f6d-48aa-91f2-7b0250053a25")
+		(uuid "364ab9e8-223d-4a5e-a4b6-71d58b0adce1")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX15P"
 		(shape bidirectional)
 		(at 95.4 229.06000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a9799ffe-a332-401b-8605-586cfff0d666")
+		(uuid "38688643-f11a-4fd1-b26d-8e1e9c2d53a7")
 	)
 
 	(hierarchical_label "OAM0_PCIE_TX15N"
 		(shape bidirectional)
 		(at 95.4 232.87000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3b0470b0-180e-44c9-9a26-00899e7a78c2")
+		(uuid "9ee4c0de-da79-442b-9034-647b408cf4c5")
 	)
 
 	(hierarchical_label "OAM0_PCIE_RX15N"
 		(shape bidirectional)
 		(at 95.4 236.68000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "87ffc24a-cae4-494f-ad4e-ddc1d16b127d")
+		(uuid "7b38f8b9-f974-4cf9-9ed7-6e229904d066")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX0P"
 		(shape bidirectional)
 		(at 95.4 240.49000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5124585c-558d-43f6-bd65-d51488895c9b")
+		(uuid "d871e4db-17b0-4b58-ac5f-a73cb5c25eb4")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX0P"
 		(shape bidirectional)
 		(at 95.4 244.30000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a6c68104-3ae4-436a-b738-dfe4639c9de3")
+		(uuid "5d0f880b-dfe4-40fb-881d-dc610a3fe790")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX0N"
 		(shape bidirectional)
 		(at 95.4 248.11000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b10cc8d7-9785-4852-9c7e-1dc95e892f8c")
+		(uuid "6e0ae1b0-0abe-4e3a-83c9-f51bf8c4c253")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX0N"
 		(shape bidirectional)
 		(at 95.4 251.92000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9baf914f-58f3-466b-953f-40746d34a2a0")
+		(uuid "29b6b5c8-e748-4fcc-9bb3-e640e63f85ad")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX1P"
 		(shape bidirectional)
 		(at 95.4 255.73000000000008 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e03f8f9d-0ab4-455f-95d4-74286d95c4d8")
+		(uuid "e6b8aa10-ef77-4f9f-8bde-8fbca8c9d7e3")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX1P"
 		(shape bidirectional)
 		(at 95.4 259.5400000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "11e5b72e-6a5d-4acb-9165-ad857e701f1e")
+		(uuid "950d5e9b-d926-472f-adb9-bb63547b98bb")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX1N"
 		(shape bidirectional)
 		(at 165.4 130 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7dd99262-83f9-4c99-8a6b-e21da76d5782")
+		(uuid "b5ab3e05-156a-401e-9f6b-d6d33f8b1cb9")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX1N"
 		(shape bidirectional)
 		(at 165.4 133.81 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fdcb373e-bf13-4389-89b2-686d752780e4")
+		(uuid "cbef52bc-c111-4691-ac8e-82043f5a03d3")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX2P"
 		(shape bidirectional)
 		(at 165.4 137.62 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "36aed8bc-d30b-4316-bce6-348cfd435354")
+		(uuid "a9453267-b7bc-4100-be00-4df38b648635")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX2P"
 		(shape bidirectional)
 		(at 165.4 141.43 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "91a0466f-36a2-45fd-a994-3424f483d738")
+		(uuid "eb82c3d2-b104-4ad1-977a-502ffe032216")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX2N"
 		(shape bidirectional)
 		(at 165.4 145.24 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "bce853d2-5b20-4538-9316-4335d6fed278")
+		(uuid "01354987-0c08-4019-92f8-c6b661c2551a")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX2N"
 		(shape bidirectional)
 		(at 165.4 149.05 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "304015e5-6f39-4d08-83f1-bd56b87817a3")
+		(uuid "f1e6db7f-03d2-4cac-96e3-9ee5bd804a72")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX3P"
 		(shape bidirectional)
 		(at 165.4 152.86 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ef929e1b-dece-488b-b233-4c80e3634484")
+		(uuid "74117521-92d7-4dc4-986a-7bc0050d55ef")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX3P"
 		(shape bidirectional)
 		(at 165.4 156.67000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e12a81bb-fe49-4382-82d5-335d300f1077")
+		(uuid "4328c23b-9b81-4999-a8e0-45693a5b95a5")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX3N"
 		(shape bidirectional)
 		(at 165.4 160.48000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5ce5da01-f674-45a7-8020-72b2868cd447")
+		(uuid "c98867da-83c2-4bf7-a495-a2e0fe2e861b")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX3N"
 		(shape bidirectional)
 		(at 165.4 164.29000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6ad02da0-0f9b-4a39-aed7-80b5492d4266")
+		(uuid "4390a0d5-4d4c-4dc6-bb71-877127253970")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX4P"
 		(shape bidirectional)
 		(at 165.4 168.10000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "dfc36b73-ed17-42b7-9f16-77160f715f24")
+		(uuid "17355f83-4449-4dcf-ae03-f178d982fd07")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX4P"
 		(shape bidirectional)
 		(at 165.4 171.91000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fb680e45-d87d-401b-8c44-9e5b28af99df")
+		(uuid "26432ff6-013d-4a0d-8972-3529def42f0b")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX4N"
 		(shape bidirectional)
 		(at 165.4 175.72000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "61cae387-3a5b-4ea1-9b15-1f01367422cc")
+		(uuid "b5530c2c-a5e5-452c-ae6f-83f0e18dce28")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX4N"
 		(shape bidirectional)
 		(at 165.4 179.53000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c17b38f2-36c5-4f5b-85e2-14cb0e967ea7")
+		(uuid "48006864-7870-44f8-b779-6bf051d15d42")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX5P"
 		(shape bidirectional)
 		(at 165.4 183.34000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9d779392-fb6d-49e2-9047-80e62f38ba42")
+		(uuid "00620bee-c1e5-4f0c-bf6f-29b7c39fa493")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX5P"
 		(shape bidirectional)
 		(at 165.4 187.15000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e930d455-0195-4d42-b0ca-9f37105a86c0")
+		(uuid "16b2b73a-28f1-48ac-819a-0903ef4b524c")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX5N"
 		(shape bidirectional)
 		(at 165.4 190.96000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a0f37342-e535-447b-960b-358f4b451877")
+		(uuid "ed469482-439e-4ce8-a38b-152ed289cf0f")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX5N"
 		(shape bidirectional)
 		(at 165.4 194.77000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "6dbc8de9-cc58-46b9-a5a7-b8859afab629")
+		(uuid "39d44d9a-0843-41e3-a4a6-99cc4bc7bb73")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX6P"
 		(shape bidirectional)
 		(at 165.4 198.58000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "61d20ced-756d-4ea5-a9f9-63172305188c")
+		(uuid "d12a719c-4193-4982-8081-385c35a0395f")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX6P"
 		(shape bidirectional)
 		(at 165.4 202.39000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fe4fa3cf-1ec7-4d5d-b421-a911661fc112")
+		(uuid "cab50a9b-49e6-4cc9-933c-93f17037e6f6")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX6N"
 		(shape bidirectional)
 		(at 165.4 206.20000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "57f56260-7312-47c5-8dce-8ca58974dedb")
+		(uuid "6b12a01a-9973-4557-9b46-4fd43411f500")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX6N"
 		(shape bidirectional)
 		(at 165.4 210.01000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "08039665-7ad9-4b3b-b4ba-a75d574dc1f4")
+		(uuid "0ee88fbb-c4b9-4743-949a-dcc7facaaf24")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX7P"
 		(shape bidirectional)
 		(at 165.4 213.82000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1a4a1648-605c-4c89-a65c-5228578ed0d5")
+		(uuid "0186b00b-3d33-4775-9fff-6e7c1e6bd674")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX7P"
 		(shape bidirectional)
 		(at 165.4 217.63000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "908ab1e5-27aa-443d-8c2f-4741f7890a8c")
+		(uuid "963099c5-026a-49ad-92fd-c6229dd89dea")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX7N"
 		(shape bidirectional)
 		(at 165.4 221.44000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d1a4b9a2-5320-44d3-8576-2808c9a554fa")
+		(uuid "8348f5a5-c7cd-4862-b9c2-3f4f33637495")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX7N"
 		(shape bidirectional)
 		(at 165.4 225.25000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "87253f2e-c620-4f19-a1e1-a02b211f8beb")
+		(uuid "85843adb-9dec-4582-80bb-18d12d3e7e17")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX8P"
 		(shape bidirectional)
 		(at 165.4 229.06000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "0e8a275b-cbf1-4743-a0e0-2b31f1ae72fd")
+		(uuid "8e83b53e-2b60-4d1b-a6ff-c89fdb69e16e")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX8P"
 		(shape bidirectional)
 		(at 165.4 232.87000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "3a3a46d4-c56a-45e4-b43b-bedc38ff341a")
+		(uuid "d1e123ac-b9a8-425e-98a5-b0429a1bcba7")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX8N"
 		(shape bidirectional)
 		(at 165.4 236.68000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "00d9d055-ed7e-4f78-aaa9-abbe8f3f3d37")
+		(uuid "a20f1360-60a2-4692-8008-999f279bb353")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX8N"
 		(shape bidirectional)
 		(at 165.4 240.49000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "94bf8cc0-99d3-4e4d-9662-e5096f049433")
+		(uuid "1455cdee-cbc2-4a8a-af79-7507b97dfb36")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX9P"
 		(shape bidirectional)
 		(at 165.4 244.30000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "44b2b081-9cc9-43b8-8ac3-a0cd92574f9c")
+		(uuid "6384a6c1-d7da-4ba8-8c18-6859e8d90670")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX9P"
 		(shape bidirectional)
 		(at 165.4 248.11000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "915ed0bd-c34c-4151-90f1-25353f864e3b")
+		(uuid "50527961-81ec-40bc-927e-7bd2d2a13223")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX9N"
 		(shape bidirectional)
 		(at 165.4 251.92000000000007 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b9f260f0-5686-4690-9f63-afa783cf8b8a")
+		(uuid "fcc5e4aa-0db1-47ae-b551-4bc9519cf2a4")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX9N"
 		(shape bidirectional)
 		(at 165.4 255.73000000000008 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e88f4ec9-ac40-4dac-85a6-d6f940aed3d1")
+		(uuid "bcda36b4-3ef4-40cc-9cfc-b562509d7069")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX10P"
 		(shape bidirectional)
 		(at 165.4 259.5400000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "98dd83fb-93fa-4431-96f9-69d8ef6cf1cb")
+		(uuid "6a2f3927-dc23-406f-b669-c4872d6ec5a6")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX10P"
 		(shape bidirectional)
 		(at 235.4 130 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e7092445-382c-48d7-b1d4-8bbcee5c67a1")
+		(uuid "2a3733d7-fc77-4d94-986c-e64f266eaed3")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX10N"
 		(shape bidirectional)
 		(at 235.4 133.81 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "879578a8-26f9-461e-a803-4705d36e1afa")
+		(uuid "f91869f1-69b2-459a-952f-c8ec58493a3d")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX10N"
 		(shape bidirectional)
 		(at 235.4 137.62 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "22753178-9838-4f70-b709-bd09c42e4257")
+		(uuid "faa035dd-0061-4bbb-9992-2d16e91b53d0")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX11P"
 		(shape bidirectional)
 		(at 235.4 141.43 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "1da41445-e4d4-437d-a43f-31d1c0ecd637")
+		(uuid "ded10f96-7e25-4261-babb-6a420b472d60")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX11P"
 		(shape bidirectional)
 		(at 235.4 145.24 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "17162808-c1c1-4fb0-81ae-635136066af6")
+		(uuid "c1c46786-c5fb-4ed7-a72d-e74e13d0a1fa")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX11N"
 		(shape bidirectional)
 		(at 235.4 149.05 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8ea82e04-f844-4711-bccd-88cd4c0975ef")
+		(uuid "4162a951-c425-4e34-892e-711fc9654a19")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX11N"
 		(shape bidirectional)
 		(at 235.4 152.86 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "cee4335f-5cc0-4540-bbf6-478ff71f602c")
+		(uuid "2c1862b0-0ed9-409b-bb35-8a67cf5e3751")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX12P"
 		(shape bidirectional)
 		(at 235.4 156.67000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "fdcf3e95-9d5d-496a-85a2-b2506f4ae896")
+		(uuid "c391405b-74a4-4e8f-bfb1-583f48574b09")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX12P"
 		(shape bidirectional)
 		(at 235.4 160.48000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "134e0f2a-a0a9-4402-be1f-4e20a6498302")
+		(uuid "4431ffc5-d08e-471c-bee1-81437195d6c8")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX12N"
 		(shape bidirectional)
 		(at 235.4 164.29000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e0028dcb-36ed-42e6-bafe-8d02f58da662")
+		(uuid "c1ee69c8-eb26-4c59-83e0-103c65650986")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX12N"
 		(shape bidirectional)
 		(at 235.4 168.10000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "85846aa7-db25-45b5-b79e-d850677c9d96")
+		(uuid "34d6766c-ff1a-44a3-b6ba-b6eddc869f06")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX13P"
 		(shape bidirectional)
 		(at 235.4 171.91000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "9654e91b-0edd-4df2-a3bc-fc3f86dd39fd")
+		(uuid "90a416ff-7a81-4a41-b03e-26cef24d85a7")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX13P"
 		(shape bidirectional)
 		(at 235.4 175.72000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "5e8007b3-8d50-46c5-8173-6352a643d862")
+		(uuid "5f50038b-c5a0-4c8f-b381-7e0c302dc2c8")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX13N"
 		(shape bidirectional)
 		(at 235.4 179.53000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "30ae42a1-d43f-418e-b70c-72c30726bb43")
+		(uuid "37d31fef-9b5a-4433-86fe-94081b08caee")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX13N"
 		(shape bidirectional)
 		(at 235.4 183.34000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7e605364-f95a-4071-bb2a-279c36d36352")
+		(uuid "98f8a051-fc66-4a36-84a6-5611810bf31b")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX14P"
 		(shape bidirectional)
 		(at 235.4 187.15000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "324e7f47-79d1-4e42-b887-82d3156f8895")
+		(uuid "f8403c4a-1a18-49d7-939c-68666bab173a")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX14P"
 		(shape bidirectional)
 		(at 235.4 190.96000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ae932c04-0c54-4530-ae2e-bb12e5ec1a04")
+		(uuid "8f403613-6125-4c9e-95be-754d7a43cecf")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX14N"
 		(shape bidirectional)
 		(at 235.4 194.77000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ba832408-4e3c-4232-857f-6e0d263d4e65")
+		(uuid "f1d534ac-551a-4695-80b8-ee68afe816a7")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX14N"
 		(shape bidirectional)
 		(at 235.4 198.58000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "46216575-0012-4bc6-a44a-e8967c4c7f8e")
+		(uuid "be4b07e3-d224-472e-8316-313cb3200321")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX15P"
 		(shape bidirectional)
 		(at 235.4 202.39000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "ad09e270-945b-4ef9-baef-5457867f078e")
+		(uuid "2f7d3525-f66b-4a27-84e6-7ccdd890d3a2")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX15P"
 		(shape bidirectional)
 		(at 235.4 206.20000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "e466a514-b7ac-4cbd-8094-a2c882589f55")
+		(uuid "aeb85877-3b7d-41b3-8a82-2b39a986e06c")
 	)
 
 	(hierarchical_label "OAM1_PCIE_TX15N"
 		(shape bidirectional)
 		(at 235.4 210.01000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "91182b8f-24b6-46f9-b7de-a2c9ebf535f1")
+		(uuid "f7e88d8c-06e1-4aeb-9087-c22eacaa6ca5")
 	)
 
 	(hierarchical_label "OAM1_PCIE_RX15N"
 		(shape bidirectional)
 		(at 235.4 213.82000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d08cdb41-40a8-4114-b86e-2cf22461c14c")
+		(uuid "fb8fe5ae-92f5-4292-89e0-a3f817222623")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX0P"
+		(shape bidirectional)
+		(at 235.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "198d4aef-edba-4851-9c29-25d906123979")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX0P"
+		(shape bidirectional)
+		(at 235.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4176a970-317f-4751-9040-6205746432b6")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX0N"
+		(shape bidirectional)
+		(at 235.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "204706b5-1d12-49a8-94b4-dea32e27c483")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX0N"
+		(shape bidirectional)
+		(at 235.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b18b6b63-a0eb-4d8d-9101-a2848a367a9e")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX1P"
+		(shape bidirectional)
+		(at 235.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f88bc386-4a49-4c68-b7ae-05fdd0af84d0")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX1P"
+		(shape bidirectional)
+		(at 235.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c515e174-8825-4b59-8122-781e8c07e8cd")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX1N"
+		(shape bidirectional)
+		(at 235.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9eacf6c5-157d-4655-a8dc-60a1d50159d5")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX1N"
+		(shape bidirectional)
+		(at 235.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e022bce0-3e8f-48f7-afb6-7bb75a92a93d")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX2P"
+		(shape bidirectional)
+		(at 235.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b30e9b6f-7ffd-4a8e-aa7b-afc4407a50b0")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX2P"
+		(shape bidirectional)
+		(at 235.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dc095ef9-a66f-4330-91f4-99bdd787fad4")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX2N"
+		(shape bidirectional)
+		(at 235.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "27e3c52e-775b-4d79-9ec4-f18953df02d3")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX2N"
+		(shape bidirectional)
+		(at 235.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6b6477bd-d1e1-433b-8bb4-0d2e92ccfbe6")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX3P"
+		(shape bidirectional)
+		(at 305.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "af11b5ae-e0de-46d4-9638-627c3e60a177")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX3P"
+		(shape bidirectional)
+		(at 305.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "02f8efae-23ac-441d-86e9-92cbc577920f")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX3N"
+		(shape bidirectional)
+		(at 305.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "76a47675-2ca7-4b88-8751-ceb671e61c6c")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX3N"
+		(shape bidirectional)
+		(at 305.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f61f6292-ffee-4722-8109-ae9d867cabd5")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX4P"
+		(shape bidirectional)
+		(at 305.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7c901fa4-b525-4aab-9c9d-3a195f566d88")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX4P"
+		(shape bidirectional)
+		(at 305.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "86c3a640-0337-42b9-8d99-3f88bcfc3753")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX4N"
+		(shape bidirectional)
+		(at 305.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6c93ed25-3b14-4d9e-9180-b590e41a129d")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX4N"
+		(shape bidirectional)
+		(at 305.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d4cdaf6b-3520-4448-ae38-0831c284f227")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX5P"
+		(shape bidirectional)
+		(at 305.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "66fc902c-da4f-4159-a399-c4ceddcd706c")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX5P"
+		(shape bidirectional)
+		(at 305.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ebe64e2f-ad94-49e9-802b-c6adb650606b")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX5N"
+		(shape bidirectional)
+		(at 305.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2a59e077-0397-4824-8d82-79644d8f9860")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX5N"
+		(shape bidirectional)
+		(at 305.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "977a6ebc-2680-448e-aa42-a7aeb1431995")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX6P"
+		(shape bidirectional)
+		(at 305.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7a22a685-44d0-44ae-a60f-b37523c03843")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX6P"
+		(shape bidirectional)
+		(at 305.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "720021d0-a604-4a29-9509-006ce393d3bb")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX6N"
+		(shape bidirectional)
+		(at 305.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "bfdda371-5861-4401-b04b-5e8e71fb6a56")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX6N"
+		(shape bidirectional)
+		(at 305.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "943c8287-8949-4459-8957-8cb3c1b71094")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX7P"
+		(shape bidirectional)
+		(at 305.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6132e40a-b2b8-44f5-8397-0e5213a6739c")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX7P"
+		(shape bidirectional)
+		(at 305.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cb2fcbb3-ac53-47e4-8873-3207c7d017ce")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX7N"
+		(shape bidirectional)
+		(at 305.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3519196e-0bea-4d75-8ffb-a101f8dbabfa")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX7N"
+		(shape bidirectional)
+		(at 305.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6052ac36-b96f-4ad3-b9ae-e01941006db1")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX8P"
+		(shape bidirectional)
+		(at 305.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f5537609-56e3-4518-a132-ada034d6ae1b")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX8P"
+		(shape bidirectional)
+		(at 305.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a7eafd31-d70a-4278-b857-12535586305a")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX8N"
+		(shape bidirectional)
+		(at 305.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b9aa8ed2-1061-4b10-aa3c-2711cc2926e1")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX8N"
+		(shape bidirectional)
+		(at 305.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "84596c88-67fa-47ef-ba27-c0edb1275874")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX9P"
+		(shape bidirectional)
+		(at 305.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5dc1fe1f-f9b6-4ae9-9ef4-fdcc93703288")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX9P"
+		(shape bidirectional)
+		(at 305.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a5a434fa-7aa1-4f55-b9bb-84075903e46e")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX9N"
+		(shape bidirectional)
+		(at 305.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a5e06ff6-55ff-48f5-b050-1c4eeffad381")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX9N"
+		(shape bidirectional)
+		(at 305.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8b1eb02e-5fdb-4949-a320-207d0c21e84f")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX10P"
+		(shape bidirectional)
+		(at 305.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "185bb0f5-fd1c-4bec-bdcd-bb70cc188e67")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX10P"
+		(shape bidirectional)
+		(at 305.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4e4b42c3-242f-49c4-9f25-ee451a3a7d61")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX10N"
+		(shape bidirectional)
+		(at 305.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "38aef69b-fa63-4301-80fd-bf0df183be80")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX10N"
+		(shape bidirectional)
+		(at 305.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cc80b32e-bb2e-4920-bc03-b912a73c8c7b")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX11P"
+		(shape bidirectional)
+		(at 305.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ed65db94-78b5-4e14-bab9-98cf4886d707")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX11P"
+		(shape bidirectional)
+		(at 305.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ed24aa6a-c621-45e0-a08e-629376011084")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX11N"
+		(shape bidirectional)
+		(at 305.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3e0b9c11-bb6b-47cb-a55f-349af7a113a0")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX11N"
+		(shape bidirectional)
+		(at 375.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e388388e-1638-4c5a-9655-35be9a9756d0")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX12P"
+		(shape bidirectional)
+		(at 375.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0a81420f-5d8b-47c3-8b39-459af1c8cdb8")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX12P"
+		(shape bidirectional)
+		(at 375.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c4c2ed9b-ac4b-475f-863a-2ba7a42432fb")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX12N"
+		(shape bidirectional)
+		(at 375.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "db99fcf4-e0ce-4321-9ba3-39fa0e6e0bff")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX12N"
+		(shape bidirectional)
+		(at 375.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c43b18e6-e479-4ec6-862c-e7b6e5c82356")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX13P"
+		(shape bidirectional)
+		(at 375.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e3a946a6-6b01-4cd9-8a7a-7b5276ac4d19")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX13P"
+		(shape bidirectional)
+		(at 375.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5ae7eb16-39d1-4e5b-af4d-869db4e923ee")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX13N"
+		(shape bidirectional)
+		(at 375.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "84c0e4b5-363a-4224-b28b-179758564f81")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX13N"
+		(shape bidirectional)
+		(at 375.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a4bed76e-8c58-4f2b-b9ff-02ce99048c9d")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX14P"
+		(shape bidirectional)
+		(at 375.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d265df8a-ba88-445e-bdf1-b847f8208547")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX14P"
+		(shape bidirectional)
+		(at 375.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "915a387a-3bf3-4af6-b740-4cf7da4a01d7")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX14N"
+		(shape bidirectional)
+		(at 375.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f20a7701-9640-44e3-abe0-a111335a4c04")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX14N"
+		(shape bidirectional)
+		(at 375.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "13076da8-9457-4d7d-8896-5841a06240dc")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX15P"
+		(shape bidirectional)
+		(at 375.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2374b70b-8cf9-4187-9397-7f1c93686d5a")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX15P"
+		(shape bidirectional)
+		(at 375.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "39d08df7-9fd3-4b38-abde-61dc6c0b137b")
+	)
+
+	(hierarchical_label "OAM2_PCIE_TX15N"
+		(shape bidirectional)
+		(at 375.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "93d79ae6-a60e-419a-856d-2b08a261c960")
+	)
+
+	(hierarchical_label "OAM2_PCIE_RX15N"
+		(shape bidirectional)
+		(at 375.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5e122594-3dbc-44db-b3cd-2547b8cda2b2")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX0P"
+		(shape bidirectional)
+		(at 375.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9f3cb9d0-75bb-470e-bcc7-c97b2100dd25")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX0P"
+		(shape bidirectional)
+		(at 375.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ca2448a6-03b2-457e-8dff-ef67dcac40c8")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX0N"
+		(shape bidirectional)
+		(at 375.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f6cddba5-3bbd-4a65-80c4-7164d542ae65")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX0N"
+		(shape bidirectional)
+		(at 375.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5c6d3971-f1dc-4a33-a022-74aea6040621")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX1P"
+		(shape bidirectional)
+		(at 375.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ba18def6-a9a5-4c90-b1cb-fbee90883915")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX1P"
+		(shape bidirectional)
+		(at 375.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f542ce87-aa74-4026-a23c-66b957d69416")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX1N"
+		(shape bidirectional)
+		(at 375.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2c8f157a-4314-4c96-a26e-b4788e9024cc")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX1N"
+		(shape bidirectional)
+		(at 375.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9406adb3-a22c-402b-8bf5-cd761026b948")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX2P"
+		(shape bidirectional)
+		(at 375.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3c3b30d4-f984-4bab-a576-abac6ac05f89")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX2P"
+		(shape bidirectional)
+		(at 375.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7d45b6f7-0e92-40cd-946d-fe42f3a8e96b")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX2N"
+		(shape bidirectional)
+		(at 375.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "76412fe0-2eac-4af8-b8a5-184415b002ef")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX2N"
+		(shape bidirectional)
+		(at 375.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7e234d4d-3ee1-452c-b8b9-3232ea9e4980")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX3P"
+		(shape bidirectional)
+		(at 375.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "229d4814-14cf-465a-923a-4e24925a34bc")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX3P"
+		(shape bidirectional)
+		(at 375.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9052286f-3942-4fbd-89be-a524f01cdc87")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX3N"
+		(shape bidirectional)
+		(at 375.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "442de2f5-71fb-418b-b25b-4047e92eb959")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX3N"
+		(shape bidirectional)
+		(at 375.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ac07c897-637c-46ea-b0ab-cc9cf1b60abe")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX4P"
+		(shape bidirectional)
+		(at 375.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "441557b9-03d7-486e-8ee9-5a21fd20d1d6")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX4P"
+		(shape bidirectional)
+		(at 375.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fc40e181-1254-46be-b2a3-a4f6469d7e00")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX4N"
+		(shape bidirectional)
+		(at 445.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6c1912b3-428d-4c1e-b487-a8aa78138869")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX4N"
+		(shape bidirectional)
+		(at 445.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "17d16c60-649c-4f0a-b913-ced78e02476a")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX5P"
+		(shape bidirectional)
+		(at 445.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b7a1adb9-1f4b-4e98-84ab-3d023c89b1b5")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX5P"
+		(shape bidirectional)
+		(at 445.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c3f239b5-d886-4611-97c9-598b60fd29d4")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX5N"
+		(shape bidirectional)
+		(at 445.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c64d7932-3252-4136-a928-c2b12dfd1cfb")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX5N"
+		(shape bidirectional)
+		(at 445.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ece74757-a7d9-4b86-a5a1-4b7a768e9c29")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX6P"
+		(shape bidirectional)
+		(at 445.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b930844e-3f67-4d72-af71-2bb4f38c4d2b")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX6P"
+		(shape bidirectional)
+		(at 445.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f9f1b4a1-4c9f-413c-8458-ef0520e04f34")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX6N"
+		(shape bidirectional)
+		(at 445.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f6999b55-f3c4-4db3-8b63-54d842a57200")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX6N"
+		(shape bidirectional)
+		(at 445.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6411ee18-de2f-478b-a2da-25ac54c5fb55")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX7P"
+		(shape bidirectional)
+		(at 445.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "65a53918-111b-4724-8e66-d9157510bf4c")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX7P"
+		(shape bidirectional)
+		(at 445.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d1a55fe6-c29c-422a-af10-8c9d58ced75e")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX7N"
+		(shape bidirectional)
+		(at 445.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "47aa08fa-5c28-4159-9f7d-40d3f53051dd")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX7N"
+		(shape bidirectional)
+		(at 445.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f098eb8f-bbc9-45d8-81c6-46ef6c58beaa")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX8P"
+		(shape bidirectional)
+		(at 445.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1faec8da-8b91-45bb-a5a8-3f5ece137c6c")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX8P"
+		(shape bidirectional)
+		(at 445.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "212c1742-3a96-43ea-93b8-7d6cd5e2c56b")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX8N"
+		(shape bidirectional)
+		(at 445.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8df3319b-248e-43d6-9ee5-2c78569bad26")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX8N"
+		(shape bidirectional)
+		(at 445.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8b294209-9824-484e-b94e-f2ed037d25e0")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX9P"
+		(shape bidirectional)
+		(at 445.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9c40039c-647a-49d1-a481-f898f7b0ff8d")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX9P"
+		(shape bidirectional)
+		(at 445.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "98019e21-98ea-4a0f-87d7-4db15fab3057")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX9N"
+		(shape bidirectional)
+		(at 445.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1f23932b-bd12-4faf-ae2c-79f110f6171e")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX9N"
+		(shape bidirectional)
+		(at 445.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "33db9cc1-5c36-404d-a1de-aa5edd3b483d")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX10P"
+		(shape bidirectional)
+		(at 445.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a6d162ca-90fe-47b4-99be-841d690ec561")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX10P"
+		(shape bidirectional)
+		(at 445.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "80756525-c749-40b4-b888-64d807efca14")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX10N"
+		(shape bidirectional)
+		(at 445.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5cc978eb-2e0f-4ffc-aba3-1f236bc61e5e")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX10N"
+		(shape bidirectional)
+		(at 445.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "314248fb-b300-48c3-b47c-13d4a92bb594")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX11P"
+		(shape bidirectional)
+		(at 445.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d9670e23-a6a0-4765-ab3a-0fcc98c24c0d")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX11P"
+		(shape bidirectional)
+		(at 445.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6baa3579-526d-40d8-aa25-b0278d414870")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX11N"
+		(shape bidirectional)
+		(at 445.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7a8ec701-dfe1-423e-ab8d-0fd25b91e9b8")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX11N"
+		(shape bidirectional)
+		(at 445.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "77509ae1-6f13-404e-b7ee-5800e851084c")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX12P"
+		(shape bidirectional)
+		(at 445.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a5f0b36c-07b5-41c1-92ba-475137ebff27")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX12P"
+		(shape bidirectional)
+		(at 445.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "27c48659-14bd-48b7-b67d-637671eb3c91")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX12N"
+		(shape bidirectional)
+		(at 445.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "89e0f751-b46f-4ba2-b097-29ad2930792e")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX12N"
+		(shape bidirectional)
+		(at 445.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6ff58f19-593c-4a97-855f-b9a952c645f7")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX13P"
+		(shape bidirectional)
+		(at 445.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d0c8ecce-be9a-44e0-8dc1-cd4597998f01")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX13P"
+		(shape bidirectional)
+		(at 515.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2a07565c-ad9b-4529-8eea-7e916450e211")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX13N"
+		(shape bidirectional)
+		(at 515.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "69ee52a9-55f7-4bae-8b4b-cb727415c5b8")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX13N"
+		(shape bidirectional)
+		(at 515.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "70afa6b9-e1da-4f63-802c-8bf6825bad8c")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX14P"
+		(shape bidirectional)
+		(at 515.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1c44dad5-04bb-44ff-b076-7ad7e9834c39")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX14P"
+		(shape bidirectional)
+		(at 515.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "536dd0b0-41f5-4744-aad8-872f8bb4fef9")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX14N"
+		(shape bidirectional)
+		(at 515.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "27fbd68d-d8e1-44fc-a3a6-f7b41af072d9")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX14N"
+		(shape bidirectional)
+		(at 515.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "eb38acf5-ff14-4343-ac12-0fa14432c16a")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX15P"
+		(shape bidirectional)
+		(at 515.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a6cf3c39-7c2e-45d6-90e4-c47d5b407596")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX15P"
+		(shape bidirectional)
+		(at 515.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cdd9a0fa-06a1-4310-9f0d-8f499c147447")
+	)
+
+	(hierarchical_label "OAM3_PCIE_TX15N"
+		(shape bidirectional)
+		(at 515.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7d8ce41d-30c0-4709-bca5-af8f91cca7d3")
+	)
+
+	(hierarchical_label "OAM3_PCIE_RX15N"
+		(shape bidirectional)
+		(at 515.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ee1b7ec2-3a32-4388-a7c5-cdf487f8d612")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX0P"
+		(shape bidirectional)
+		(at 515.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "71879450-5409-49d1-9e1e-f5d92a43ac7d")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX0P"
+		(shape bidirectional)
+		(at 515.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "74cb48b5-6fe3-451b-b905-f49f5844fca6")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX0N"
+		(shape bidirectional)
+		(at 515.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9a90cd7d-f195-4524-9001-c608c8accea8")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX0N"
+		(shape bidirectional)
+		(at 515.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0099cea4-78d1-4d9d-b696-bbf12473354d")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX1P"
+		(shape bidirectional)
+		(at 515.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c075e37e-ed24-4d71-8c26-04817408526b")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX1P"
+		(shape bidirectional)
+		(at 515.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "86778dd5-edaa-4ecc-9761-506879bc92f3")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX1N"
+		(shape bidirectional)
+		(at 515.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c72c4f51-037b-4c74-ba0b-9749bfc9cb23")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX1N"
+		(shape bidirectional)
+		(at 515.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2d62a560-b818-4a81-9415-7a4c7bb5aa9e")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX2P"
+		(shape bidirectional)
+		(at 515.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "39859fb1-e324-405b-8b9f-95d3558cae84")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX2P"
+		(shape bidirectional)
+		(at 515.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dc519189-b4de-46de-8bfe-a23a554b2b7f")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX2N"
+		(shape bidirectional)
+		(at 515.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "30fbb315-115b-42c8-b5a1-c46663e8826e")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX2N"
+		(shape bidirectional)
+		(at 515.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "369b6439-4c7a-4937-a747-bfe903a5801b")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX3P"
+		(shape bidirectional)
+		(at 515.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1a04c2e4-c136-4b2c-a826-2ef886940697")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX3P"
+		(shape bidirectional)
+		(at 515.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dbe00c74-4210-4ada-b180-b2779aec4757")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX3N"
+		(shape bidirectional)
+		(at 515.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "57eaf987-5207-4278-b376-d0a04916405e")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX3N"
+		(shape bidirectional)
+		(at 515.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8847e3ff-ca78-439a-aa2f-a4c4936df668")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX4P"
+		(shape bidirectional)
+		(at 515.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5bc354b3-b5ed-4bdd-8fe5-01aab0dddc6d")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX4P"
+		(shape bidirectional)
+		(at 515.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5c0010d2-8d08-4a59-9241-1e6c99ccd0a5")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX4N"
+		(shape bidirectional)
+		(at 515.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8dc6507d-67fd-4705-8b4e-e1195f13a3aa")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX4N"
+		(shape bidirectional)
+		(at 515.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "80240882-772f-44de-9094-d8e72bb4fcb1")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX5P"
+		(shape bidirectional)
+		(at 515.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "07bcb52a-8ee8-4a50-8409-33a0f1ebe80d")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX5P"
+		(shape bidirectional)
+		(at 515.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "95e75050-99fb-4f43-ac96-277801ec1fcd")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX5N"
+		(shape bidirectional)
+		(at 515.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a9e14e68-a147-4bce-83ea-4ddf3c206882")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX5N"
+		(shape bidirectional)
+		(at 515.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "06c27db7-df95-41f9-9f8e-ff354edd1012")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX6P"
+		(shape bidirectional)
+		(at 585.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a82359f5-d102-4794-9085-aff196d4d9db")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX6P"
+		(shape bidirectional)
+		(at 585.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fa27f962-2106-4d89-b792-87b2cfabf2fe")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX6N"
+		(shape bidirectional)
+		(at 585.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3367b942-fee3-4c11-bc42-a17526d95e7c")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX6N"
+		(shape bidirectional)
+		(at 585.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7bd4bfcd-3a12-41a9-830a-0241f1d19fcd")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX7P"
+		(shape bidirectional)
+		(at 585.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b0655fe3-c2f1-4d48-aa09-13e3b0361de8")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX7P"
+		(shape bidirectional)
+		(at 585.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7fc1e4ec-a92b-4277-b16c-50529dfa2f46")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX7N"
+		(shape bidirectional)
+		(at 585.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ccff61e3-b9dd-4337-834f-03987870fe66")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX7N"
+		(shape bidirectional)
+		(at 585.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "596ee3ef-f5bc-4201-a59e-73e260e4b3a6")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX8P"
+		(shape bidirectional)
+		(at 585.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1254fb2d-0b8b-4798-a0d9-7cceb617532c")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX8P"
+		(shape bidirectional)
+		(at 585.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "740bc70b-1e4d-490b-a49d-447fe44ae4e7")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX8N"
+		(shape bidirectional)
+		(at 585.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d14393d2-f8e9-4ee4-95c8-7ee30fbf785c")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX8N"
+		(shape bidirectional)
+		(at 585.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c16abf57-0ad4-48e6-a0c8-6ef7fc7b49fe")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX9P"
+		(shape bidirectional)
+		(at 585.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "99984697-7fe9-4577-ab9a-c1e5114ec729")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX9P"
+		(shape bidirectional)
+		(at 585.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7a6d5969-1873-4061-9829-e33096b71d8f")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX9N"
+		(shape bidirectional)
+		(at 585.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "96e23f2e-ab19-46da-8755-d88f033a1440")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX9N"
+		(shape bidirectional)
+		(at 585.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "28be2107-4fb9-421f-bf34-96de6f934681")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX10P"
+		(shape bidirectional)
+		(at 585.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5ffe8aff-b726-4557-9108-b79e6375b311")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX10P"
+		(shape bidirectional)
+		(at 585.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fd992ca5-0e08-46cf-8b3c-0ed083053814")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX10N"
+		(shape bidirectional)
+		(at 585.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "93419537-9b86-4780-874d-58a91b1950d1")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX10N"
+		(shape bidirectional)
+		(at 585.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "074f3143-3f6a-4ac4-a4ad-36fa5befa088")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX11P"
+		(shape bidirectional)
+		(at 585.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "918c1ac9-101b-4f87-8dcd-4c98d4c63da1")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX11P"
+		(shape bidirectional)
+		(at 585.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "86d784c2-6e28-43d6-a321-6d5b2caab87e")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX11N"
+		(shape bidirectional)
+		(at 585.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "bc5ec5e6-5938-4af2-89d7-eb7d5ae2fd34")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX11N"
+		(shape bidirectional)
+		(at 585.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "082aff5a-9f88-45c4-9600-d88eff8db1d2")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX12P"
+		(shape bidirectional)
+		(at 585.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a62ceaed-a867-46ec-aa1c-06a3bb9f48d6")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX12P"
+		(shape bidirectional)
+		(at 585.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5816db9a-22d5-4f39-8340-7eb3a000dfda")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX12N"
+		(shape bidirectional)
+		(at 585.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "12cc2626-9057-4041-852b-926c351d3e1b")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX12N"
+		(shape bidirectional)
+		(at 585.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "83444453-d849-40c6-a2e8-a7cae61d3ce3")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX13P"
+		(shape bidirectional)
+		(at 585.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3cbb4871-b463-4e16-aa00-3b626ddbcdd4")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX13P"
+		(shape bidirectional)
+		(at 585.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c43fbe84-d59a-4aa5-88b0-6c9be3537bc8")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX13N"
+		(shape bidirectional)
+		(at 585.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "be0c560d-3139-4725-ad6d-cdc8bdb78692")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX13N"
+		(shape bidirectional)
+		(at 585.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "345b72ee-70e5-4254-92bb-f50ccae1e4c9")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX14P"
+		(shape bidirectional)
+		(at 585.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2ea02413-995f-453b-86fd-a598756f2354")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX14P"
+		(shape bidirectional)
+		(at 585.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0f167d11-aea4-40b4-aa8c-5eba1d6167be")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX14N"
+		(shape bidirectional)
+		(at 585.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "185bbc8a-45b6-4626-b07e-8b67188683f2")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX14N"
+		(shape bidirectional)
+		(at 655.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ca7ec479-e800-4970-b549-8c212103d99e")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX15P"
+		(shape bidirectional)
+		(at 655.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7ad9ac8b-933a-4d59-8a6e-fc567c45d3fe")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX15P"
+		(shape bidirectional)
+		(at 655.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4cb4f3fe-8572-49e8-a9a7-11ddc2ffef8b")
+	)
+
+	(hierarchical_label "OAM4_PCIE_TX15N"
+		(shape bidirectional)
+		(at 655.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "be43f5a8-0800-481b-a8ec-5e40e2e27e11")
+	)
+
+	(hierarchical_label "OAM4_PCIE_RX15N"
+		(shape bidirectional)
+		(at 655.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8b637442-78a6-4369-ae08-ef6d5a90b43f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX0P"
+		(shape bidirectional)
+		(at 655.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "673364f5-6bd5-43c6-9899-08017ed47c92")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX0P"
+		(shape bidirectional)
+		(at 655.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "433f56c6-adee-4f28-b298-58f387896358")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX0N"
+		(shape bidirectional)
+		(at 655.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "25bba798-71b2-4a5b-b342-c35016f1786e")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX0N"
+		(shape bidirectional)
+		(at 655.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "36b5ac7c-1249-4de6-aeb8-8e09fa59e07c")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX1P"
+		(shape bidirectional)
+		(at 655.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2d6f9792-98ba-42b4-80cd-7c3bfe3ceec2")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX1P"
+		(shape bidirectional)
+		(at 655.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ff1f39e5-a348-4f3d-82e8-89e3b1139e05")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX1N"
+		(shape bidirectional)
+		(at 655.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cae56a53-482e-4478-a05f-f09c5b07b74e")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX1N"
+		(shape bidirectional)
+		(at 655.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c3b627a7-8b1c-4e1a-bd83-a8a2d0945b59")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX2P"
+		(shape bidirectional)
+		(at 655.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "befed4dd-87dd-4600-90db-df490c3d7da6")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX2P"
+		(shape bidirectional)
+		(at 655.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e8ca0b2a-c8cb-46e7-a733-3b26f219930f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX2N"
+		(shape bidirectional)
+		(at 655.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9e1958ef-8ae9-459e-9e4e-aea1d56ea47e")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX2N"
+		(shape bidirectional)
+		(at 655.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "386689eb-cb28-4da6-bc29-c50b19a7630a")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX3P"
+		(shape bidirectional)
+		(at 655.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9b1024b0-f248-424b-ab8f-045a979dbf69")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX3P"
+		(shape bidirectional)
+		(at 655.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6f8086fa-0e05-4783-8296-7cea85069a44")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX3N"
+		(shape bidirectional)
+		(at 655.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1cf5049e-cb3d-45e1-863e-e060258ea9e5")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX3N"
+		(shape bidirectional)
+		(at 655.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3a4fffe2-fb83-4116-aa96-2094d8673c9e")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX4P"
+		(shape bidirectional)
+		(at 655.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c91b357e-734b-482f-9c84-52b20586b85e")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX4P"
+		(shape bidirectional)
+		(at 655.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8b6820e1-da34-4faa-81ca-894488daed3a")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX4N"
+		(shape bidirectional)
+		(at 655.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2f45743c-31b8-4d78-aacf-b4a01b290b31")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX4N"
+		(shape bidirectional)
+		(at 655.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7690bd0d-9e4d-4934-a860-ad80b6548227")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX5P"
+		(shape bidirectional)
+		(at 655.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1fbae277-0d91-4121-956f-c71376dd0d5c")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX5P"
+		(shape bidirectional)
+		(at 655.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7217ad56-3cf8-4c66-8be4-e608ed7d332f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX5N"
+		(shape bidirectional)
+		(at 655.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5f819ca7-4f9b-45a0-a573-94d1adf8d2ef")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX5N"
+		(shape bidirectional)
+		(at 655.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7cfabee7-7a5f-4be0-b312-f3372dadc348")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX6P"
+		(shape bidirectional)
+		(at 655.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ba6a38fd-fcc6-4416-b3b3-695c75fce5e8")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX6P"
+		(shape bidirectional)
+		(at 655.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cf052ec1-f91d-439f-ba33-2ef19775d0d8")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX6N"
+		(shape bidirectional)
+		(at 655.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f1efd7df-327a-4d6c-95ef-e11c9a015b67")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX6N"
+		(shape bidirectional)
+		(at 655.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "79de0361-0515-4b48-9f46-2bec528176a5")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX7P"
+		(shape bidirectional)
+		(at 655.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7c29b2c0-9acc-4d05-8929-28ce4ca07d0c")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX7P"
+		(shape bidirectional)
+		(at 655.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "605639d9-139b-474e-ae99-e51418af1218")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX7N"
+		(shape bidirectional)
+		(at 725.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "958b11dd-2230-4ccf-9eed-da091a119e3c")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX7N"
+		(shape bidirectional)
+		(at 725.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2deec00d-b190-47f1-b504-7a8d690afeae")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX8P"
+		(shape bidirectional)
+		(at 725.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "304e7b60-047c-46c1-aebb-ad9296c8f217")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX8P"
+		(shape bidirectional)
+		(at 725.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "788b31ed-5eba-4e3c-85d7-4861e68198f5")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX8N"
+		(shape bidirectional)
+		(at 725.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "45d9a08f-5998-4d14-bccc-35805c3d5f8f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX8N"
+		(shape bidirectional)
+		(at 725.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "de45437f-04e6-4625-a5c7-f582574ca116")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX9P"
+		(shape bidirectional)
+		(at 725.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5bec719e-5c34-4c6e-873f-1a5061499b0d")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX9P"
+		(shape bidirectional)
+		(at 725.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5a11b26f-9f82-418a-a80b-fa06c8321d8a")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX9N"
+		(shape bidirectional)
+		(at 725.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "88e55eed-fd9e-401a-a354-4f6eb4ff816f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX9N"
+		(shape bidirectional)
+		(at 725.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6a0552d4-f36a-4fed-a127-8ad37c9c93a3")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX10P"
+		(shape bidirectional)
+		(at 725.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "429551ce-39d0-4a91-bc00-b6eb92702ba5")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX10P"
+		(shape bidirectional)
+		(at 725.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "227856ea-e4bb-4d66-aeb0-b64cf98aa806")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX10N"
+		(shape bidirectional)
+		(at 725.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "11c39b41-b579-4ea6-8983-e7eee7ed9667")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX10N"
+		(shape bidirectional)
+		(at 725.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7a78f670-c9b0-4f08-ad30-c76b7a45e3a1")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX11P"
+		(shape bidirectional)
+		(at 725.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "eaea88ed-c7a2-47c2-b167-b88c7f21f9df")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX11P"
+		(shape bidirectional)
+		(at 725.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "818b00bc-bfe9-415f-9ebf-b0ee3ea74e70")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX11N"
+		(shape bidirectional)
+		(at 725.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8acb4bdf-3586-4b72-9059-10ab7cbc4ea2")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX11N"
+		(shape bidirectional)
+		(at 725.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "50777801-8a73-4e06-9b66-b01e9df3f4f3")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX12P"
+		(shape bidirectional)
+		(at 725.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "de4c64c5-44f4-408a-929a-96dbcb30dcde")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX12P"
+		(shape bidirectional)
+		(at 725.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "52abbbb8-d6b5-42bc-a056-3dcc3359bfca")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX12N"
+		(shape bidirectional)
+		(at 725.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c7000775-71b5-408b-b5f6-7fea2438975b")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX12N"
+		(shape bidirectional)
+		(at 725.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7b0bae98-a0d8-4371-a471-8ca3e896e08a")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX13P"
+		(shape bidirectional)
+		(at 725.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b3789743-4161-4d38-8f50-1fec8fe57bc5")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX13P"
+		(shape bidirectional)
+		(at 725.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e948a635-94e3-414f-8e88-e0630bb7a1f1")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX13N"
+		(shape bidirectional)
+		(at 725.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a3e6129e-0cc8-4c61-b57a-18e6b613fba9")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX13N"
+		(shape bidirectional)
+		(at 725.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f7512c8a-ea96-4be5-b1c5-d7d682c88edd")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX14P"
+		(shape bidirectional)
+		(at 725.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3e3e5654-5412-4d0f-b457-d9a019518a39")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX14P"
+		(shape bidirectional)
+		(at 725.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5a15ff23-2fe1-45a6-bc6e-bbacda1c8356")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX14N"
+		(shape bidirectional)
+		(at 725.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "83afd7d6-1340-457c-a4a6-b981b2d55f0f")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX14N"
+		(shape bidirectional)
+		(at 725.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1d5040bd-ba8d-4f42-9bde-3197e4751ce4")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX15P"
+		(shape bidirectional)
+		(at 725.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0326881a-e720-4c37-bc56-7de8fd633279")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX15P"
+		(shape bidirectional)
+		(at 725.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "44b17ef6-e828-4d40-9c0d-9ab49eb7c8e3")
+	)
+
+	(hierarchical_label "OAM5_PCIE_TX15N"
+		(shape bidirectional)
+		(at 725.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ddbd4813-941d-42ce-8052-d80fadd6021b")
+	)
+
+	(hierarchical_label "OAM5_PCIE_RX15N"
+		(shape bidirectional)
+		(at 725.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "48303c30-c79b-4133-8548-7ec3586014ef")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX0P"
+		(shape bidirectional)
+		(at 725.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0bf5b2a5-c4a6-499a-9a7d-71e644ebe153")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX0P"
+		(shape bidirectional)
+		(at 795.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "20b29b20-6331-48d0-bb0d-a342b028dcad")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX0N"
+		(shape bidirectional)
+		(at 795.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b356d8ec-f9a0-4e7a-a006-9d288de14163")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX0N"
+		(shape bidirectional)
+		(at 795.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "82cca47a-eb94-4dfd-ac27-3d4d112e968b")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX1P"
+		(shape bidirectional)
+		(at 795.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "479716f5-cab7-4b6b-be04-65acc262ed8e")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX1P"
+		(shape bidirectional)
+		(at 795.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "04b48cd4-adac-40b7-be78-076c6a21ead6")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX1N"
+		(shape bidirectional)
+		(at 795.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "023ec9d2-bf19-44fb-82d8-373c91e677c9")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX1N"
+		(shape bidirectional)
+		(at 795.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "44dd2a9a-56f1-406b-969d-3edfbe83956d")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX2P"
+		(shape bidirectional)
+		(at 795.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a2d1f014-166b-4554-a542-610a91bbdc95")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX2P"
+		(shape bidirectional)
+		(at 795.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "63019b02-04cf-4825-8678-7a7831c8a4ea")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX2N"
+		(shape bidirectional)
+		(at 795.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6786b112-0a25-4250-bed4-3e2008cb9604")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX2N"
+		(shape bidirectional)
+		(at 795.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "066a0255-29b5-4638-bb84-def2dccab5e9")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX3P"
+		(shape bidirectional)
+		(at 795.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9ce0ec28-4bc0-43a9-a997-379c961a5d31")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX3P"
+		(shape bidirectional)
+		(at 795.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cecce856-bb44-45e4-9f1c-60402cbb3ebf")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX3N"
+		(shape bidirectional)
+		(at 795.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "de51c929-010a-46d4-af35-6c85bc5fd6b1")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX3N"
+		(shape bidirectional)
+		(at 795.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "65be95a9-3b5b-4b8b-ace9-7d8b18c55c2f")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX4P"
+		(shape bidirectional)
+		(at 795.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ff8548b8-5ccd-4447-8f07-c4a782971945")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX4P"
+		(shape bidirectional)
+		(at 795.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "72b02b18-1b4d-4d49-835e-60efa6ef6a96")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX4N"
+		(shape bidirectional)
+		(at 795.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f41498c7-8a13-4984-8afb-cb0a0a075e07")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX4N"
+		(shape bidirectional)
+		(at 795.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "33fb47d7-131a-4796-9503-e71acbc0d640")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX5P"
+		(shape bidirectional)
+		(at 795.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "df84b25c-4b1c-425b-b29b-bdb19aba7c39")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX5P"
+		(shape bidirectional)
+		(at 795.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7ba1fa79-8bcf-4d68-b7a9-718e74f0607e")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX5N"
+		(shape bidirectional)
+		(at 795.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1425ed66-b110-4fd2-b143-bdda2e545fa1")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX5N"
+		(shape bidirectional)
+		(at 795.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5648d8a4-552f-4976-b5e5-e78ae1dacd0e")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX6P"
+		(shape bidirectional)
+		(at 795.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ace7f27c-7a62-46c4-ac1b-2e7b3c818520")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX6P"
+		(shape bidirectional)
+		(at 795.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "670977c5-71a2-4906-b744-319a21d39cd4")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX6N"
+		(shape bidirectional)
+		(at 795.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "35070e55-9d44-4e06-85d6-fd069d4edec0")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX6N"
+		(shape bidirectional)
+		(at 795.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "09b32606-b4c3-42ef-b496-d6e33fa7ab2e")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX7P"
+		(shape bidirectional)
+		(at 795.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "22552988-2f16-4cd1-835f-864928b647f3")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX7P"
+		(shape bidirectional)
+		(at 795.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1ddc16d6-1ef7-418f-931f-f9c6429527a4")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX7N"
+		(shape bidirectional)
+		(at 795.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d2e7abca-5de8-406b-9597-18f64c333b23")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX7N"
+		(shape bidirectional)
+		(at 795.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "94204b5b-d4be-490b-afd7-a21192e2d498")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX8P"
+		(shape bidirectional)
+		(at 795.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d3c71adc-0e47-42a1-af5d-41b6e6e0e3f4")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX8P"
+		(shape bidirectional)
+		(at 795.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3e1dfef7-f0f4-410a-afa9-872bf658c159")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX8N"
+		(shape bidirectional)
+		(at 795.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "56349c89-aa92-43c2-aa30-9e37a6ca1b4c")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX8N"
+		(shape bidirectional)
+		(at 795.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9adc558c-b7b2-469a-baca-b0b4018d0716")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX9P"
+		(shape bidirectional)
+		(at 865.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e9966a56-f379-4513-b39d-c58de437f781")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX9P"
+		(shape bidirectional)
+		(at 865.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ac56887d-a042-4494-945c-f7e0967f978f")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX9N"
+		(shape bidirectional)
+		(at 865.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "792048ee-7c61-48e3-b520-dc8a58804993")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX9N"
+		(shape bidirectional)
+		(at 865.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "2cdc6ff6-20b8-463b-ad66-879789f67133")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX10P"
+		(shape bidirectional)
+		(at 865.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ad43d815-c3b5-497f-94ad-4ba5b356be12")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX10P"
+		(shape bidirectional)
+		(at 865.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0cff85bd-5827-4c1a-aabb-c6c5998ca94e")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX10N"
+		(shape bidirectional)
+		(at 865.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6432789b-e317-4d25-a02e-836a978bed31")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX10N"
+		(shape bidirectional)
+		(at 865.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "79d830d6-a777-4f9e-9e38-a3dd15b95007")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX11P"
+		(shape bidirectional)
+		(at 865.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "293e7aff-9882-403e-b317-d27b1e88b340")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX11P"
+		(shape bidirectional)
+		(at 865.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ca93f282-8d2b-489f-8039-da2fc8799ad2")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX11N"
+		(shape bidirectional)
+		(at 865.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "977597b9-3f08-4226-8ab2-400ad3c5ab22")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX11N"
+		(shape bidirectional)
+		(at 865.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d2b6100e-2177-4d37-8339-b95434ae07a0")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX12P"
+		(shape bidirectional)
+		(at 865.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "75735222-f508-457a-8c9b-79edeb0f426d")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX12P"
+		(shape bidirectional)
+		(at 865.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d2261e7e-21cb-4b14-979b-77424c9d7a20")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX12N"
+		(shape bidirectional)
+		(at 865.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5b18e7c3-e21a-4f19-9022-d8cddc14b3e5")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX12N"
+		(shape bidirectional)
+		(at 865.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fae7a2dc-0c55-4fbb-8f2c-2192f7a71d60")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX13P"
+		(shape bidirectional)
+		(at 865.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d58e081c-8edf-42a3-909e-7f82692d8221")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX13P"
+		(shape bidirectional)
+		(at 865.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4adf71a4-9a34-435f-b233-68ac645a7167")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX13N"
+		(shape bidirectional)
+		(at 865.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "955028f5-8c52-4256-81bb-ad0cd37e4f03")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX13N"
+		(shape bidirectional)
+		(at 865.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "eda8008a-58a8-42b0-b3ff-8a7f02a0c8d1")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX14P"
+		(shape bidirectional)
+		(at 865.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1a82893b-1103-4567-9492-bef5cca5612a")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX14P"
+		(shape bidirectional)
+		(at 865.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "843696c4-b226-4d3c-8acd-9678565316b6")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX14N"
+		(shape bidirectional)
+		(at 865.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "06ea269f-30be-4473-b15b-5f3ed2fe9b45")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX14N"
+		(shape bidirectional)
+		(at 865.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f95e2cfb-160c-451d-872c-dbca05897fc4")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX15P"
+		(shape bidirectional)
+		(at 865.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "d786b660-02ed-4311-8972-87a5e4ac4c35")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX15P"
+		(shape bidirectional)
+		(at 865.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "362135e7-85f8-46b3-a775-f9435830703d")
+	)
+
+	(hierarchical_label "OAM6_PCIE_TX15N"
+		(shape bidirectional)
+		(at 865.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "918ceaeb-7b77-4916-83a1-a8e3887e8c85")
+	)
+
+	(hierarchical_label "OAM6_PCIE_RX15N"
+		(shape bidirectional)
+		(at 865.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6756390a-8c30-45d6-87dd-20f7ff5b3cb8")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX0P"
+		(shape bidirectional)
+		(at 865.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "018a834a-1234-49ee-8595-85fc3d784c86")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX0P"
+		(shape bidirectional)
+		(at 865.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8db330df-ea85-4627-ab6a-df0b4019bb70")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX0N"
+		(shape bidirectional)
+		(at 865.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1803f2bb-6d60-4e84-901d-cce4010e8c38")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX0N"
+		(shape bidirectional)
+		(at 865.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fc813659-a5c9-4eec-bbf8-f9d3a27799c7")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX1P"
+		(shape bidirectional)
+		(at 865.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "36c7b1a8-b988-4d97-be89-faf639ae4428")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX1P"
+		(shape bidirectional)
+		(at 865.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5ca3685a-f2c9-411e-b479-0567b9def1a3")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX1N"
+		(shape bidirectional)
+		(at 865.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "55ae4213-75b5-4a88-a4f5-76643e966735")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX1N"
+		(shape bidirectional)
+		(at 935.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f63108ee-6903-41a9-bda2-6ba122dce12d")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX2P"
+		(shape bidirectional)
+		(at 935.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c8514b24-7690-40f4-b86a-4c4c238c2a36")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX2P"
+		(shape bidirectional)
+		(at 935.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1c2892f1-2971-4c2c-92de-557b4d6d0072")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX2N"
+		(shape bidirectional)
+		(at 935.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c71ed824-1c1b-4bc8-b980-5dfe2a36fce0")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX2N"
+		(shape bidirectional)
+		(at 935.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ac47dc71-5314-4fb1-8429-fbe0fffb3ef0")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX3P"
+		(shape bidirectional)
+		(at 935.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "94ccb115-9613-475f-ab42-5a19da4c5b81")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX3P"
+		(shape bidirectional)
+		(at 935.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f1f73148-c90f-4227-9891-681279a0cb8b")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX3N"
+		(shape bidirectional)
+		(at 935.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "64d41993-2e97-49f2-ba87-2da5d8516b5b")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX3N"
+		(shape bidirectional)
+		(at 935.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8c8db231-379a-4a9c-9a09-214bc2070ef2")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX4P"
+		(shape bidirectional)
+		(at 935.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f7f707e7-e732-4b9f-ba9d-9e1986ce99e1")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX4P"
+		(shape bidirectional)
+		(at 935.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3f739368-9c5f-4ee1-ac7a-a242ba43e9c6")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX4N"
+		(shape bidirectional)
+		(at 935.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b2068649-bee5-47b0-8b78-1f36c3e05e1f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX4N"
+		(shape bidirectional)
+		(at 935.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7923d863-4859-4d9f-ae31-670f052e7d5f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX5P"
+		(shape bidirectional)
+		(at 935.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f5d0bd91-0a9f-4212-bd39-351382d3454b")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX5P"
+		(shape bidirectional)
+		(at 935.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b03dd06e-b7f8-447c-9e5d-86a477c5e708")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX5N"
+		(shape bidirectional)
+		(at 935.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b97bdaca-b74c-4bf1-becd-4c2a6af3ad04")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX5N"
+		(shape bidirectional)
+		(at 935.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "290f49e4-80fb-4508-9c52-aa1d8e1f39e2")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX6P"
+		(shape bidirectional)
+		(at 935.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "9d20ff1a-091b-4ea9-b9a2-61af1da0471c")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX6P"
+		(shape bidirectional)
+		(at 935.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ada3f2af-ad16-43b9-8b4b-e0c3171f04ca")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX6N"
+		(shape bidirectional)
+		(at 935.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "01cdc7ed-8a04-4c5f-a58e-8cddfb7f254d")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX6N"
+		(shape bidirectional)
+		(at 935.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "799972ab-8342-41cb-aa19-d6e04431e805")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX7P"
+		(shape bidirectional)
+		(at 935.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "19a836a4-f710-4722-9e01-f70555afd9d7")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX7P"
+		(shape bidirectional)
+		(at 935.4 213.82000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "57f930cc-b75c-4c33-a822-826c94481c30")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX7N"
+		(shape bidirectional)
+		(at 935.4 217.63000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "70fd4d37-65d6-4fb7-aec1-74e51ca61dc0")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX7N"
+		(shape bidirectional)
+		(at 935.4 221.44000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "b7499479-3b65-4b39-afd2-f31db130378f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX8P"
+		(shape bidirectional)
+		(at 935.4 225.25000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8cc3374d-87bb-4b61-8b8e-ed3b362dfcde")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX8P"
+		(shape bidirectional)
+		(at 935.4 229.06000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c3a3bfda-fd1e-42c6-8c3a-ac204f5f6480")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX8N"
+		(shape bidirectional)
+		(at 935.4 232.87000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5601e942-4f41-49e5-8089-ddf6ff6a6b2f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX8N"
+		(shape bidirectional)
+		(at 935.4 236.68000000000006 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "caa68b0d-e0aa-4a90-9456-0af593c12deb")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX9P"
+		(shape bidirectional)
+		(at 935.4 240.49000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a45bc8e9-8c11-4ec8-bf4b-f8fc6ebfa14f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX9P"
+		(shape bidirectional)
+		(at 935.4 244.30000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "536de628-0eb5-4338-9006-e2bd3c65c778")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX9N"
+		(shape bidirectional)
+		(at 935.4 248.11000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "960e3cbe-a7c4-4219-ba17-dadc8560fb6b")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX9N"
+		(shape bidirectional)
+		(at 935.4 251.92000000000007 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "12d52160-c594-4ce6-8cd0-10d865172180")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX10P"
+		(shape bidirectional)
+		(at 935.4 255.73000000000008 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4178ca93-6b26-4b63-b0d6-d38ac5d7f3df")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX10P"
+		(shape bidirectional)
+		(at 935.4 259.5400000000001 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4d58aa3b-9684-4691-b669-f8d79db8f33d")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX10N"
+		(shape bidirectional)
+		(at 1005.4 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "dc686800-0379-492c-9e84-71fc28ad7c46")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX10N"
+		(shape bidirectional)
+		(at 1005.4 133.81 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "bb3ca56f-123d-4f77-bd27-6680465fd275")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX11P"
+		(shape bidirectional)
+		(at 1005.4 137.62 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "af4aa15b-264a-47a4-a61d-8ef29f07ba48")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX11P"
+		(shape bidirectional)
+		(at 1005.4 141.43 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "eed01dcd-b82d-43ab-b633-24b60aa9074d")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX11N"
+		(shape bidirectional)
+		(at 1005.4 145.24 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1d1215d5-f50c-4eb0-aca6-4ccbb396669f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX11N"
+		(shape bidirectional)
+		(at 1005.4 149.05 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "47e223da-d96c-48be-bc25-0761d518e8e3")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX12P"
+		(shape bidirectional)
+		(at 1005.4 152.86 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5ec1d585-dcec-4496-b7cd-299d6455f1fa")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX12P"
+		(shape bidirectional)
+		(at 1005.4 156.67000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f7aa9432-38e6-4392-9332-8bce537e5cf2")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX12N"
+		(shape bidirectional)
+		(at 1005.4 160.48000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ab646ffc-4a80-4653-b524-da6703af57e6")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX12N"
+		(shape bidirectional)
+		(at 1005.4 164.29000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "4bd74bd9-0dd2-4709-920e-ea2da292da17")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX13P"
+		(shape bidirectional)
+		(at 1005.4 168.10000000000002 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ddc31c9b-9875-4b10-b37c-e7ff88cb6050")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX13P"
+		(shape bidirectional)
+		(at 1005.4 171.91000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "e999ccc9-629d-426a-933c-d6545cd8ea0f")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX13N"
+		(shape bidirectional)
+		(at 1005.4 175.72000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a5ea7c2d-ec38-4fc6-9f61-8e96f2c15e84")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX13N"
+		(shape bidirectional)
+		(at 1005.4 179.53000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ecb3d7f7-d6de-4979-b871-27657509ca1a")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX14P"
+		(shape bidirectional)
+		(at 1005.4 183.34000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "01b8442b-98c9-45a8-8025-98d2d410fa0b")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX14P"
+		(shape bidirectional)
+		(at 1005.4 187.15000000000003 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "0debb087-7d15-4e88-b7ff-465e06312d89")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX14N"
+		(shape bidirectional)
+		(at 1005.4 190.96000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "6fedd4aa-0b62-46b1-b07d-a5c39e4d8334")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX14N"
+		(shape bidirectional)
+		(at 1005.4 194.77000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "c17673de-d34d-46f8-bb0d-acaa0a9068a2")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX15P"
+		(shape bidirectional)
+		(at 1005.4 198.58000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "bbcfb9b3-8636-4042-a633-e7ca3b876e53")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX15P"
+		(shape bidirectional)
+		(at 1005.4 202.39000000000004 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "f4d742fa-a756-4456-bdcc-7ea9c2c499b1")
+	)
+
+	(hierarchical_label "OAM7_PCIE_TX15N"
+		(shape bidirectional)
+		(at 1005.4 206.20000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a532acd4-1b08-4079-adb9-208ca010caaa")
+	)
+
+	(hierarchical_label "OAM7_PCIE_RX15N"
+		(shape bidirectional)
+		(at 1005.4 210.01000000000005 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "3e8ee546-be18-4bf5-ae44-57a74f246289")
+	)
+
+
+
+	(hierarchical_label "PE_S0_GCD0_x16"
+		(shape bidirectional)
+		(at 200 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ad8a2faa-ac4a-4511-b5d6-63baa81aeb9c")
+	)
+
+	(hierarchical_label "PE_S1_GCD0_x16"
+		(shape bidirectional)
+		(at 200 138.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "be0dfb76-f2c5-42c2-8b48-69babf2e95c0")
+	)
+
+
+
+	(hierarchical_label "PE_S0_GCD0_x16"
+		(shape bidirectional)
+		(at 270 130 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "81634a46-28d7-4bdc-b90c-6d566be4ad5c")
+	)
+
+	(hierarchical_label "PE_S0_GCD1_x16"
+		(shape bidirectional)
+		(at 270 136.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "cd89c8a4-992d-42cf-a2a2-42391148d467")
+	)
+
+	(hierarchical_label "PE_S1_GCD0_x16"
+		(shape bidirectional)
+		(at 270 142.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "509e643a-608e-4386-a384-363acc1b18b5")
+	)
+
+	(hierarchical_label "PE_S1_GCD1_x16"
+		(shape bidirectional)
+		(at 270 148.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "8a2484e1-0a05-459b-9dcc-8f9573c3ac92")
+	)
+
+	(hierarchical_label "PE_S2_GCD0_x16"
+		(shape bidirectional)
+		(at 270 154.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a04bd250-4caf-4fa9-ba41-7911e453e646")
+	)
+
+	(hierarchical_label "PE_S2_GCD1_x16"
+		(shape bidirectional)
+		(at 270 160.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "229a1603-022f-47a9-9b80-1b6be3f43bfd")
+	)
+
+	(hierarchical_label "PE_S3_GCD0_x16"
+		(shape bidirectional)
+		(at 270 166.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "16c15e6e-61ca-4d79-b04d-9f79cba8192e")
+	)
+
+	(hierarchical_label "PE_S3_GCD1_x16"
+		(shape bidirectional)
+		(at 270 172.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "1d47ca3a-57a5-4e1d-b74f-eae14b9e4ee4")
+	)
+
+	(hierarchical_label "PE_S4_GCD0_x16"
+		(shape bidirectional)
+		(at 270 178.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7293e78f-5e64-4b24-9e6f-87a318d0bc90")
+	)
+
+	(hierarchical_label "PE_S4_GCD1_x16"
+		(shape bidirectional)
+		(at 270 184.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "ac97ef85-8436-49e1-b740-e6fe7ef52cda")
+	)
+
+	(hierarchical_label "PE_S5_GCD0_x16"
+		(shape bidirectional)
+		(at 270 190.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "fe010560-2147-4773-bba6-68c72ff0331f")
+	)
+
+	(hierarchical_label "PE_S5_GCD1_x16"
+		(shape bidirectional)
+		(at 270 196.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "851c9888-0024-447d-b825-70455f8c49b9")
+	)
+
+	(hierarchical_label "PE_S6_GCD0_x16"
+		(shape bidirectional)
+		(at 270 202.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "550f40cf-efa2-4047-886e-3351028623e7")
+	)
+
+	(hierarchical_label "PE_S6_GCD1_x16"
+		(shape bidirectional)
+		(at 270 208.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5170d28d-fc8a-4360-a96d-b805567b1687")
+	)
+
+	(hierarchical_label "PE_S7_GCD0_x16"
+		(shape bidirectional)
+		(at 270 214.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5a9049d3-d765-41c2-9937-a00adda4014c")
+	)
+
+	(hierarchical_label "PE_S7_GCD1_x16"
+		(shape bidirectional)
+		(at 270 220.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "74cb7e0e-27e9-416b-8eec-0b7dff6d949e")
+	)
+
+	(hierarchical_label "PE_SW0_US_x16"
+		(shape bidirectional)
+		(at 270 226.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "7271d7b1-4c4a-408b-810d-7d5e8571f5d4")
+	)
+
+	(hierarchical_label "PE_SW1_US_x16"
+		(shape bidirectional)
+		(at 270 232.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "5472b805-0312-4cc4-9721-7fa8cfaba401")
+	)
+
+	(hierarchical_label "PE_SW2_US_x16"
+		(shape bidirectional)
+		(at 270 238.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "a142791c-a0be-4a2d-92d0-548ea5db8bd2")
+	)
+
+	(hierarchical_label "PE_SW3_US_x16"
+		(shape bidirectional)
+		(at 270 244.0 0)
+		(effects (font (size 1.27 1.27)) (justify left))
+		(uuid "78b4ae1e-b45b-4223-9ab3-e46ccfbca7dd")
 	)
 
 

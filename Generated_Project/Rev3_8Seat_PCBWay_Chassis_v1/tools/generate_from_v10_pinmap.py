@@ -1,41 +1,66 @@
 #!/usr/bin/env python3
-"""Generate the Rev3 8-seat PCBWay chassis stub KiCad project.
+"""Generate the Rev3 8-seat PCBWay named-net chassis KiCad project.
 
 Writes ONLY into Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/.
-Never overwrites Rev1/Rev2/Rev3_2Seat. Never writes the original Open-MI250X-Carrier tree.
+Never overwrites Rev1/Rev2/Rev3_2Seat. Writes only this DUPLICATE checkout.
 
 Pin names: 22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv
 (xlsx in downloads/ wins on mismatch).
 
 Architecture:
-- 8 identical OAM seats, 16x Molex 218910-1115, 4-layer FR-4 stub.
-- 4x2 tiling of 103x166 mm KOZ = 412x332 mm (INFERRED, not a UBB drawing) + 20 mm
-  service margin + 40 mm host-stub strip = 492 x 372 mm outline (< PCBWay 508x600).
-- Seats 0-1: named host PCIe nets toward a documented host-connector REGION.
-  Do NOT invent a CEM cable / retimer BOM.
-- Seats 2-7: mechanical + power pads only. PCIe/xGMI unrouted / no net.
-  Silk: "needs on-board PCIe switch — MPN Unknown".
-- Do not route S1-S7 between OAMs. TEST*/RFU/DO_NOT_USE unmapped.
-- Do not drive PVREF. P48V pads exist, NO POUR, DO NOT ENERGIZE (ticket 167157).
-- P3V3 = Conn0 C1/C2 only (never r2.0).
+- FIRST ARTICLE TARGET: seats 0-1 (2 modules). Same 8-seat PCB; 2→4→8 populate later.
+  Without AMD overlay, 2x MI250X means two modules can SIT and at most GCD0 on each
+  can be targeted (2 GCDs). NOT 2 modules at full width (4 GCDs).
+- Conn0 OCP v1.0 PCIE_TX/RX0-15 = the only legal named host PE (GCD0 x16).
+  GCD1 is named-only / unmapped. Do NOT assign S1-S7. Conn1 has zero PCIE_* pads.
+- Host keepout: two x16 uplink names PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward
+  X11DPH-T (3x x16 + 4x x8). Two GCD0 x16 links FIT this host. Two full-width
+  modules (4x x16) do NOT. No CEM/MCIO MPN invented. Do not swap the host board.
+- 8 electrically designed OAM seats (2→4→8: seats 0-1, then 0-3, then all 8).
+  16x Molex 218910-1115. Board 492 x 372 mm. 12-layer 2.0 mm stuffed-switch TARGET
+  (plan 12-16L, not 4). 8-layer 2.0 mm is a documented cheaper DNP-switch option only.
+- Later-seat names stay: 16 named x16 PE buses + four DNP PM8536B-FEI (SW0-SW3).
+- Do not route S1-S7 (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. Never drive PVREF.
+- HOST_PWRGD is ENABLE. No GPU multiphase VRM on this PCB.
+- P48V: Anderson 6325G1 + 2x 1382 (SB175) + per-seat Littelfuse 0476015.MR 15 A
+  + LOCAL pours on the 16 verified Conn0 P48V pads. NOT a board-wide 100 A plane.
+  First populate stuffs fuses F0/F1 only. Off-board 48 V is 240 V / 50 A
+  single-phase wall class (DPU-3200-48 class) — NOT RST-5000-48 (3-phase).
+- P12V1: TRACO THL 40-4812WI from 48 V (40 W first-article; OCP allows <=50 W).
+  P3V3: Murata OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM.
+- PM8536B-FEI ball map is not public — DNP courtyards. POWER+MECH first article.
+  2-module path does NOT require stuffing SW0 (GCD0 names toward host keepout).
+  8x FULL-WIDTH is CONCEPT only (../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md).
+  DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. xGMI = XGMI_Sn_P*
+  boxes/port names — do NOT assign S1-S7. Do not claim DRC-clean live PE.
+  LATE BIND: named nets + DNP courtyards + comment-layer PE corridors (seats 0-1
+  GCD0 toward host keepout and SW0). NO guessed tracks. 16x x16 + four 1311-ball
+  escapes are a RESPIN, not a silk ECO. See LATE_BIND.md.
+- Molex 2026-08-18: 2189101115 CSA 60 V (COFC 80170713) at OCP P48V; published
+  OCP P48V map already satisfies Skip Pins — do NOT add extra NC pads.
+  Residual OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE until written.
+- P3V3 = Conn0 C1/C2 only (never r2.0). P12V2 named, Unknown / may be NC.
 - M3.5 NPTH φ3.9 mm per OAM Fig 2 at each seat.
-- DO NOT FABRICATE until Molex 60V/skip-pin and AMD overlay are closed.
+- Do not shop GPUs / 48 V shelves / cooling onto this PCB BOM.
 """
 from __future__ import annotations
 
 import csv
 import json
+import math
 import re
 import shutil
 import uuid
 from collections import defaultdict
 from pathlib import Path
 
+from fab_copper import MEZZ_ZONE_CLEAR_MM, build as build_fab_copper, p48_net
+
 ROOT = Path(__file__).resolve().parents[1]
 if ROOT.name != "Rev3_8Seat_PCBWay_Chassis_v1":
     raise SystemExit(f"refusing to write outside Rev3 8-seat tree: {ROOT}")
-if "Open-MI250X-Carrier" in str(ROOT) and "DUPLICATE" not in str(ROOT) and "omi-dup" not in str(ROOT):
-    raise SystemExit(f"refusing to write the original repo tree: {ROOT}")
+if "Rev1_" in str(ROOT) or "Rev2_" in str(ROOT) or "Rev3_2Seat" in str(ROOT):
+    raise SystemExit(f"refusing to overwrite Rev1/Rev2/2-seat trees: {ROOT}")
 
 REPO = Path(__file__).resolve().parents[3]
 PINMAP = REPO / "22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv"
@@ -50,6 +75,15 @@ SYM_VER = 20241209
 
 SHARED_RAILS = {"P48V", "P12V1", "P12V2", "P3V3", "GND"}
 UNMAPPED_EXACT = {"RFU", "DO_NOT_USE"}
+# Verified OCP v1.0 Conn0 P48V pads only. Do not add skip/void NC pads.
+P48V_PADS = {
+    "H59", "K59", "H60", "K60",
+    "H61", "J61", "K61", "L61",
+    "H62", "J62", "K62", "L62",
+    "H63", "J63", "H64", "J64",
+}
+P12V1_PADS = {"A59", "A60", "A61", "A62", "B62"}
+P3V3_PADS = {"C1", "C2"}
 
 N_SEATS = 8
 N_COLS = 4
@@ -60,7 +94,27 @@ MARGIN = 20.0
 HOST_STRIP = 40.0
 BOARD_W = MARGIN + N_COLS * KOZ_W + MARGIN + HOST_STRIP  # 492
 BOARD_H = MARGIN + N_ROWS * KOZ_H + MARGIN              # 372
-HOST_PCIE_SEATS = {0, 1}
+HOST_PCIE_SEATS = {0, 1, 2, 3, 4, 5, 6, 7}  # all 8 electrically named
+FIRST_STUFF_SEATS = {0, 1}          # populate path step 1 (stuff SW0 later)
+SECOND_STUFF_SEATS = {0, 1, 2, 3}   # populate path step 2 (stuff SW0+SW1)
+# One 96-lane switch per two seats: 2 seats × 2 GCD × x16 = 64 DS + 16 US.
+N_SWITCHES = 4
+SWITCH_SEATS = {
+    0: {0, 1},
+    1: {2, 3},
+    2: {4, 5},
+    3: {6, 7},
+}
+# Classes named on every seat so stuffing 6 more modules needs no respin.
+NAMED_ON_ALL = {
+    "power_shared", "pcie_stub", "clock_reset", "mgmt_stub",
+    "ocp_sideband", "module_output_do_not_drive", "named_other",
+}
+# No xGMI / QSFP copper. TEST*/RFU already unmapped.
+NO_NET_CLASSES = {
+    "serdes_named_not_routed", "mgmt_link_named_not_routed",
+    "qsfp_sideband_named_not_routed", "unmapped_nc",
+}
 CONN0_MOD = (51.0, 31.5)
 CONN1_MOD = (51.0, 133.5)
 HOLES_MOD = [(6.0, 31.5), (96.0, 31.5), (6.0, 133.5), (96.0, 133.5)]
@@ -68,6 +122,67 @@ ROT = 180  # Inferred PIN A3 vs candidate land (same as Rev2 2-seat)
 
 PCBWAY_ADV_ML = (508.0, 600.0)
 PCBWAY_STD_ML = (560.0, 1150.0)
+N_LAYERS = 12  # stuffed-switch TARGET (four 1311-ball 1.0 mm PM8536 DNP). 8L 2.0 mm is docs-only DNP-switch.
+BOARD_THICK_MM = 2.0
+OZ2_UM = 0.070
+OZ1_UM = 0.035
+P48V_CLEAR_MM = 0.64  # OCP UBB v1.5 >40 V internal 25 mil
+GND_CLEAR_MM = 0.25
+# SB175 on-board in the south margin (NPTH copper inside Edge.Cuts). Housing 6325G1.
+SB175_AT = (70.0, 354.0)
+# PRIMARY: four Microchip PM8536B-FEI DNP courtyards. Switchtec PFX 96-lane Gen3,
+# 1311-ball 37.5 mm FCBGA, 1.0 mm pitch. ~$460-475, ~18 wk.
+# Lane math (verified; not a ball map / not a locked pinout):
+#   8 × 2 GCD × x16 = 256 downstream. 2×96 = 192 — enough for 8× x8/GCD
+#   (128 DS + uplinks), NOT 256 DS. 4×96 = 384. Example partition: each SW
+#   16 US + 64 DS (two seats × two GCD × x16) = 80 of 96, 16 spare.
+#   4 × 16 US = 64 host-facing vs X11DPH-T ~80. Chassis WIRED for 4× US x16;
+#   this host CANNOT LIGHT 256 DS. x8/GCD remains a stuffing option if only
+#   SW0+SW1 are populated.
+# PCBWay can assemble 1.0 mm without HDI; plan 12-16 layers (not 4).
+# Host strip is 40 mm; 37.5 mm body + 1.25 mm per side. Four 40 mm courtyards
+# stacked in Y; 12 V brick cluster sits south of SW3 (y>=332).
+# PEX8780-AB80BI G is a cheaper 80-lane alt in docs only — not placed
+# (80 lanes is exactly 16 US+64 DS with no spare; still too small to replace
+# four 96-lane courtyards with two chips).
+# PM8533B-F3EI (48-lane, 27 mm) is a 2-seat alt in docs only — not placed.
+PM8536_MPN = "PM8536B-FEI"
+PM8536_BODY_MM = 37.5
+PM8536_CRTYD_MM = 40.0
+SW_KEEPOUTS = {
+    0: (452.0, 16.0, 492.0, 56.0),     # seats 0-1 first stuff
+    1: (452.0, 62.0, 492.0, 102.0),    # seats 2-3
+    2: (452.0, 248.0, 492.0, 288.0),   # seats 4-5
+    3: (452.0, 292.0, 492.0, 332.0),   # seats 6-7
+}
+SW_SILK_Y = {0: 36.0, 1: 82.0, 2: 268.0, 3: 312.0}
+# X11DPH-T cable keepout (four named US x16 toward host). MPN Unknown — no CEM invented.
+HOST_CABLE_KEEPOUT = (452.0, 110.0, 492.0, 244.0)
+HOST_SILK_Y = 177.0
+
+
+def switch_for_seat(oam: int) -> int:
+    """SW0=seats 0-1, SW1=2-3, SW2=4-5, SW3=6-7."""
+    return oam // 2
+
+
+def pe_named_buses() -> list[str]:
+    """Architectural PE names. GCD0 pads stay OAM{n}_PCIE_* (OCP Conn0).
+    GCD1 is named-only (overlay Unknown; not assigned to S1-S7).
+    First-article host uplinks are PE_S0_GCD0_x16 and PE_S1_GCD0_x16 only.
+    """
+    names = []
+    for oam in range(N_SEATS):
+        names.append(f"PE_S{oam}_GCD0_x16")
+        names.append(f"PE_S{oam}_GCD1_x16")
+    for sw in range(N_SWITCHES):
+        names.append(f"PE_SW{sw}_US_x16")
+    return names
+
+
+def first_article_uplinks() -> list[str]:
+    """Two GCD0 x16 names toward the host keepout. Not a CEM pin map."""
+    return ["PE_S0_GCD0_x16", "PE_S1_GCD0_x16"]
 
 
 def uid() -> str:
@@ -121,18 +236,24 @@ def classify(signal: str) -> str:
 
 
 def net_name(oam: int, signal: str) -> str | None:
-    """KiCad net for a v1.0 signal, or None if unmapped on this seat."""
+    """KiCad net for a v1.0 signal, or None if unmapped on this seat.
+
+    All 8 seats are electrically designed (no respin to light seats 2-7).
+    S1-S7 / QSFP / TEST* stay without nets. P12V2 stays the OCP name (Unknown/may be NC).
+    """
     if is_unmapped(signal):
         return None
     sig = signal.replace(" ", "")
-    if signal in SHARED_RAILS:
-        return sig
-    if oam not in HOST_PCIE_SEATS:
-        # seats 2-7: mechanical + power pads only. PVREF named, never driven.
-        if signal == "PVREF":
-            return f"OAM{oam}_{sig}"
+    cls = classify(signal)
+    if cls in NO_NET_CLASSES:
         return None
-    return f"OAM{oam}_{sig}"
+    if signal in SHARED_RAILS:
+        if signal == "P48V":
+            return p48_net(oam)
+        return sig
+    if cls in NAMED_ON_ALL:
+        return f"OAM{oam}_{sig}"
+    return None
 
 
 def kicad_escape(s: str) -> str:
@@ -166,7 +287,7 @@ def write_classification_csv(rows: list[dict]) -> None:
         w = csv.writer(f)
         header = ["connector", "pad", "v10_signal", "class"]
         header += [f"oam{i}_net" for i in range(N_SEATS)]
-        header += ["wired_on_oam0_1", "notes"]
+        header += ["wired_on_all_8", "notes"]
         w.writerow(header)
         for r in rows:
             sig = r["signal"]
@@ -180,13 +301,22 @@ def write_classification_csv(rows: list[dict]) -> None:
             if cls == "unmapped_nc":
                 note = "Named in v1.0 but AMD overlay unknown or reserved; no copper"
             elif cls == "serdes_named_not_routed":
-                note = "Named SerDes (xGMI/IF candidate). Named on seats 0-1 only; never routed between OAMs"
+                note = "Named SerDes (xGMI/IF candidate). NO NET on any seat. Do not route S1-S7."
             elif cls == "module_output_do_not_drive":
                 note = "Module output. Never drive from carrier. Per-OAM nets. Do not short seats together."
             elif cls == "power_shared":
-                note = "OCP-named power/ground on all 8 seats. P48V NO POUR. DO NOT ENERGIZE."
+                note = (
+                    "OCP-named power/ground on all 8 seats. P48V = local per-seat pour "
+                    "on 16 Conn0 pads after fuse keepout; NOT a 100A flood. "
+                    "P12V2 Unknown/may be NC. Do not tie P48V to D3000E-S1 (12 V). DO NOT ENERGIZE."
+                )
             elif cls == "pcie_stub":
-                note = "Named on seats 0-1 toward host region. Seats 2-7: no net (need on-board PCIe switch, MPN Unknown)."
+                note = (
+                    "Conn0 16-lane PCIE bus = PE_S{n}_GCD0_x16 (OCP PETp/n+PERp/n host link). "
+                    "First article: seats 0-1 GCD0 toward host keepout (2x x16). "
+                    "PE_S{n}_GCD1_x16 named-only (Conn1 has no PCIE_*; not S1-S7). "
+                    "Later seats keep 8-seat names. Not a CEM mapping."
+                )
             w.writerow([r["connector"], r["pin"], sig, cls, *nets, "yes" if wired else "no", note])
 
 
@@ -240,7 +370,7 @@ def build_conn_symbol(conn: str, rows: list[dict]) -> str:
         f'  (property "Value" "{sym}" (at 0 2.54 0) (effects (font (size 1.27 1.27))))',
         f'  (property "Footprint" "footprints:218910-1115_candidate" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
         f'  (property "Datasheet" "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
-        f'  (property "ki_description" "OCP generic v1.0 {conn} 688-contact map. NOT AMD MI250X overlay. DO NOT FABRICATE." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
+        f'  (property "ki_description" "OCP generic v1.0 {conn} 688-contact map. NOT AMD MI250X overlay. DO NOT ENERGIZE P48V." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
         f'  (property "ki_fp_filters" "218910-1115*" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))',
     ]
     for unit, classes in unit_map.items():
@@ -292,12 +422,12 @@ def sch_header(title: str, comment: str) -> str:
 	(paper "A3")
 	(title_block
 		(title "{kicad_escape(title)}")
-		(date "2026-08-21")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "{kicad_escape(comment)}")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
+        (comment 2 "{kicad_escape(comment)}")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 '''
 
@@ -305,16 +435,16 @@ def sch_header(title: str, comment: str) -> str:
 SHEETS = [
     ("00_DO_NOT_FABRICATE", "sheets/00_do_not_fabricate.kicad_sch"),
     ("01_Power_Clock_Reset", "sheets/01_power_clock_reset.kicad_sch"),
-    ("02_Host_PCIe_Stub_OAM0_1", "sheets/02_host_pcie_stub.kicad_sch"),
+    ("02_Host_PCIe_Named_8Seat", "sheets/02_host_pcie_stub.kicad_sch"),
     ("03_OAM0_Connectors", "sheets/03_oam0_connectors.kicad_sch"),
     ("04_OAM1_Connectors", "sheets/04_oam1_connectors.kicad_sch"),
-    ("05_OAM2_MechPower", "sheets/05_oam2_connectors.kicad_sch"),
-    ("06_OAM3_MechPower", "sheets/06_oam3_connectors.kicad_sch"),
-    ("07_OAM4_MechPower", "sheets/07_oam4_connectors.kicad_sch"),
-    ("08_OAM5_MechPower", "sheets/08_oam5_connectors.kicad_sch"),
-    ("09_OAM6_MechPower", "sheets/09_oam6_connectors.kicad_sch"),
-    ("10_OAM7_MechPower", "sheets/10_oam7_connectors.kicad_sch"),
-    ("11_PCIe_Switch_Unknown", "sheets/11_pcie_switch_unknown.kicad_sch"),
+    ("05_OAM2_Connectors", "sheets/05_oam2_connectors.kicad_sch"),
+    ("06_OAM3_Connectors", "sheets/06_oam3_connectors.kicad_sch"),
+    ("07_OAM4_Connectors", "sheets/07_oam4_connectors.kicad_sch"),
+    ("08_OAM5_Connectors", "sheets/08_oam5_connectors.kicad_sch"),
+    ("09_OAM6_Connectors", "sheets/09_oam6_connectors.kicad_sch"),
+    ("10_OAM7_Connectors", "sheets/10_oam7_connectors.kicad_sch"),
+    ("11_PM8536_DNP_x4", "sheets/11_pcie_switch_unknown.kicad_sch"),
     ("12_Unmapped_AMD", "sheets/12_unmapped_amd.kicad_sch"),
 ]
 
@@ -322,20 +452,24 @@ SHEETS = [
 def write_root_sch() -> None:
     p = ROOT / f"{PROJ}.kicad_sch"
     body = sch_header(
-        "Rev3 8-seat PCBWay chassis stub (NOT fab-ready)",
-        "8 OAM seats. Host X11DPH-T is NOT on this PCB. No CEM cable. No 20-layer UBB.",
+        "Rev3 8-seat PCBWay POWER+MECH first article (DO NOT ENERGIZE P48V)",
+        "8 OAM seats. FIRST ARTICLE = seats 0-1 GCD0 x16. Host X11DPH-T is NOT on this PCB. No CEM cable.",
     )
     note = (
-        "DO NOT FABRICATE / DO NOT ENERGIZE P48V\\n"
-        "8 identical OAM seats (populate 0-1 now, 2-7 later). Same board.\\n"
-        "16x Molex 218910-1115, 5.00 mm stack. 4-layer FR-4. Outline 492 x 372 mm.\\n"
-        "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling (not a UBB drawing).\\n"
-        "Seats 0-1: named host PCIe nets toward HOST CONNECTOR REGION. No CEM invented.\\n"
-        "Seats 2-7: mechanical+power only. needs on-board PCIe switch — MPN Unknown.\\n"
-        "X11DPH-T: 3x Gen3 x16 + 4x Gen3 x8. NOT enough lanes for 8x MI250X (2 GCD, typically 2x x16).\\n"
-        "S1-S7 NOT routed between OAMs. TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\\n"
-        "P48V pads exist, NO POUR. Molex catalog 30 V vs OCP 44-59.5 V, ticket 167157.\\n"
-        "Dell D3000E-S1 is 12 V CRPS — do not mix. P3V3 = Conn0 C1/C2 only. Never r2.0."
+        "DO NOT ENERGIZE P48V — POWER+MECH first article (seats 0-1; 4x PM8536 DNP)\\n"
+        "2-MODULE FIRST ARTICLE: seats 0-1. Same PCB populate 2 then 4 then 8 — no respin.\\n"
+        "Without overlay: 2x MI250X = two modules SIT + at most GCD0 each (2 GCDs). NOT 2x full-width (4 GCDs).\\n"
+        "Legal host PE today: Conn0 OCP PCIE_* = PE_S0/S1_GCD0_x16. GCD1 named-only. Not S1-S7. Conn1 has 0 PCIE_*.\\n"
+        "Host keepout: two x16 names toward X11DPH-T. Two GCD0 x16 FIT. Two full-width modules do NOT. No CEM/MCIO MPN.\\n"
+        "16x Molex 218910-1115. 12L 2.0 mm. Outline 492 x 372 mm. 4x2 of 103x166 mm KOZ INFERRED (not a UBB).\\n"
+        "Later seats keep 16x x16 PE names + SW0-SW3 DNP. Do not swap or design the host board.\\n"
+        "8x FULL-WIDTH is CONCEPT only (Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md). DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.\\n"
+        "S1-S7 NOT routed (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\\n"
+        "P48V: SB175 (6325G1+2x1382) + 0476015.MR 15A/seat + LOCAL pours. First stuff F0/F1. NOT a 100A flood.\\n"
+        "Off-board 48V: 240 V / 50 A single-phase wall class (DPU-3200-48 class). NOT RST-5000-48 (3-phase).\\n"
+        "Molex 2026-08-18: CSA 60V (COFC 80170713) at OCP P48V; skip pins = published map, no extra NC.\\n"
+        "OPEN: 1.2 A/contact at 48-59.5 V (2 oz). HOST_PWRGD is ENABLE. No GPU VRM. P12V2 Unknown/may be NC.\\n"
+        "Dell D3000E-S1 is 12 V CRPS — do not mix into P48V. P3V3 = Conn0 C1/C2 only. Never r2.0."
     )
     body += f'''
 	(lib_symbols
@@ -344,6 +478,7 @@ def write_root_sch() -> None:
 {power_symbol("P12V2")}
 {power_symbol("+3V3")}
 {power_symbol("GND")}
+{power_symbol("P48V_STAR")}
 	)
 
 	(text (at 25.4 15.24 0)
@@ -412,46 +547,69 @@ def append_hier_labels(rel: str, labels: list[str], x: float = 25.4, y0: float =
 
 
 def write_do_not_fab_sheet() -> None:
-    text = """GATE LIST — all must be closed before fabrication or applying power to an MI250X.
+    text = """GATE LIST — energize / stuffing. POWER+MECH Gerbers are in fab/. Eli uploads; this agent does not.
 
-1. 48V source identified AND harnessed to P48V pads (not Dell D3000E-S1 12V CRPS).
-2. Molex 218910-1115 voltage vs P48V OPEN: catalog 30 V max vs OCP 44-59.5 V.
-   Pending ticket 167157 / product spec 2189100001-PS-000.
+1. 48V source identified AND harnessed to the SB175. Dell D3000E-S1 is 12 V CRPS —
+   do not tie OAM P48V to it. No PSU shopping on this PCB BOM.
+2. Molex 218910-1115 voltage/skip-pin: WRITTEN YES 2026-08-18 (Brian Park / ticket 167157).
+   CSA 60 V (COFC 80170713) at OCP P48V. Published OCP P48V map already satisfies Skip Pins
+   — do NOT add extra NC pads. Eli ack 2026-08-19.
+   STILL OPEN: 1.2 A per used power contact at 48-59.5 V (2 oz), and skip/void is NC
+   on the same MPN. DO NOT ENERGIZE until that current follow-up is written.
 3. Connector gender/stack: hermaphroditic 2189101115 mates with itself, 5 mm stack.
    Confirm PIN A3 orientation on a plot before tape-out (rotation 180 Inferred).
-4. Cooling exists (OEM air HS or documented liquid). Do not clamp a custom cold plate on bare die.
-5. AMD overlay unknowns (TEST*, dual-GCD PCIe, SMBus map, P12V2 need, xGMI S1-S7).
-6. Host X11DPH-T is NOT on this PCB. Dual NH-U14S DX-3647 vs socket pitch: Unknown.
-7. PCIe path: seats 0-1 named only, no CEM cable invented. Seats 2-7 need on-board
-   PCIe switch — MPN Unknown. X11DPH-T Gen3 lane count cannot feed 8x MI250X.
-8. HOST_PWRGD sequencing vs P48V/P12V1/P3V3 — implement only from OCP + AMD overlay.
-9. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.
+4. AMD overlay unknowns (TEST*, dual-GCD PE vs SERDES_7, SMBus map, P12V2 need, xGMI S1-S7).
+5. Host X11DPH-T is NOT on this PCB. Cooler on the host is NH-D9 DX-3647 (NOT U14S).
+   Chamber A mATX B550M 244x244 is NOT on this PCB.
+6. PCIe first article: seats 0-1 GCD0 = Conn0 OCP PCIE_* (verified 16-lane host link).
+   Two named uplinks PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward host keepout. No CEM/MCIO MPN.
+   X11DPH-T 3x x16 + 4x x8: two GCD0 x16 FIT. Two full-width modules (4x x16) do NOT.
+   GCD1 named-only. Conn1 has 0 PCIE_*. Do not assign S1-S7. Do not stuff PM8536 this article.
+   Later seats keep 8-seat full-width names + SW0-SW3 DNP. Do not swap the host.
+7. HOST_PWRGD is ENABLE. Sequencing vs P48V/P12V1/P3V3 — OCP + AMD overlay only.
+8. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.
+9. Per-seat fuse Littelfuse 0476015.MR 15 A. P12V1 = THL 40-4812WI (40 W first article).
+   P3V3 = OKI-78SR-3.3/1.5-W36-C from P12V1. No GPU multiphase VRM on this PCB.
+10. Do not upload to PCBWay from this agent. 12L 2.0 mm stuffed-switch TARGET (plan 12-16L, not 4);
+    8L 2.0 mm is a cheaper DNP-switch option only.
 
-Until then this KiCad tree is a mapping artifact. Do not send to PCBWay. DO NOT ENERGIZE P48V.
+Fab zip is POWER+MECH. Do not stuff the DNP switches. DO NOT ENERGIZE P48V.
 """
-    write_text_sheet("sheets/00_do_not_fabricate.kicad_sch", "DO NOT FABRICATE", text)
+    write_text_sheet("sheets/00_do_not_fabricate.kicad_sch", "ENERGIZE / STUFFING GATES (fab zip in fab/)", text)
 
 
 def write_power_clock_sheet() -> None:
     text = """PURPOSE: Named power / clock / reset stubs from OAM v1.0 pin map.
 
-SHARED RAILS (OCP names, all 8 OAMs — pads exist on every seat):
+STAR-FED P48V (NOT a board-wide 100 A plane):
+- Board entry: Anderson SB175 (175 A / 600 V) on the long edge, 2 AWG landing.
+  Net P48V_STAR. Kelvin+ / Kelvin- pads at the star. Off-board 48 V is NOT a PCB BOM item.
+- Dell D3000E-S1 is 12 V CRPS — do not tie OAM P48V to it. 1000 W ATX/EPS is HOST only.
+- Per seat: Littelfuse 0476015.MR (15 A, 125 VDC Nano2), then the 16 verified OCP v1.0 Conn0
+  P48V pads. Local 2 oz F.Cu pour around those 16 pads only. No extra NC/skip pads.
+  Seat nets are P48V / P48V_S1..S7 so the fuses actually isolate.
+- Molex 2026-08-18 written yes: CSA 60 V (COFC 80170713) at OCP P48V.
+  OPEN: 1.2 A/contact at 48-59.5 V (2 oz). DO NOT ENERGIZE.
+
+SHARED RAILS (OCP names, pads on every seat):
 - P48V  Conn0 16 pads  44-59.5 V  up to 700 W class (pin list). MI250X 500/560 W.
-        NO POUR. DO NOT ENERGIZE. Molex catalog 30 V vs OCP, ticket 167157.
-- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Required.
-- P12V2 Conn0 27 pads  12 V main for 12V-based OAM. MI250X is 48 V class. AMD-unknown.
-        Do NOT short to P12V1 unless documented.
-- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Required. 2 pins — matches v1.5 Table 4; r2.0 has 6.
-- GND   Conn0 majority
-- PVREF Conn0 G1,G2    MODULE OUTPUT. NEVER drive from carrier. Per-OAM nets on all 8 seats.
+        LOCAL pours only. Module has the 48 V core VRMs — no GPU multiphase here.
+- P12V1 Conn0 5 pads   12 V infrastructure up to 50 W. Carrier supplies THL 40-4812WI (40 W first article).
+        No GPU VRM.
+- P12V2 Conn0 27 pads  12 V main for 12V-based OAM. MI250X is 48 V class.
+        Unknown / may be NC. Do NOT short to P12V1. Do not invent a P12V2 supply.
+- P3V3  Conn0 C1,C2    3.3 V up to 5 W. Carrier supplies OKI-78SR-3.3/1.5-W36-C from P12V1.
+- GND   Conn0 majority. Inner GND planes (In1, In4), 2 oz planning.
+- PVREF Conn0 G1,G2    MODULE OUTPUT. NEVER drive from carrier. Per-OAM nets.
 
-CLOCK / RESET named on seats 0-1 only (host-facing stub):
-- PE_REFCLKP/N, PERST#, WARMRST#, HOST_PWRGD, MODULE_PWRGD, PWRBRK#, PRSNT0#/1#
+CLOCK / RESET named on ALL 8 seats (no respin to light 2-7):
+- PE_REFCLKP/N, PERST#, HOST_PWRGD (ENABLE), plus WARMRST# / MODULE_PWRGD / PWRBRK# / PRSNT*
+- HOST_PWRGD is ENABLE (OCP: Power Enable when P48V/P12V1/P12V2/P3V3 are in spec).
 
-Seats 2-7: mechanical+power pads only. Clock/PCIe/SerDes have no net on those seats.
+First stuffing may populate 2 modules on seats 0-1 (F0/F1). Then 0-3, then all 8. Same nets.
 
-DO NOT: invent VRMs, mix 12 V CRPS into P48V, drive PVREF, pour P48V copper,
-or attach a guessed clock chip.
+DO NOT: invent VRMs, mix 12 V CRPS into P48V, drive PVREF, pour a 100 A P48V plane,
+shop a 48 V shelf onto this BOM, or attach a guessed clock chip.
 """
     write_text_sheet("sheets/01_power_clock_reset.kicad_sch", "Power / clock / reset stub", text)
     path = ROOT / "sheets/01_power_clock_reset.kicad_sch"
@@ -460,8 +618,8 @@ or attach a guessed clock chip.
         existing = existing[:-1]
     flags = []
     x = 30.48
-    for name, net in [("P48V", "P48V"), ("P12V1", "P12V1"), ("P12V2", "P12V2"),
-                      ("+3V3", "P3V3"), ("GND", "GND")]:
+    for name, net in [("P48V_STAR", "P48V_STAR"), ("P48V", "P48V"), ("P12V1", "P12V1"),
+                      ("P12V2", "P12V2"), ("+3V3", "P3V3"), ("GND", "GND")]:
         flags.append(f'''
 	(symbol (lib_id "power:{name}") (at {x} 140 0) (unit 1)
 		(in_bom yes) (on_board yes) (dnp no)
@@ -481,109 +639,135 @@ or attach a guessed clock chip.
         x += 25.4
     path.write_text(existing + "\n" + "".join(flags) + "\n)\n")
     labs = []
-    for oam in (0, 1):
+    for oam in range(N_SEATS):
         labs += [
             f"OAM{oam}_PE_REFCLKP", f"OAM{oam}_PE_REFCLKN", f"OAM{oam}_PERST#",
             f"OAM{oam}_HOST_PWRGD", f"OAM{oam}_MODULE_PWRGD", f"OAM{oam}_PVREF",
         ]
-    for oam in range(2, 8):
-        labs.append(f"OAM{oam}_PVREF")
     append_hier_labels("sheets/01_power_clock_reset.kicad_sch", labs, y0=170, dy=4.5)
 
 
 def write_pcie_sheet() -> None:
-    text = """PURPOSE: Host PCIe stub using ONLY v1.0 names PCIE_TXnP/N and PCIE_RXnP/N (n=0..15).
+    text = """PURPOSE: Named v1.0 PCIE_TXnP/N and PCIE_RXnP/N (n=0..15) on ALL 8 seats.
 
-THIS SHEET IS SEATS 0 AND 1 ONLY.
+FIRST ARTICLE TARGET: seats 0 and 1. Same 8-seat PCB; 2→4→8 later.
 
-OCP pin list (module POV):
-- PETp/n = module TX, host RX. AC caps on motherboard/carrier — not placed.
-- PERp/n = module RX, host TX. AC caps on motherboard/carrier — not placed.
+Pinmap (Verified OCP v1.0 generic map + pin list; NOT an AMD overlay):
+- Conn0 PCIE_TX/RX0-15 P/N = 64 pads = PETp/n + PERp/n [15:0] "PCIe or equivalent host link".
+  That is the only legal named host PE today. Call it GCD0 x16 (architectural name).
+- Conn1 has ZERO PCIE_* pads. S7_* = SERDES_7 "Reserved Link" — 64 pads, NO NET.
+  GCD1 x16 is named-only. Do NOT assign S1-S7 as GCD1 PE.
 
-This sheet does NOT map those pairs onto a CEM x16 connector pinout.
+Without overlay, "2x MI250X" on this zip:
+- CAN: two modules SIT on seats 0-1 (mech + named P48V/P12V1/P3V3/GND/GCD0 PE).
+- CAN target at most GCD0 on each (2 GCDs) toward the host keepout.
+- CANNOT: 2 modules at full width (4 GCDs). GCD1 pins Unknown.
+- CANNOT: light even those 2 GCD0 links until Molex 1.2 A/contact is written AND
+  a legal host connector exists. This article does not invent CEM/MCIO.
+
+Host X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8.
+- Two GCD0 x16 (PE_S0_GCD0_x16 + PE_S1_GCD0_x16) FIT the host lane budget.
+- Two full-width modules (4x x16) do NOT.
+
+This sheet does NOT map pairs onto a CEM x16 pinout.
 Do NOT invent a CEM cable, SlimSAS, MCIO, or retimer BOM.
+Do NOT invent PE pin numbers.
 
-Host: SuperMicro X11DPH-T is PCIe Gen3 (3x x16 + 4x x8).
-Each MI250X module is 2 GCD, typically 2x x16. 8 modules need far more
-host lanes than X11DPH-T provides. Seats 0-1 are the only named host-facing
-PCIe nets, aimed at a documented HOST CONNECTOR REGION on the PCB (silk/courtyard,
-no connector MPN).
+Later seats keep 8-seat names (PE_S2..S7 GCD0/GCD1 + PE_SWk_US_x16) and SW0-SW3 DNP.
 
-Seats 2-7: see sheet 11. needs on-board PCIe switch — MPN Unknown.
-X11DPH-T is NOT a part on this PCB.
+8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md
+DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. Do not claim DRC-clean live PE.
+2-module first article does not require stuffing SW0.
 
-Lane order, polarity invert, and dual-GCD (1x16 vs 2x8) need the AMD overlay.
-PE_BIF[1:0] on Conn1 report bifurcation; AMD default Unknown.
+X11DPH-T is NOT a part on this PCB. Do not swap or design a host board.
 """
-    write_text_sheet("sheets/02_host_pcie_stub.kicad_sch", "Host PCIe stub (OAM0-OAM1 only)", text)
+    write_text_sheet("sheets/02_host_pcie_stub.kicad_sch", "Host PE: 2-mod first article GCD0 x16; later-seat names kept", text)
     labels = []
-    for oam in (0, 1):
+    for oam in range(N_SEATS):
         for n in range(16):
             for pn in ("P", "N"):
                 for txrx in ("TX", "RX"):
                     labels.append(f"OAM{oam}_PCIE_{txrx}{n}{pn}")
     append_hier_labels("sheets/02_host_pcie_stub.kicad_sch", labels, y0=130, dy=3.81)
+    append_hier_labels("sheets/02_host_pcie_stub.kicad_sch", first_article_uplinks(), x=200, y0=130, dy=8.0)
+    append_hier_labels("sheets/02_host_pcie_stub.kicad_sch", pe_named_buses(), x=270, y0=130, dy=6.0)
 
 
 def write_oam_connector_sheet(oam: int, rel: str) -> None:
-    if oam in HOST_PCIE_SEATS:
-        text = f"""OAM{oam} connector instances — HOST-FACING SEAT (populate now).
+    sw = switch_for_seat(oam)
+    seats = ",".join(str(s) for s in sorted(SWITCH_SEATS[sw]))
+    if oam in FIRST_STUFF_SEATS:
+        stuff = "FIRST ARTICLE 2-module path (seats 0-1). GCD0 toward host keepout. GCD1 named-only."
+    elif oam in SECOND_STUFF_SEATS:
+        stuff = "SECOND STUFF (populate path 4: seats 0-3). Later than first article. Names kept."
+    else:
+        stuff = "EIGHT-SEAT STUFF (populate path 8). Later than first article. Names kept; no respin."
+    if oam in FIRST_STUFF_SEATS:
+        pe_line = (
+            f"Conn0 PE 16 lanes (PE_S{oam}_GCD0_x16) named toward HOST KEEPOUT "
+            f"(first-article uplink; not a CEM map). SW{sw} stays DNP this article. "
+            f"PE_S{oam}_GCD1_x16 named-only (pins Unknown; not S1-S7)."
+        )
+    else:
+        pe_line = (
+            f"Conn0 PE 16 lanes (PE_S{oam}_GCD0_x16) toward SW{sw} DNP "
+            f"(seats {seats}; later-seat name). PE_S{oam}_GCD1_x16 named-only "
+            f"(pins Unknown; not S1-S7)."
+        )
+    text = f"""OAM{oam} connector instances — {stuff}.
 
 Footprint: Molex 218910-1115 candidate (geometry). Hermaphroditic — mates with itself
 (Farnell 2189101115: Mates With 2189101115; mated height 5.00 mm).
 
-Pad nets assigned on the PCB from the v1.0 CSV. Schematic shows hierarchical
-ports for power / clock / reset / mgmt. Host PCIe names live on sheet 02.
-SerDes S1-S7 named on the PCB for this seat and left unrouted (AMD xGMI unknown).
+Pad nets assigned on the PCB from the v1.0 CSV for this seat:
+P48V/P12V1/P3V3/GND, {pe_line}
+PE_REFCLK / PERST# / HOST_PWRGD (ENABLE). S1-S7 have NO NET (no xGMI).
+TEST*/RFU/DO_NOT_USE unmapped. PVREF is a module output — never drive.
+P12V2 named from v1.0 but Unknown / may be NC. P48V is a LOCAL pour after a ~15 A fuse keepout.
 
 MODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).
 """
-        ports = [
-            "P48V", "P12V1", "P12V2", "P3V3", "GND",
-            f"OAM{oam}_PVREF", f"OAM{oam}_PE_REFCLKP", f"OAM{oam}_PE_REFCLKN",
-            f"OAM{oam}_PERST#", f"OAM{oam}_HOST_PWRGD", f"OAM{oam}_MODULE_PWRGD",
-            f"OAM{oam}_WARMRST#", f"OAM{oam}_PWRBRK#", f"OAM{oam}_PRSNT0#",
-            f"OAM{oam}_SMBus_SLV_D", f"OAM{oam}_SMBus_SLV_CLK",
-        ]
-    else:
-        text = f"""OAM{oam} connector instances — MECHANICAL + POWER ONLY (populate later).
-
-Same 2x Molex 218910-1115 land pattern and Fig 2 M3.5 holes as seats 0-1.
-PCIe / xGMI / clock / mgmt pads have NO NET on this seat.
-
-needs on-board PCIe switch — MPN Unknown.
-
-Power pads share P48V / P12V1 / P12V2 / P3V3 / GND with the rest of the board.
-P48V still NO POUR, DO NOT ENERGIZE. PVREF is a module output — never drive.
-"""
-        ports = ["P48V", "P12V1", "P12V2", "P3V3", "GND", f"OAM{oam}_PVREF"]
+    ports = [
+        "P48V", "P12V1", "P12V2", "P3V3", "GND",
+        f"OAM{oam}_PVREF", f"OAM{oam}_PE_REFCLKP", f"OAM{oam}_PE_REFCLKN",
+        f"OAM{oam}_PERST#", f"OAM{oam}_HOST_PWRGD", f"OAM{oam}_MODULE_PWRGD",
+        f"OAM{oam}_WARMRST#", f"OAM{oam}_PWRBRK#", f"OAM{oam}_PRSNT0#",
+        f"OAM{oam}_SMBus_SLV_D", f"OAM{oam}_SMBus_SLV_CLK",
+        f"PE_S{oam}_GCD0_x16", f"PE_S{oam}_GCD1_x16",
+    ]
     write_text_sheet(rel, f"OAM{oam} connectors", text)
     append_hier_labels(rel, ports, y0=150)
 
 
 def write_switch_unknown_sheet() -> None:
-    text = """SEATS 2-7 HOST I/O — NOT CLOSED.
+    text = """FOUR PM8536B-FEI KEEPOUTS — DNP, later-seat architecture. No fake pins. No ball map.
 
-X11DPH-T (system host, NOT on this PCB):
-  3x PCIe Gen3 x16 + 4x Gen3 x8.
-Each MI250X OAM is 2 GCD and typically presents 2x x16 of host PCIe.
-8 seats therefore need far more host lanes than the locked motherboard has.
+FIRST ARTICLE does NOT stuff any switch. Seats 0-1 GCD0 names go toward the host keepout
+(PE_S0_GCD0_x16 + PE_S1_GCD0_x16). Two GCD0 x16 FIT X11DPH-T. Two full-width modules do NOT.
 
-This stub:
-- Seats 0-1: named PCIE_* nets aimed at the HOST CONNECTOR REGION on the PCB.
-  No CEM / SlimSAS / MCIO / retimer MPN is invented.
-- Seats 2-7: mechanical + power pads only. PCIe and S1-S7 have no net.
+U_SW0  PM8536B-FEI  DNP  seats 0-1   later 8-seat / full-width path
+U_SW1  PM8536B-FEI  DNP  seats 2-3
+U_SW2  PM8536B-FEI  DNP  seats 4-5
+U_SW3  PM8536B-FEI  DNP  seats 6-7
 
-To light seats 2-7 later, this carrier would need an on-board PCIe switch
-(and likely a refclk / PERST distribution tree).
+Package (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA,
+1.0 mm pitch. Courtyard/keepout only. Do NOT populate this article.
 
-needs on-board PCIe switch — MPN Unknown.
+GCD1 = SERDES_7 is Inferred — NO public AMD overlay. Do NOT route S1-S7.
+Conn1 has ZERO PCIE_* pads. Conn0 PCIE_* is the only legal named host PE.
 
-Do not buy a random Broadcom/Microchip switch to "finish" this board.
-SI, bifurcation, dual-GCD mapping, and the AMD overlay are all still Unknown.
-Do not route S1-S7 as a pretend xGMI mesh.
+Do not invent CEM / SlimSAS / MCIO / retimer. SuperMicro CBL-MCIO is a UBB cable,
+not an X11DPH-T CEM map. No MCIO-on-carrier MPN placed (none chosen with a public
+footprint AND without inventing OAM↔MCIO).
+
+Populate: seats 0-1 first (no switch), then 0-3, then all 8 + SW0-SW3. Same PCB.
+
+8x FULL-WIDTH CONCEPT (ideas only): ../Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md
+DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.
+xGMI = boxes and XGMI_Sn_P* names only. Do NOT assign S1-S7.
 """
-    write_text_sheet("sheets/11_pcie_switch_unknown.kicad_sch", "PCIe switch MPN Unknown", text)
+    write_text_sheet("sheets/11_pcie_switch_unknown.kicad_sch", "PM8536B-FEI DNP x4 (later path; not stuffed for 2-mod)", text)
+    append_hier_labels("sheets/11_pcie_switch_unknown.kicad_sch", pe_named_buses(), y0=150, dy=4.5)
 
 
 def write_unmapped_sheet(rows: list[dict]) -> None:
@@ -592,7 +776,7 @@ def write_unmapped_sheet(rows: list[dict]) -> None:
         "Pads explicitly UNMAPPED on every seat (no net, no copper).",
         "Named in the v1.0 generic map but reserved, do-not-use, or TEST pins",
         "whose AMD MI250X function is Unknown. Do not invent pullups or straps.",
-        "On seats 2-7, PCIe/SerDes/clock/mgmt are ALSO unnetted (mech+power only).",
+        "S1-S7 / QSFP sideband also have no net (no xGMI). All 8 seats are otherwise electrically named.",
         "",
     ]
     for conn, pad, sig in unmapped:
@@ -608,13 +792,69 @@ def parse_footprint_pads() -> list[tuple[str, str, str, str]]:
     )
 
 
+def fp_to_world(fx: float, fy: float, rot: int, px: float, py: float) -> tuple[float, float]:
+    """Footprint-local pad -> PCB. ROT 180 is the inferred PIN A3 placement."""
+    if rot == 180:
+        return fx - px, fy - py
+    if rot == 0:
+        return fx + px, fy + py
+    raise SystemExit(f"unsupported footprint rotation {rot}")
+
+
+def zone(net_id: int, name: str, layer: str, clearance: float, pts: list[tuple[float, float]],
+         priority: int = 0, hatch: str = "0.5") -> str:
+    poly = " ".join(f"(xy {x:.3f} {y:.3f})" for x, y in pts)
+    return f'''  (zone (net {net_id}) (net_name "{name}") (layer "{layer}") (uuid "{uid()}")
+    (hatch edge {hatch})
+    (priority {priority})
+    (connect_pads yes (clearance {clearance}))
+    (min_thickness 0.25)
+    (filled_areas_thickness no)
+    (fill yes (thermal_gap {clearance}) (thermal_bridge_width 0.5))
+    (polygon (pts {poly}))
+  )'''
+
+
+def keepout_rect(x0: float, y0: float, x1: float, y1: float, layers: str = "*.Cu") -> str:
+    return f'''  (zone (net 0) (net_name "") (layers "{layers}") (uuid "{uid()}")
+    (hatch edge 0.5)
+    (priority 0)
+    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
+    (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
+    (polygon (pts (xy {x0:.3f} {y0:.3f}) (xy {x1:.3f} {y0:.3f}) (xy {x1:.3f} {y1:.3f}) (xy {x0:.3f} {y1:.3f})))
+  )'''
+
+
 def write_pcb(rows: list[dict]) -> None:
-    """4-layer mechanical+mapped board. No signal tracks. No P48V plane pour."""
+    """12-layer stuffed-switch target: local P48V pours, GND planes, SB175, 4x PM8536 DNP keepouts."""
     pads = parse_footprint_pads()
     if len(pads) != 688:
         raise SystemExit(f"expected 688 footprint pads, got {len(pads)}")
 
+    p48_local: list[tuple[float, float]] = []
+    p12_local: list[tuple[float, float]] = []
+    p3_local: list[tuple[float, float]] = []
+    for pad, at, _size, _layers in pads:
+        xs = at.split()
+        xy = (float(xs[0]), float(xs[1]))
+        if pad in P48V_PADS:
+            p48_local.append(xy)
+        if pad in P12V1_PADS:
+            p12_local.append(xy)
+        if pad in P3V3_PADS:
+            p3_local.append(xy)
+    if len(p48_local) != 16:
+        raise SystemExit(f"expected 16 Conn0 P48V pads in footprint, got {len(p48_local)}")
+    if len(p12_local) != 5:
+        raise SystemExit(f"expected 5 Conn0 P12V1 pads in footprint, got {len(p12_local)}")
+    if len(p3_local) != 2:
+        raise SystemExit(f"expected 2 Conn0 P3V3 pads in footprint, got {len(p3_local)}")
+
     pad_sig = {(r["connector"], r["pin"]): r["signal"] for r in rows}
+    p48_csv = [r["pin"] for r in rows if r["connector"] == "Conn0" and r["signal"] == "P48V"]
+    if set(p48_csv) != P48V_PADS:
+        raise SystemExit(f"CSV P48V pads {sorted(p48_csv)} != verified set {sorted(P48V_PADS)}")
+
     nets: dict[str, int] = {}
 
     def nid(name: str) -> int:
@@ -622,14 +862,18 @@ def write_pcb(rows: list[dict]) -> None:
             nets[name] = len(nets) + 1
         return nets[name]
 
-    for n in ["GND", "P48V", "P12V1", "P12V2", "P3V3"]:
+    for n in ["GND", "P48V", "P12V1", "P12V2", "P3V3", "P48V_STAR", "P48V_BRICK"] + [
+        p48_net(s) for s in range(1, N_SEATS)
+    ]:
         nid(n)
 
     seats_meta = []
     holes = []
+    conn0_xy: dict[int, tuple[float, float]] = {}
     for oam in range(N_SEATS):
         c0 = pcb_from_mod(oam, *CONN0_MOD)
         c1 = pcb_from_mod(oam, *CONN1_MOD)
+        conn0_xy[oam] = c0
         seats_meta.append((oam, "Conn0", f"J{oam}_Conn0", c0[0], c0[1], ROT))
         seats_meta.append((oam, "Conn1", f"J{oam}_Conn1", c1[0], c1[1], ROT))
         for i, (hx, hy) in enumerate(HOLES_MOD, start=1):
@@ -638,7 +882,7 @@ def write_pcb(rows: list[dict]) -> None:
 
     fp_blocks = []
     for oam, conn, ref, x, y, rot in seats_meta:
-        role = "HOST_PCIE_NAMED" if oam in HOST_PCIE_SEATS else "MECH_POWER_ONLY"
+        role = "ELEC_NAMED_8SEAT" if oam in FIRST_STUFF_SEATS else "ELEC_NAMED_DNP_MODULE_OK"
         pad_lines = [
             '    (pad "" np_thru_hole circle (at -31.5000 -9.5000) (size 1.80 1.80) (drill 1.80) (layers "*.Cu" "*.Mask"))',
             '    (pad "" np_thru_hole circle (at 31.5000 -9.5000) (size 1.80 1.80) (drill 1.80) (layers "*.Cu" "*.Mask"))',
@@ -654,7 +898,7 @@ def write_pcb(rows: list[dict]) -> None:
                 f'    (pad "{pad}" smd circle (at {at}) (size {size}) (layers {layers}){extra})'
             )
         fp_blocks.append(f'''  (footprint "footprints:218910-1115_candidate" (layer "F.Cu") (at {x:.3f} {y:.3f} {rot})
-    (descr "v1.0 mapped geometry candidate — DO NOT FABRICATE")
+    (descr "v1.0 mapped Molex 218910-1115. Skip-pin NC. DO NOT ENERGIZE P48V.")
     (property "Reference" "{ref}" (at 0 -14) (layer "F.SilkS") (effects (font (size 1.2 1.2) (thickness 0.15))))
     (property "Value" "218910-1115" (at 0 14) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
     (property "Sheetfile" "{PROJ}.kicad_sch" (at 0 0) (layer "F.Fab") (effects (font (size 1 1)) hide))
@@ -663,7 +907,27 @@ def write_pcb(rows: list[dict]) -> None:
 {chr(10).join(pad_lines)}
   )''')
 
-    net_decls = "\n".join(f'  (net {i} "{name}")' for name, i in sorted(nets.items(), key=lambda kv: kv[1]))
+    star_id = nid("P48V_STAR")
+    gnd_id = nid("GND")
+    p48_id = nid("P48V")
+    sx, sy = SB175_AT
+    fp_blocks.append(f'''  (footprint "footprints:Anderson_SB175_2pole" (layer "F.Cu") (at {sx:.3f} {sy:.3f})
+    (descr "Anderson 6325G1 + 2x 1382 SB175 175A/600V on-board landing. DO NOT ENERGIZE. Not D3000E-S1.")
+    (property "Reference" "J_SB175" (at -40 0) (layer "F.SilkS") (effects (font (size 1.2 1.2) (thickness 0.15))))
+    (property "Value" "6325G1_SB175" (at 0 24) (layer "F.Fab") (effects (font (size 1 1) (thickness 0.15))))
+    (fp_text user "6325G1 + 2x 1382 — Kelvin sense — DO NOT ENERGIZE P48V" (at -40 6) (layer "F.SilkS")
+      (effects (font (size 0.8 0.8) (thickness 0.1))))
+    (fp_rect (start -26.55 -17.7) (end 26.55 17.7) (stroke (width 0.15) (type solid)) (fill none) (layer "F.SilkS"))
+    (fp_rect (start -27.5 -18.5) (end 27.5 18.5) (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
+    (pad "1" smd rect (at -14.3 -8) (size 14 10) (layers "F.Cu" "F.Paste" "F.Mask") (net {star_id} "P48V_STAR"))
+    (pad "2" smd rect (at 14.3 -8) (size 14 10) (layers "F.Cu" "F.Paste" "F.Mask") (net {gnd_id} "GND"))
+    (pad "K+" smd circle (at -14.3 -16.5) (size 2.2 2.2) (layers "F.Cu" "F.Paste" "F.Mask") (net {star_id} "P48V_STAR"))
+    (pad "K-" smd circle (at 14.3 -16.5) (size 2.2 2.2) (layers "F.Cu" "F.Paste" "F.Mask") (net {gnd_id} "GND"))
+    (pad "" np_thru_hole circle (at -14.3 8) (size 8.00 8.00) (drill 6.60) (layers "*.Cu" "*.Mask"))
+    (pad "" np_thru_hole circle (at 14.3 8) (size 8.00 8.00) (drill 6.60) (layers "*.Cu" "*.Mask"))
+  )''')
+
+    net_decls = ""  # rebuilt after fab copper assigns P48V_BRICK etc.
     hole_blocks = []
     for ref, hx, hy in holes:
         hole_blocks.append(
@@ -677,26 +941,60 @@ def write_pcb(rows: list[dict]) -> None:
     graphics = [
         f'  (gr_rect (start 0 0) (end {BOARD_W:.3f} {BOARD_H:.3f})',
         '    (stroke (width 0.2) (type solid)) (fill none) (layer "Edge.Cuts"))',
-        f'  (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay chassis stub"',
+        f'  (gr_text "DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay POWER+MECH first article"',
         f'    (at {BOARD_W/2:.3f} 6) (layer "F.SilkS")',
         '    (effects (font (size 2.4 2.4) (thickness 0.3))))',
-        f'  (gr_text "Molex 218910-1115 x16  |  4-layer  |  no P48V pour  |  ticket 167157  |  NOT a UBB"',
+        f'  (gr_text "Molex 218910-1115 x16  |  12L 2.0mm TARGET  |  LOCAL P48V pours  |  4x PM8536B-FEI DNP  |  SB175 star  |  NOT a UBB"',
         f'    (at {BOARD_W/2:.3f} 12) (layer "F.SilkS")',
-        '    (effects (font (size 1.6 1.6) (thickness 0.2))))',
+        '    (effects (font (size 1.5 1.5) (thickness 0.18))))',
         f'  (gr_text "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling. Outline {BOARD_W:.0f}x{BOARD_H:.0f} mm < PCBWay adv ML 508x600."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-6:.3f}) (layer "F.SilkS")',
         '    (effects (font (size 1.4 1.4) (thickness 0.18))))',
     ]
+
+    fuse_centers: list[tuple[int, float, float]] = []
+    p48_bboxes: list[tuple[int, float, float, float, float]] = []
+    p12_bboxes: list[tuple[int, float, float, float, float]] = []
+    p3_bboxes: list[tuple[int, float, float, float, float]] = []
+    gnd_via_pts: list[tuple[float, float]] = []
+    margin_p = 1.4
+    for oam in range(N_SEATS):
+        fx, fy = conn0_xy[oam]
+        def _bbox(locals_xy):
+            world = [fp_to_world(fx, fy, ROT, px, py) for px, py in locals_xy]
+            xs = [p[0] for p in world]
+            ys = [p[1] for p in world]
+            return (min(xs) - margin_p, min(ys) - margin_p, max(xs) + margin_p, max(ys) + margin_p)
+        x0, y0, x1, y1 = _bbox(p48_local)
+        p48_bboxes.append((oam, x0, y0, x1, y1))
+        p12_bboxes.append((oam, *_bbox(p12_local)))
+        p3_bboxes.append((oam, *_bbox(p3_local)))
+        row = oam // 4
+        fuse_cx = x1 + 5.5
+        fuse_cy = 169.5 if row == 0 else 336.0
+        fuse_centers.append((oam, fuse_cx, fuse_cy))
+    # Unique GND stitch vias in KOZ interior (not the south channel / P12 spines).
+    seen = set()
+    for oam in range(N_SEATS):
+        kx, ky = koz_origin(oam)
+        for a, b in ((10, 10), (KOZ_W - 10, 10), (10, 70), (KOZ_W - 10, 70)):
+            pt = (round(kx + a, 3), round(ky + b, 3))
+            if pt not in seen:
+                seen.add(pt)
+                gnd_via_pts.append(pt)
 
     for oam in range(N_SEATS):
         kx, ky = koz_origin(oam)
         mx, my = mod_origin(oam)
         cx = kx + KOZ_W / 2
         cy = ky + 8
-        if oam in HOST_PCIE_SEATS:
-            role = f"SEAT {oam}  HOST PCIe NAMED (stub)  populate now"
+        sw = switch_for_seat(oam)
+        if oam in FIRST_STUFF_SEATS:
+            role = f"SEAT {oam}  FIRST ARTICLE 2-mod  PE_S{oam}_GCD0_x16 -> host keepout  GCD1 named-only"
+        elif oam in SECOND_STUFF_SEATS:
+            role = f"SEAT {oam}  later 0-3  PE_S{oam}_GCD0_x16 named  GCD1 named-only -> SW{sw}"
         else:
-            role = f"SEAT {oam}  MECH+POWER ONLY  needs on-board PCIe switch — MPN Unknown"
+            role = f"SEAT {oam}  later 8-seat  PE_S{oam}_GCD0_x16 named  GCD1 named-only -> SW{sw}"
         graphics += [
             f'  (gr_rect (start {kx:.3f} {ky:.3f}) (end {kx+KOZ_W:.3f} {ky+KOZ_H:.3f})',
             '    (stroke (width 0.15) (type solid)) (fill none) (layer "Dwgs.User"))',
@@ -710,55 +1008,156 @@ def write_pcb(rows: list[dict]) -> None:
             f'  (gr_text "OAM{oam} KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"',
             f'    (at {cx:.3f} {ky+KOZ_H-6:.3f}) (layer "Dwgs.User")',
             '    (effects (font (size 1.1 1.1) (thickness 0.12))))',
+            f'  (gr_text "P48V local pour — 16 Conn0 pads — 2 oz — not a 100A plane"',
+            f'    (at {cx:.3f} {ky+14:.3f}) (layer "Cmts.User")',
+            '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
         ]
 
     hx0 = MARGIN + N_COLS * KOZ_W + MARGIN  # 452
+    h0, h1, h2, h3 = HOST_CABLE_KEEPOUT
     graphics += [
         f'  (gr_rect (start {hx0:.3f} {MARGIN:.3f}) (end {BOARD_W:.3f} {BOARD_H-MARGIN:.3f})',
         '    (stroke (width 0.25) (type solid)) (fill none) (layer "Dwgs.User"))',
-        f'  (gr_rect (start {hx0:.3f} {MARGIN:.3f}) (end {BOARD_W:.3f} {BOARD_H-MARGIN:.3f})',
-        '    (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))',
-        f'  (gr_text "HOST CONNECTOR REGION"',
-        f'    (at {hx0+HOST_STRIP/2:.3f} {MARGIN+20:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 2.0 2.0) (thickness 0.25))))',
-        f'  (gr_text "OAM0+OAM1 PCIE_* named nets point here"',
-        f'    (at {hx0+HOST_STRIP/2-8:.3f} {MARGIN+80:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.2 1.2) (thickness 0.15))))',
-        f'  (gr_text "NO CEM / SlimSAS / MCIO invented"',
-        f'    (at {hx0+HOST_STRIP/2+0:.3f} {MARGIN+80:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.2 1.2) (thickness 0.15))))',
-        f'  (gr_text "X11DPH-T NOT ON THIS PCB"',
-        f'    (at {hx0+HOST_STRIP/2+8:.3f} {MARGIN+80:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.2 1.2) (thickness 0.15))))',
-        f'  (gr_text "seats 2-7: needs on-board PCIe switch — MPN Unknown"',
-        f'    (at {hx0+HOST_STRIP/2+16:.3f} {MARGIN+90:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
-        f'  (gr_text "P48V PADS EXIST — NO POUR — DO NOT ENERGIZE"',
+        f'  (gr_text "2-MODULE FIRST ARTICLE seats 0-1 GCD0 x16 — NOT 2x full-width (4 GCDs). DO NOT ENERGIZE P48V"',
+        f'    (at {BOARD_W/2:.3f} 9.5) (layer "F.SilkS")',
+        '    (effects (font (size 1.4 1.4) (thickness 0.16))))',
+    ]
+    for sw, (a0, a1, a2, a3) in SW_KEEPOUTS.items():
+        seats = ",".join(str(s) for s in sorted(SWITCH_SEATS[sw]))
+        silk_y = SW_SILK_Y[sw]
+        graphics += [
+            f'  (gr_rect (start {a0:.3f} {a1:.3f}) (end {a2:.3f} {a3:.3f})',
+            '    (stroke (width 0.25) (type dash)) (fill none) (layer "F.CrtYd"))',
+            f'  (gr_rect (start {a0:.3f} {a1:.3f}) (end {a2:.3f} {a3:.3f})',
+            '    (stroke (width 0.2) (type dash)) (fill none) (layer "Dwgs.User"))',
+            f'  (gr_text "U_SW{sw} DNP PRIMARY"',
+            f'    (at {hx0+HOST_STRIP/2:.3f} {silk_y:.3f} 90) (layer "F.SilkS")',
+            '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
+            f'  (gr_text "PM8536B-FEI 37.5mm 1311-FCBGA"',
+            f'    (at {hx0+HOST_STRIP/2+7:.3f} {silk_y:.3f} 90) (layer "F.SilkS")',
+            '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
+            f'  (gr_text "later path DNP  not stuffed for 2-mod"',
+            f'    (at {hx0+HOST_STRIP/2+14:.3f} {silk_y:.3f} 90) (layer "F.SilkS")',
+            '    (effects (font (size 0.8 0.8) (thickness 0.1))))',
+        ]
+    graphics += [
+        f'  (gr_rect (start {h0:.3f} {h1:.3f}) (end {h2:.3f} {h3:.3f})',
+        '    (stroke (width 0.2) (type dash)) (fill none) (layer "F.CrtYd"))',
+        f'  (gr_rect (start {h0:.3f} {h1:.3f}) (end {h2:.3f} {h3:.3f})',
+        '    (stroke (width 0.15) (type dash)) (fill none) (layer "Dwgs.User"))',
+        f'  (gr_text "HOST CABLE KEEPOUT"',
+        f'    (at {hx0+HOST_STRIP/2:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 1.4 1.4) (thickness 0.16))))',
+        f'  (gr_text "FIRST ARTICLE 2x x16: PE_S0_GCD0_x16 + PE_S1_GCD0_x16"',
+        f'    (at {hx0+HOST_STRIP/2-8:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 0.85 0.85) (thickness 0.1))))',
+        f'  (gr_text "X11DPH-T 3x x16+4x x8  two GCD0 FIT  4x x16 do NOT"',
+        f'    (at {hx0+HOST_STRIP/2-16:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 0.8 0.8) (thickness 0.1))))',
+        f'  (gr_text "NO CEM / SlimSAS / MCIO invented  MPN Unknown"',
+        f'    (at {hx0+HOST_STRIP/2+8:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 0.85 0.85) (thickness 0.1))))',
+        f'  (gr_text "GCD1 named-only  not S1-S7"',
+        f'    (at {hx0+HOST_STRIP/2+16:.3f} {HOST_SILK_Y:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
+        f'  (gr_text "STAR-FED P48V — LOCAL POURS ONLY — DO NOT ENERGIZE"',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-12:.3f}) (layer "F.SilkS")',
         '    (effects (font (size 1.8 1.8) (thickness 0.22))))',
-        f'  (gr_text "Inners In1.Cu / In2.Cu reserved. No signal tracks. Seats 2-7 have power nets only."',
-        f'    (at {BOARD_W/2:.3f} 16.5) (layer "Cmts.User")',
-        '    (effects (font (size 1.3 1.3) (thickness 0.15))))',
-        f'  (gr_text "Seat grid: row0 (Y={MARGIN:.0f}) seats 0-3; row1 (Y={MARGIN+KOZ_H:.0f}) seats 4-7; col pitch {KOZ_W:.0f} mm. Conn rotation 180 Inferred."',
+        f'  (gr_text "2-mod first article: seats 0-1 + F0/F1. Later 0-3 then 8. Same PCB. SW0-SW3 DNP. No signal tracks."',
+        f'    (at {BOARD_W/2:.3f} {BOARD_H-22:.3f}) (layer "Cmts.User")',
+        '    (effects (font (size 1.1 1.1) (thickness 0.12))))',
+        f'  (gr_text "CONCEPT 8x FULL-WIDTH: see Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md — DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS. GCD1 named-only. xGMI=XGMI_Sn_P* boxes only, not S1-S7."',
+        f'    (at {BOARD_W/2:.3f} {BOARD_H-26:.3f}) (layer "Cmts.User")',
+        '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
+        # Late-bind corridors: notes only. No copper, no fake pins, not fab silk.
+        '  (gr_rect (start 105.000 138.000) (end 452.000 178.000)',
+        '    (stroke (width 0.18) (type dash)) (fill none) (layer "Dwgs.User"))',
+        '  (gr_text "LATE BIND note: PE_S0/S1_GCD0 toward host keepout. NO COPPER. NO FAKE PINS. 16x x16 route = RESPIN not silk ECO."',
+        '    (at 278.500 158.000) (layer "Cmts.User")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
+        '  (gr_rect (start 105.000 22.000) (end 452.000 56.000)',
+        '    (stroke (width 0.18) (type dash)) (fill none) (layer "Dwgs.User"))',
+        '  (gr_text "LATE BIND note: PE_S0/S1_GCD0 toward SW0 courtyard. NO COPPER. 1311-ball escape = RESPIN. See LATE_BIND.md."',
+        '    (at 278.500 39.000) (layer "Cmts.User")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
+        f'  (gr_text "Off-board 48V: 240V/50A single-phase class. NOT RST-5000-48 (3-phase). NOT D3000E-S1 12V."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-18:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
+        f'  (gr_text "P48V STAR / Kelvin sense"',
+        f'    (at {sx - 40:.3f} {sy:.3f}) (layer "F.SilkS")',
+        '    (effects (font (size 1.4 1.4) (thickness 0.16))))',
+        f'  (gr_text "off-board 48V via 2 AWG  |  NOT D3000E-S1 12V"',
+        f'    (at {sx+55:.3f} {sy:.3f}) (layer "F.SilkS")',
+        '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
+        f'  (gr_text "P12V2 pads named v1.0 — Unknown / may be NC — do not short to P12V1"',
+        f'    (at 280 {BOARD_H-12:.3f}) (layer "Cmts.User")',
+        '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
     ]
 
+    for oam, fcx, fcy in fuse_centers:
+        graphics += [
+            f'  (gr_line (start {sx:.3f} {sy-8:.3f}) (end {fcx:.3f} {fcy:.3f})',
+            '    (stroke (width 0.12) (type dash)) (layer "Dwgs.User"))',
+        ]
+
+    zones = []
+    # Local P48V pours — F.Cu only, one island per seat. Mezz clearance is vendor 0.9 mm pitch.
+    # Star copper lives in fab_copper (0.64 mm / 25 mil). Not a 100 A flood.
+    for oam, x0, y0, x1, y1 in p48_bboxes:
+        nname = p48_net(oam)
+        zones.append(zone(
+            nid(nname), nname, "F.Cu", MEZZ_ZONE_CLEAR_MM,
+            [(x0, y0), (x1, y0), (x1, y1), (x0, y1)],
+            priority=20,
+        ))
+        graphics += [
+            f'  (gr_rect (start {x0:.3f} {y0:.3f}) (end {x1:.3f} {y1:.3f})',
+            '    (stroke (width 0.12) (type solid)) (fill none) (layer "Dwgs.User"))',
+        ]
+    # Inner GND planes — board-wide return. Not a P48V flood.
+    gnd_poly = [(2.0, 2.0), (BOARD_W - 2.0, 2.0), (BOARD_W - 2.0, BOARD_H - 2.0), (2.0, BOARD_H - 2.0)]
+    zones.append(zone(gnd_id, "GND", "In1.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
+    zones.append(zone(gnd_id, "GND", "In4.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
+    zones.append(zone(gnd_id, "GND", "In7.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
+    zones.append(zone(gnd_id, "GND", "In10.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
+
+    fab_fps, fab_tracks, fab_vias, fab_zones, fab_gfx = build_fab_copper(
+        nid, p48_bboxes, fuse_centers, conn0_xy, p12_bboxes, p3_bboxes, gnd_via_pts,
+    )
+    fp_blocks.extend(fab_fps)
+    zones.extend(fab_zones)
+    graphics.extend(fab_gfx)
+
+    keepouts = [keepout_rect(*SW_KEEPOUTS[i]) for i in range(N_SWITCHES)]
+    keepouts.append(keepout_rect(*HOST_CABLE_KEEPOUT))
+
+    net_decls = "\n".join(f'  (net {i} "{name}")' for name, i in sorted(nets.items(), key=lambda kv: kv[1]))
+
     pcb = f'''(kicad_pcb (version {PCB_VER}) (generator "{GEN}") (generator_version "9.0")
-  (general (thickness 1.6))
+  (general (thickness {BOARD_THICK_MM}))
   (paper "A1")
   (title_block
-    (title "DO NOT FABRICATE — Rev3 8-seat PCBWay chassis stub")
-    (date "2026-08-21")
+    (title "DO NOT ENERGIZE P48V — Rev3 8-seat PCBWay POWER+MECH first article")
+    (date "2026-08-22")
     (rev "Rev3_8Seat_PCBWay_v1")
-    (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157.")
-    (comment 2 "492 x 372 mm 4-layer FR-4. 16x 218910-1115. Not a UBB.")
+    (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN. Skip-pin NC. Not D3000E-S1.")
+    (comment 2 "492x372 12L 2.0mm. 2-mod first article seats 0-1 GCD0 x16. 4x PM8536 DNP. No CEM.")
   )
   (layers
     (0 "F.Cu" signal)
     (1 "In1.Cu" power)
-    (2 "In2.Cu" power)
+    (2 "In2.Cu" signal)
+    (3 "In3.Cu" signal)
+    (4 "In4.Cu" power)
+    (5 "In5.Cu" signal)
+    (6 "In6.Cu" signal)
+    (7 "In7.Cu" power)
+    (8 "In8.Cu" signal)
+    (9 "In9.Cu" signal)
+    (10 "In10.Cu" power)
     (31 "B.Cu" signal)
+    (32 "B.Paste" user)
+    (33 "F.Paste" user)
     (37 "F.SilkS" user)
     (36 "B.SilkS" user)
     (39 "F.Mask" user)
@@ -772,19 +1171,39 @@ def write_pcb(rows: list[dict]) -> None:
   (setup
     (pad_to_mask_clearance 0)
     (stackup
-      (layer "F.Cu" (type "copper") (thickness 0.035))
-      (layer "dielectric 1" (type "core") (thickness 0.2) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
-      (layer "In1.Cu" (type "copper") (thickness 0.035))
-      (layer "dielectric 2" (type "core") (thickness 1.065) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
-      (layer "In2.Cu" (type "copper") (thickness 0.035))
-      (layer "dielectric 3" (type "core") (thickness 0.2) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
-      (layer "B.Cu" (type "copper") (thickness 0.035))
+      (layer "F.Cu" (type "copper") (thickness {OZ2_UM}))
+      (layer "dielectric 1" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In1.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 2" (type "core") (thickness 0.15) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In2.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 3" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In3.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 4" (type "core") (thickness 0.15) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In4.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 5" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In5.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 6" (type "core") (thickness 0.15) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In6.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 7" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In7.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 8" (type "core") (thickness 0.15) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In8.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 9" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In9.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 10" (type "core") (thickness 0.15) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "In10.Cu" (type "copper") (thickness {OZ1_UM}))
+      (layer "dielectric 11" (type "prepreg") (thickness 0.11) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "B.Cu" (type "copper") (thickness {OZ2_UM}))
     )
   )
 {net_decls}
 {chr(10).join(graphics)}
 {chr(10).join(hole_blocks)}
 {chr(10).join(fp_blocks)}
+{chr(10).join(fab_tracks)}
+{chr(10).join(fab_vias)}
+{chr(10).join(zones)}
+{chr(10).join(keepouts)}
 )
 '''
     (ROOT / f"{PROJ}.kicad_pcb").write_text(pcb)
@@ -801,11 +1220,13 @@ def write_pcb(rows: list[dict]) -> None:
                     grouped[(n, oam, r["connector"])].append(r["pin"])
         for (n, oam, conn), plist in sorted(grouped.items()):
             w.writerow([n, oam, conn, " ".join(plist)])
+        w.writerow(["P48V_STAR", "", "J_SB175", "1 K+"])
+        w.writerow(["P48V_BRICK", "", "U_P12V1", "1"])
 
 
 def write_project() -> None:
     (ROOT / "fp-lib-table").write_text(
-        '(fp_lib_table\n  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints")(options "")(descr "Molex 218910-1115 geometry candidate"))\n)\n'
+        '(fp_lib_table\n  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints")(options "")(descr "218910-1115 + Anderson SB175 geometry candidates"))\n)\n'
     )
     (ROOT / "sym-lib-table").write_text(
         '(sym_lib_table\n  (lib (name "OAM_v10_mapped")(type "KiCad")(uri "${KIPRJMOD}/symbols/OAM_v10_mapped.kicad_sym")(options "")(descr "v1.0 OCP generic named pads"))\n)\n'
@@ -819,21 +1240,40 @@ def write_project() -> None:
                     "courtyard_line_width": 0.05,
                     "silk_line_width": 0.12,
                 },
-                "rules": {"min_clearance": 0.1, "min_track_width": 0.1},
-                "track_widths": [0.1, 0.2, 0.5, 1.0],
+                "rules": {"min_clearance": 0.15, "min_track_width": 0.15, "min_via_diameter": 0.6, "min_through_hole_diameter": 0.3},
+                "track_widths": [0.15, 0.2, 0.5, 1.0, 2.0],
                 "via_dimensions": [{"diameter": 0.6, "drill": 0.3}],
+                "custom_rules": (
+                    "(version 1)\n"
+                    "(rule \"mezz Molex 0.9mm vendor pitch\"\n"
+                    "  (constraint clearance (min 0.20mm))\n"
+                    "  (condition \"A.Type == 'Pad' && B.Type == 'Pad' && "
+                    "A.Parent.Reference =~ 'J[0-7]_Conn.*' && "
+                    "B.Parent.Reference =~ 'J[0-7]_Conn.*'\"))\n"
+                ),
             }
         },
         "boards": [],
         "cvpcb": {"equivalence_files": []},
         "libraries": {"pinned_footprint_libs": [], "pinned_symbol_libs": []},
         "meta": {"filename": f"{PROJ}.kicad_pro", "version": 3},
-        "net_settings": {"classes": [], "meta": {"version": 0}},
+        "net_settings": {
+            "classes": [
+                {"name": "Default", "clearance": 0.2, "track_width": 0.25},
+                {"name": "P48V", "clearance": 0.20, "track_width": 1.0,
+                 "nets": ["P48V"] + [f"P48V_S{i}" for i in range(1, 8)]},
+                {"name": "P48V_STAR", "clearance": 0.64, "track_width": 2.0, "nets": ["P48V_STAR", "P48V_BRICK"]},
+                {"name": "GND", "clearance": 0.25, "track_width": 0.5, "nets": ["GND"]},
+                {"name": "P12V1", "clearance": 0.20, "track_width": 0.5, "nets": ["P12V1"]},
+                {"name": "P3V3", "clearance": 0.20, "track_width": 0.5, "nets": ["P3V3"]},
+            ],
+            "meta": {"version": 2},
+        },
         "pcbnew": {"last_paths": {"netlist": "", "plot": ""}, "page_layout_descr_file": ""},
         "schematic": {"annotate_start_num": 0},
         "sheets": [[f"{PROJ}.kicad_sch", "Root"]] + [[rel, name] for name, rel in SHEETS],
         "text_variables": {
-            "DO_NOT_FABRICATE": "true",
+            "DO_NOT_FABRICATE": "false",
             "DO_NOT_ENERGIZE": "true",
             "PINMAP": "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map",
         },
@@ -843,9 +1283,12 @@ def write_project() -> None:
 
 def write_ipc_netlist(rows: list[dict]) -> None:
     lines = [
-        "# Open-MI250X 8-OAM v1.0 named-net stub (PCBWay chassis)",
+        "# Rev3 8-seat PCBWay named-net chassis (v1.0 map)",
         "# NOT a fabrication netlist. Unmapped pads omitted.",
-        "# Seats 2-7: power + PVREF only.",
+        "# All 8 seats electrically named. S1-S7 / TEST* omitted. SB175 = P48V_STAR.",
+        "# PE_Sn_GCD0_x16 = Conn0 OCP PCIE pads. PE_Sn_GCD1_x16 named-only (not on pads).",
+        "# First article uplinks: PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward host keepout.",
+        "# Four PM8536 DNP (not stuffed for 2-mod). Do not invent CEM/MCIO.",
         "# Format: ref.pad  net",
     ]
     for oam in range(N_SEATS):
@@ -856,6 +1299,22 @@ def write_ipc_netlist(rows: list[dict]) -> None:
                 n = net_name(oam, r["signal"])
                 if n:
                     lines.append(f"{ref}.{r['pin']}\t{n}")
+    lines.append("J_SB175.1\tP48V_STAR")
+    lines.append("J_SB175.K+\tP48V_STAR")
+    lines.append("J_SB175.2\tGND")
+    lines.append("J_SB175.K-\tGND")
+    for s in range(N_SEATS):
+        lines.append(f"F{s}.1\tP48V_STAR")
+        lines.append(f"F{s}.2\t{p48_net(s)}")
+    lines.append("F_P12.1\tP48V_STAR")
+    lines.append("F_P12.2\tP48V_BRICK")
+    lines.append("U_P12V1.1\tP48V_BRICK")
+    lines.append("U_P12V1.2\tGND")
+    lines.append("U_P12V1.3\tP12V1")
+    lines.append("U_P12V1.5\tGND")
+    lines.append("U_P3V3.1\tP12V1")
+    lines.append("U_P3V3.2\tGND")
+    lines.append("U_P3V3.3\tP3V3")
     (ROOT / f"netlist/{PROJ}.net").write_text("\n".join(lines) + "\n")
 
 
@@ -863,6 +1322,9 @@ def main() -> None:
     rows = load_pinmap()
     if not FOOTPRINT_SRC.exists():
         raise SystemExit(f"missing footprint {FOOTPRINT_SRC}")
+    sb175 = ROOT / "footprints/Anderson_SB175_2pole.kicad_mod"
+    if not sb175.exists():
+        raise SystemExit(f"missing footprint {sb175}")
     write_classification_csv(rows)
     write_symbol_lib(rows)
     write_project()
@@ -888,27 +1350,95 @@ def main() -> None:
         "named_pads": len(rows),
         "unmapped_signal_names": sorted({r["signal"] for r in rows if is_unmapped(r["signal"])}),
         "shared_rails": sorted(SHARED_RAILS),
-        "do_not_fabricate": True,
+        "do_not_fabricate": False,
         "do_not_energize_p48v": True,
         "rev": "Rev3_8Seat_PCBWay_Chassis_v1",
         "molex_voltage_ticket": "167157",
-        "layers": 4,
+        "molex_csa_60v": "COFC 80170713 written 2026-08-18 via Brian Park / ticket 167157",
+        "molex_skip_pins": "published OCP P48V map satisfies Skip Pins; no extra NC pads",
+        "molex_current_followup_open": "1.2 A per used power contact at 48-59.5 V (2 oz); skip/void NC on same MPN",
+        "eli_ack": "2026-08-19",
+        "layers": N_LAYERS,
+        "layer_stack_target": "12L 2.0 mm stuffed-switch (four PM8536B-FEI DNP)",
+        "layer_stack_dnp_option": "8L 2.0 mm cheaper DNP-switch / mezz+power option only",
+        "board_thickness_mm_planning": BOARD_THICK_MM,
+        "copper_oz": {"F.Cu": 2, "inners": 1, "B.Cu": 2},
         "oam_seats": N_SEATS,
+        "electrically_named_seats": list(range(N_SEATS)),
+        "first_article_target": "seats 0-1 two modules; GCD0 x16 each toward host keepout",
+        "first_article_uplinks": first_article_uplinks(),
+        "first_article_means": "two modules can sit; at most GCD0 on each (2 GCDs); not 2x full-width (4 GCDs)",
+        "gcd0_legal_path": "Conn0 OCP v1.0 PCIE_TX/RX0-15 = PETp/n+PERp/n host link; 64 pads; Conn1 has 0 PCIE_*",
+        "gcd1_status": "named-only; not assigned to S1-S7; SERDES_7 Inferred only",
+        "host_two_gcd0_x16_fit": True,
+        "host_two_full_width_modules_fit": False,
+        "mcio_on_carrier_placed": False,
+        "offboard_48v": "240 V / 50 A single-phase wall class; DPU-3200-48 class; NOT RST-5000-48 3-phase",
+        "first_stuff_seats": sorted(FIRST_STUFF_SEATS),
+        "second_stuff_seats": sorted(SECOND_STUFF_SEATS),
+        "populate_path": "seats 0-1 first (no stuffed switch), then 0-3, then all 8 + SW0-SW3; same PCB",
+        "sw0_seats": sorted(SWITCH_SEATS[0]),
+        "sw1_seats": sorted(SWITCH_SEATS[1]),
+        "sw2_seats": sorted(SWITCH_SEATS[2]),
+        "sw3_seats": sorted(SWITCH_SEATS[3]),
+        "pe_named_buses": pe_named_buses(),
+        "full_width_ds_lanes": 256,
+        "host_gen3_lanes": 80,
+        "chassis_can_wire_8_full_width": True,
+        "host_can_light_8_full_width": False,
+        "late_bind_doc": "Generated_Project/Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md",
+        "late_bind_16x16_and_four_bga": "copper_respin_not_silk_eco",
+        "pcbway_zip_is_live_gpu_chassis": False,
+        "late_bind_corridors": "Dwgs.User/Cmts.User only; seats 0-1 GCD0 toward host keepout and SW0; no copper; no fake pins",
         "connectors_per_seat": 2,
         "molex_mpn": "218910-1115",
         "molex_qty": 16,
+        "molex_street_usd_each": [50, 96],
         "molex_mates_with": "2189101115 (hermaphroditic, self-mating)",
         "board_outline_mm": [BOARD_W, BOARD_H],
         "koz_reserve_mm": [N_COLS * KOZ_W, N_ROWS * KOZ_H],
         "koz_tiling": "4x2 of 103x166 INFERRED not a UBB drawing",
         "pcbway_adv_finished_ml_mm": list(PCBWAY_ADV_ML),
         "fits_pcbway_508x600": BOARD_W <= PCBWAY_ADV_ML[0] and BOARD_H <= PCBWAY_ADV_ML[1],
-        "host_pcie_seats": sorted(HOST_PCIE_SEATS),
-        "mech_power_only_seats": [i for i in range(N_SEATS) if i not in HOST_PCIE_SEATS],
         "p3v3_count_conn0": sum(1 for r in rows if r["connector"] == "Conn0" and r["signal"] == "P3V3"),
+        "p48v_pads_conn0": sorted(P48V_PADS),
+        "p48v_pad_count_per_seat": 16,
         "npth_m35_count": N_SEATS * 4,
-        "p48v_pour": False,
+        "p48v_pour": "local_per_seat_F.Cu_not_board_wide_flood",
+        "p48v_star_net": "P48V_STAR",
+        "board_entry": "Anderson 6325G1 housing + 2x 1382 1/0 AWG contacts (SB175 175A/600V)",
+        "p48v_not_tied_to": "Dell D3000E-S1 12V CRPS",
+        "no_psu_shopping_on_pcb_bom": True,
+        "fuse_per_seat_A": 15,
+        "fuse_mpn": "0476015.MR",
+        "fuse_brick_mpn": "0476002.MR",
+        "p12v1_mpn": "THL 40-4812WI",
+        "p12v1_watts_first_article": 40,
+        "p3v3_mpn": "OKI-78SR-3.3/1.5-W36-C",
+        "pm8536_pinout": "not_public_DNP_courtyard",
+        "pcie_switch_mpn": "PM8536B-FEI",
+        "pcie_switch_status": "PRIMARY_DNP",
+        "pcie_switch_qty_dnp": 4,
+        "pcie_switch_package": "1311-ball 37.5 mm FCBGA 1.0 mm pitch",
+        "pcie_switch_lanes": 96,
+        "pcie_switch_topology": "full-width capable: 4x PM8536 DNP; each 16US+64DS (2 seats x 2 GCD x x16, hypothesis not a ball map); 16 named x16 PE buses; 2x96 enough for 8x x8/GCD not 8x x16/GCD",
+        "pcie_switch_street_usd": [460, 475],
+        "pcie_switch_lead_wk": 18,
+        "pcie_switch_alt_docs_only": "PEX8780-AB80BI G 80-lane 35 mm cheaper alt, not placed",
+        "pcie_switch_2seat_alt_docs_only": "PM8533B-F3EI 48-lane 27 mm, not placed",
+        "host_connector_mpn": "Unknown",
+        "host_uplinks": "first article: PE_S0_GCD0_x16 + PE_S1_GCD0_x16 toward X11DPH-T keepout; later PE_SWk_US_x16 names kept; no CEM MPN",
+        "xgmi_routed": False,
+        "no_gpu_vrm": True,
+        "pvref_driven": False,
+        "p12v2_status": "named_v1.0_Unknown_may_be_NC",
         "signal_tracks": False,
+        "inner_planes": {
+            "In1.Cu": "GND", "In2.Cu": "signal_reserved", "In3.Cu": "signal_reserved",
+            "In4.Cu": "GND", "In5.Cu": "signal_reserved", "In6.Cu": "signal_reserved",
+            "In7.Cu": "GND", "In8.Cu": "signal_reserved", "In9.Cu": "signal_reserved",
+            "In10.Cu": "GND",
+        },
     }
     (ROOT / "netlist/generation_meta.json").write_text(json.dumps(meta, indent=2) + "\n")
     import sys

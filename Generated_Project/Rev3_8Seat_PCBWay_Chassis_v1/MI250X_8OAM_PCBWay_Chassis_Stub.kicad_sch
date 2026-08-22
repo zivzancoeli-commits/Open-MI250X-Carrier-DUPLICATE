@@ -1,14 +1,14 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "9e149b2c-ee24-41e4-9a2c-1616a441d16c")
+	(uuid "02bc8d49-c633-48aa-a7e7-b32c4341abeb")
 	(paper "A3")
 	(title_block
-		(title "Rev3 8-seat PCBWay chassis stub (NOT fab-ready)")
-		(date "2026-08-21")
+		(title "Rev3 8-seat PCBWay POWER+MECH first article (DO NOT ENERGIZE P48V)")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "8 OAM seats. Host X11DPH-T is NOT on this PCB. No CEM cable. No 20-layer UBB.")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
+        (comment 2 "8 OAM seats. FIRST ARTICLE = seats 0-1 GCD0 x16. Host X11DPH-T is NOT on this PCB. No CEM cable.")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 
 	(lib_symbols
@@ -57,13 +57,22 @@
 	)
 )
 
+(symbol "power:P48V_STAR" (power) (pin_names (offset 0)) (exclude_from_sim no) (in_bom yes) (on_board yes)
+	(property "Reference" "#PWR" (at 0 -3.81 0) (effects (font (size 1.27 1.27)) hide))
+	(property "Value" "P48V_STAR" (at 0 3.556 0) (effects (font (size 1.27 1.27))))
+	(property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+	(symbol "P48V_STAR_0_1"
+		(pin power_in line (at 0 0 90) (length 0) (name "P48V_STAR") (number "1"))
+	)
+)
+
 	)
 
-	(text "DO NOT FABRICATE / DO NOT ENERGIZE P48V\n8 identical OAM seats (populate 0-1 now, 2-7 later). Same board.\n16x Molex 218910-1115, 5.00 mm stack. 4-layer FR-4. Outline 492 x 372 mm.\n4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling (not a UBB drawing).\nSeats 0-1: named host PCIe nets toward HOST CONNECTOR REGION. No CEM invented.\nSeats 2-7: mechanical+power only. needs on-board PCIe switch — MPN Unknown.\nX11DPH-T: 3x Gen3 x16 + 4x Gen3 x8. NOT enough lanes for 8x MI250X (2 GCD, typically 2x x16).\nS1-S7 NOT routed between OAMs. TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\nP48V pads exist, NO POUR. Molex catalog 30 V vs OCP 44-59.5 V, ticket 167157.\nDell D3000E-S1 is 12 V CRPS — do not mix. P3V3 = Conn0 C1/C2 only. Never r2.0."
+	(text "DO NOT ENERGIZE P48V — POWER+MECH first article (seats 0-1; 4x PM8536 DNP)\n2-MODULE FIRST ARTICLE: seats 0-1. Same PCB populate 2 then 4 then 8 — no respin.\nWithout overlay: 2x MI250X = two modules SIT + at most GCD0 each (2 GCDs). NOT 2x full-width (4 GCDs).\nLegal host PE today: Conn0 OCP PCIE_* = PE_S0/S1_GCD0_x16. GCD1 named-only. Not S1-S7. Conn1 has 0 PCIE_*.\nHost keepout: two x16 names toward X11DPH-T. Two GCD0 x16 FIT. Two full-width modules do NOT. No CEM/MCIO MPN.\n16x Molex 218910-1115. 12L 2.0 mm. Outline 492 x 372 mm. 4x2 of 103x166 mm KOZ INFERRED (not a UBB).\nLater seats keep 16x x16 PE names + SW0-SW3 DNP. Do not swap or design the host board.\n8x FULL-WIDTH is CONCEPT only (Rev3_8Seat_FULLWIDTH_CONCEPT/CONCEPT.md). DO NOT FABRICATE as live PE. X11DPH-T cannot light 256 DS.\nS1-S7 NOT routed (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\nP48V: SB175 (6325G1+2x1382) + 0476015.MR 15A/seat + LOCAL pours. First stuff F0/F1. NOT a 100A flood.\nOff-board 48V: 240 V / 50 A single-phase wall class (DPU-3200-48 class). NOT RST-5000-48 (3-phase).\nMolex 2026-08-18: CSA 60V (COFC 80170713) at OCP P48V; skip pins = published map, no extra NC.\nOPEN: 1.2 A/contact at 48-59.5 V (2 oz). HOST_PWRGD is ENABLE. No GPU VRM. P12V2 Unknown/may be NC.\nDell D3000E-S1 is 12 V CRPS — do not mix into P48V. P3V3 = Conn0 C1/C2 only. Never r2.0."
 		(exclude_from_sim no)
 		(at 25.4 15.24 0)
 		(effects (font (size 1.8 1.8)) (justify left top))
-		(uuid "cf6554aa-3dd3-45cb-a64e-f07e52c2849f")
+		(uuid "254ceab5-3b6e-4474-b66b-fa78a0c5d6d5")
 	)
 	(sheet
 		(at 20 100)
@@ -74,7 +83,7 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "c5e82caf-9ee9-46ce-815e-b91c8b893a31")
+		(uuid "7b39058e-9178-4c5a-a3b9-d72ef6448436")
 		(property "Sheetname" "00_DO_NOT_FABRICATE"
 			(at 22.54 97.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
@@ -85,7 +94,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "2")
 				)
 			)
@@ -100,7 +109,7 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "13b565c3-78c4-490c-a3bb-f5d2d422de73")
+		(uuid "8d1683a3-28f6-4612-b9e9-f0df0c8332d5")
 		(property "Sheetname" "01_Power_Clock_Reset"
 			(at 94.54 97.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
@@ -111,7 +120,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "3")
 				)
 			)
@@ -126,8 +135,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "3303dd91-f203-4793-a8b9-9b94be99b148")
-		(property "Sheetname" "02_Host_PCIe_Stub_OAM0_1"
+		(uuid "a7bb0d64-1dc1-48d3-84c8-6a3d88c414bc")
+		(property "Sheetname" "02_Host_PCIe_Named_8Seat"
 			(at 166.54 97.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -137,7 +146,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "4")
 				)
 			)
@@ -152,7 +161,7 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "f9329830-6d7e-4397-890c-f4690e94510f")
+		(uuid "24beef65-1389-4bae-8b7c-b3ccf4abbf9f")
 		(property "Sheetname" "03_OAM0_Connectors"
 			(at 238.54 97.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
@@ -163,7 +172,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "5")
 				)
 			)
@@ -178,7 +187,7 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "d276c9e5-3ee8-4b4c-bd7c-ee6b5ea4ee8e")
+		(uuid "f399292e-5303-4a3e-96f3-2c66b7eba2cb")
 		(property "Sheetname" "04_OAM1_Connectors"
 			(at 22.54 139.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
@@ -189,7 +198,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "6")
 				)
 			)
@@ -204,8 +213,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "699188f6-a7c4-44d8-850f-ecb87e28e08c")
-		(property "Sheetname" "05_OAM2_MechPower"
+		(uuid "22f6dba2-ae83-439d-b74c-b7e04c2fc7dd")
+		(property "Sheetname" "05_OAM2_Connectors"
 			(at 94.54 139.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -215,7 +224,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "7")
 				)
 			)
@@ -230,8 +239,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "7634db92-336e-4b33-a8fc-e11a1eddb982")
-		(property "Sheetname" "06_OAM3_MechPower"
+		(uuid "e348c14f-a0fa-4c3e-b68d-3635850b03d3")
+		(property "Sheetname" "06_OAM3_Connectors"
 			(at 166.54 139.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -241,7 +250,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "8")
 				)
 			)
@@ -256,8 +265,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "d8c1ca96-de88-4139-872b-5251be92540a")
-		(property "Sheetname" "07_OAM4_MechPower"
+		(uuid "006652a4-e482-4c3b-8582-68d08489e040")
+		(property "Sheetname" "07_OAM4_Connectors"
 			(at 238.54 139.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -267,7 +276,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "9")
 				)
 			)
@@ -282,8 +291,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "17052ae9-6be3-4626-8612-b2f037352e25")
-		(property "Sheetname" "08_OAM5_MechPower"
+		(uuid "b3cad944-546b-499c-a70f-d9e8ef96d55f")
+		(property "Sheetname" "08_OAM5_Connectors"
 			(at 22.54 181.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -293,7 +302,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "10")
 				)
 			)
@@ -308,8 +317,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "34237e46-1339-41c9-a5b5-4346e0f91f54")
-		(property "Sheetname" "09_OAM6_MechPower"
+		(uuid "6507c27b-5f85-4bcd-abc7-2ef80d87d355")
+		(property "Sheetname" "09_OAM6_Connectors"
 			(at 94.54 181.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -319,7 +328,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "11")
 				)
 			)
@@ -334,8 +343,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "9c078d8c-c1c7-4722-9912-5f9e69a0cfff")
-		(property "Sheetname" "10_OAM7_MechPower"
+		(uuid "a071900b-227a-4e4c-9455-abba15f2a063")
+		(property "Sheetname" "10_OAM7_Connectors"
 			(at 166.54 181.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -345,7 +354,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "12")
 				)
 			)
@@ -360,8 +369,8 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "71174233-d0cc-46d9-beab-f4391a30a093")
-		(property "Sheetname" "11_PCIe_Switch_Unknown"
+		(uuid "cc9e2d5d-aeac-4e91-9f1f-0d328ad21406")
+		(property "Sheetname" "11_PM8536_DNP_x4"
 			(at 238.54 181.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
@@ -371,7 +380,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "13")
 				)
 			)
@@ -386,7 +395,7 @@
 		(dnp no)
 		(stroke (width 0.1524) (type solid))
 		(fill (color 0 0 0 0.0000))
-		(uuid "fc1052b3-4dca-40a2-8660-bb9f4bfed3cc")
+		(uuid "a50ce3cb-8067-4d68-860d-a9afebef1039")
 		(property "Sheetname" "12_Unmapped_AMD"
 			(at 22.54 223.46 0)
 			(effects (font (size 1.27 1.27)) (justify left bottom))
@@ -397,7 +406,7 @@
 		)
 		(instances
 			(project "MI250X_8OAM_PCBWay_Chassis_Stub"
-				(path "/9e149b2c-ee24-41e4-9a2c-1616a441d16c"
+				(path "/02bc8d49-c633-48aa-a7e7-b32c4341abeb"
 					(page "14")
 				)
 			)

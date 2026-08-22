@@ -4,7 +4,7 @@
   (property "Value" "OAM_Conn0_v10" (at 0 2.54 0) (effects (font (size 1.27 1.27))))
   (property "Footprint" "footprints:218910-1115_candidate" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (property "Datasheet" "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-  (property "ki_description" "OCP generic v1.0 Conn0 688-contact map. NOT AMD MI250X overlay. DO NOT FABRICATE." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+  (property "ki_description" "OCP generic v1.0 Conn0 688-contact map. NOT AMD MI250X overlay. DO NOT ENERGIZE P48V." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (property "ki_fp_filters" "218910-1115*" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (symbol "OAM_Conn0_v10_1_1"
     (rectangle (start -25.4 -12.7) (end 25.4 12.7)
@@ -697,7 +697,7 @@
   (property "Value" "OAM_Conn1_v10" (at 0 2.54 0) (effects (font (size 1.27 1.27))))
   (property "Footprint" "footprints:218910-1115_candidate" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (property "Datasheet" "OAM Pin map rev 1.0.xlsx OCP Generic Pin Map" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
-  (property "ki_description" "OCP generic v1.0 Conn1 688-contact map. NOT AMD MI250X overlay. DO NOT FABRICATE." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+  (property "ki_description" "OCP generic v1.0 Conn1 688-contact map. NOT AMD MI250X overlay. DO NOT ENERGIZE P48V." (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (property "ki_fp_filters" "218910-1115*" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
   (symbol "OAM_Conn1_v10_1_1"
     (rectangle (start -25.4 -12.7) (end 25.4 12.7)

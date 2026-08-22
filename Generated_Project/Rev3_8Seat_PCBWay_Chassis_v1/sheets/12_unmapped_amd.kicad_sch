@@ -1,21 +1,21 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "e1ce5f1b-8ad5-4808-a02f-00c2469cf0e0")
+	(uuid "fead8402-4f28-4f87-8f1e-f4f82ae3e3fb")
 	(paper "A3")
 	(title_block
 		(title "Unmapped / AMD-unknown pads")
-		(date "2026-08-21")
+		(date "2026-08-22")
 		(rev "Rev3_8Seat_PCBWay_v1")
-		(comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Ticket 167157 open.")
-		(comment 2 "Documentation sheet — no invented nets")
-		(comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-		(comment 4 "r2.0 maps UNUSABLE. P3V3=2 Conn0 C1/C2. 8-seat PCBWay chassis stub.")
+        (comment 1 "DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN. Skip-pin NC.")
+        (comment 2 "Documentation sheet — no invented nets")
+        (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 4x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "Pads explicitly UNMAPPED on every seat (no net, no copper).\nNamed in the v1.0 generic map but reserved, do-not-use, or TEST pins\nwhose AMD MI250X function is Unknown. Do not invent pullups or straps.\nOn seats 2-7, PCIe/SerDes/clock/mgmt are ALSO unnetted (mech+power only).\n\nConn0 C4    TEST_MODE#\nConn0 F1    RFU\nConn0 F2    RFU\nConn0 F26   TEST0\nConn0 F29   TEST1\nConn0 F30   TEST2\nConn0 F33   TEST3\nConn0 F34   TEST4\nConn0 F37   TEST5\nConn0 F38   TEST6\nConn0 F41   TEST7\nConn0 F42   TEST8\nConn0 F49   TEST9\nConn0 F5    RFU\nConn0 F50   RFU\nConn0 H58   DO_NOT_USE\nConn0 J60   DO_NOT_USE\nConn0 K58   DO_NOT_USE\nConn0 L60   DO_NOT_USE\nConn1 A7    RFU\nConn1 A8    RFU\nConn1 B5    RFU\nConn1 B6    RFU\nConn1 C3    RFU\nConn1 C4    RFU\nConn1 C59   RFU\nConn1 C60   RFU\nConn1 C7    RFU\nConn1 C8    RFU\nConn1 E31   RFU\nConn1 E32   RFU\nConn1 E39   RFU\nConn1 E40   RFU\nConn1 F13   TEST10\nConn1 F14   TEST11\nConn1 F17   TEST12\nConn1 F18   TEST13\nConn1 F21   TEST14\nConn1 F22   RFU\nConn1 F29   RFU\nConn1 F30   RFU\nConn1 F33   RFU\nConn1 F34   RFU\nConn1 F37   RFU\nConn1 F38   RFU\nConn1 F41   RFU\nConn1 F42   RFU\nConn1 F45   RFU\nConn1 G3    RFU\nConn1 G31   RFU\nConn1 G32   RFU\nConn1 G4    RFU\nConn1 G7    RFU\nConn1 G8    RFU\nConn1 H5    RFU\nConn1 H6    RFU\nConn1 J3    RFU\nConn1 J4    RFU\nConn1 J64   RFU"
+	(text "Pads explicitly UNMAPPED on every seat (no net, no copper).\nNamed in the v1.0 generic map but reserved, do-not-use, or TEST pins\nwhose AMD MI250X function is Unknown. Do not invent pullups or straps.\nS1-S7 / QSFP sideband also have no net (no xGMI). All 8 seats are otherwise electrically named.\n\nConn0 C4    TEST_MODE#\nConn0 F1    RFU\nConn0 F2    RFU\nConn0 F26   TEST0\nConn0 F29   TEST1\nConn0 F30   TEST2\nConn0 F33   TEST3\nConn0 F34   TEST4\nConn0 F37   TEST5\nConn0 F38   TEST6\nConn0 F41   TEST7\nConn0 F42   TEST8\nConn0 F49   TEST9\nConn0 F5    RFU\nConn0 F50   RFU\nConn0 H58   DO_NOT_USE\nConn0 J60   DO_NOT_USE\nConn0 K58   DO_NOT_USE\nConn0 L60   DO_NOT_USE\nConn1 A7    RFU\nConn1 A8    RFU\nConn1 B5    RFU\nConn1 B6    RFU\nConn1 C3    RFU\nConn1 C4    RFU\nConn1 C59   RFU\nConn1 C60   RFU\nConn1 C7    RFU\nConn1 C8    RFU\nConn1 E31   RFU\nConn1 E32   RFU\nConn1 E39   RFU\nConn1 E40   RFU\nConn1 F13   TEST10\nConn1 F14   TEST11\nConn1 F17   TEST12\nConn1 F18   TEST13\nConn1 F21   TEST14\nConn1 F22   RFU\nConn1 F29   RFU\nConn1 F30   RFU\nConn1 F33   RFU\nConn1 F34   RFU\nConn1 F37   RFU\nConn1 F38   RFU\nConn1 F41   RFU\nConn1 F42   RFU\nConn1 F45   RFU\nConn1 G3    RFU\nConn1 G31   RFU\nConn1 G32   RFU\nConn1 G4    RFU\nConn1 G7    RFU\nConn1 G8    RFU\nConn1 H5    RFU\nConn1 H6    RFU\nConn1 J3    RFU\nConn1 J4    RFU\nConn1 J64   RFU"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "be567bc0-7d1c-4b58-adbc-5a0eeeabd956")
+		(uuid "311375ed-bacc-41ab-b387-9a771ceabc1a")
 	)
 
 	(sheet_instances
