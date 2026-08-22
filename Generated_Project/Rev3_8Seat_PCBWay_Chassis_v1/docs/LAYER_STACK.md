@@ -26,7 +26,7 @@ Thickness sum below is **planning**. Dielectric thicknesses are evened to hit ~2
 | 11 | In10.Cu | power | 1 oz | **GND** plane |
 | 12 | B.Cu | signal | 2 oz | Reserved / host-stub |
 
-Why 12 not 4 or 8 for the 8×-running board: two **1311-ball 1.0 mm** PM8536 plus **16× 688-contact** mezz BGAs need more than two signal inners. Guest **8L 2.0 mm $832.74** is the **DNP-switch** coupon if both PM8536 stay DNP; stuffing them is a **12L** (or 16L) job.
+Guest **8L 2.0 mm $832.74** (qty 5, 7–8 days) is the **preferred 8L / no-switch / DNP-switch** coupon if both PM8536 stay DNP; stuffing them is a **12–16L** job.
 
 **Hypothesis discarded:** a board-wide inner/outer **P48V plane** carrying ~100 A. Replaced by SB175 star + per-seat fuse keepouts + **local** 2 oz F.Cu pours on the 16 verified Conn0 P48V pads.
 
