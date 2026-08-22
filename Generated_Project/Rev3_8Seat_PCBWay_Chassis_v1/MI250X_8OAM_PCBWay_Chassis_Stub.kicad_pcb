@@ -6,7 +6,7 @@
     (date "2026-08-21")
     (rev "Rev3_8Seat_PCBWay_v1")
     (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN.")
-    (comment 2 "492 x 372 mm. PEX8780-AB80BI G CANDIDATE DNP. 8L likely if stuffed. SB175.")
+    (comment 2 "492 x 372 mm 12-layer 2.0 mm stuffed-switch TARGET. Local P48V. 2x PM8536 DNP PRIMARY. SB175.")
   )
   (layers
     (0 "F.Cu" signal)
@@ -1014,7 +1014,7 @@
   (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay chassis stub"
     (at 246.000 6) (layer "F.SilkS")
     (effects (font (size 2.4 2.4) (thickness 0.3))))
-  (gr_text "Molex 218910-1115 x16  |  PEX8780-AB80BI G CANDIDATE DNP  |  8L likely if stuffed  |  SB175 star  |  NOT a UBB"
+  (gr_text "Molex 218910-1115 x16  |  12L 2.0mm TARGET  |  LOCAL P48V pours  |  2x PM8536B-FEI DNP  |  SB175 star  |  NOT a UBB"
     (at 246.000 12) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling. Outline 492x372 mm < PCBWay adv ML 508x600."
@@ -1026,7 +1026,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 20.500 20.500) (end 122.500 185.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 0  ELEC NAMED  first-stuff OK  PE->PEX8780  x8"
+  (gr_text "SEAT 0  ELEC NAMED  first-stuff OK  PE->SW0  x8/GCD"
     (at 71.500 28.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM0 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1041,7 +1041,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 123.500 20.500) (end 225.500 185.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 1  ELEC NAMED  first-stuff OK  PE->PEX8780  x8"
+  (gr_text "SEAT 1  ELEC NAMED  first-stuff OK  PE->SW0  x8/GCD"
     (at 174.500 28.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM1 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1056,7 +1056,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 226.500 20.500) (end 328.500 185.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 2  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 2  ELEC NAMED  module DNP OK  PE->SW0  no respin"
     (at 277.500 28.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM2 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1071,7 +1071,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 329.500 20.500) (end 431.500 185.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 3  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 3  ELEC NAMED  module DNP OK  PE->SW0  no respin"
     (at 380.500 28.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM3 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1086,7 +1086,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 20.500 186.500) (end 122.500 351.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 4  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 4  ELEC NAMED  module DNP OK  PE->SW1  no respin"
     (at 71.500 194.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM4 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1101,7 +1101,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 123.500 186.500) (end 225.500 351.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 5  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 5  ELEC NAMED  module DNP OK  PE->SW1  no respin"
     (at 174.500 194.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM5 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1116,7 +1116,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 226.500 186.500) (end 328.500 351.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 6  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 6  ELEC NAMED  module DNP OK  PE->SW1  no respin"
     (at 277.500 194.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM6 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1131,7 +1131,7 @@
     (stroke (width 0.12) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 329.500 186.500) (end 431.500 351.500)
     (stroke (width 0.12) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "SEAT 7  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+  (gr_text "SEAT 7  ELEC NAMED  module DNP OK  PE->SW1  no respin"
     (at 380.500 194.000) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
   (gr_text "OAM7 KOZ 103x166 (Fig 14)  module 102x165 (Fig 2)  M3.5 NPTH 3.9 mm"
@@ -1146,18 +1146,15 @@
     (stroke (width 0.25) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 452.000 28.000) (end 492.000 68.000)
     (stroke (width 0.2) (type dash)) (fill none) (layer "Dwgs.User"))
-  (gr_text "U_SW CANDIDATE DNP"
+  (gr_text "U_SW0 DNP PRIMARY"
     (at 472.000 48.000 90) (layer "F.SilkS")
     (effects (font (size 1.3 1.3) (thickness 0.16))))
-  (gr_text "PEX8780-AB80BI G"
+  (gr_text "PM8536B-FEI 37.5mm 1311-FCBGA"
     (at 480.000 48.000 90) (layer "F.SilkS")
-    (effects (font (size 1.1 1.1) (thickness 0.14))))
-  (gr_text "35mm 1156-FCBGA  80-lane"
+    (effects (font (size 1.0 1.0) (thickness 0.12))))
+  (gr_text "seats 0-3  x8/GCD  16US+64DS"
     (at 488.000 48.000 90) (layer "F.SilkS")
     (effects (font (size 0.9 0.9) (thickness 0.1))))
-  (gr_text "8x x8 + one x16 UL  NOT stuffed"
-    (at 496.000 48.000 90) (layer "F.SilkS")
-    (effects (font (size 0.85 0.85) (thickness 0.1))))
   (gr_rect (start 452.000 90.000) (end 492.000 250.000)
     (stroke (width 0.2) (type dash)) (fill none) (layer "F.CrtYd"))
   (gr_rect (start 452.000 90.000) (end 492.000 250.000)
@@ -1165,7 +1162,7 @@
   (gr_text "HOST CABLE KEEPOUT"
     (at 472.000 170.000 90) (layer "F.SilkS")
     (effects (font (size 1.5 1.5) (thickness 0.18))))
-  (gr_text "X11DPH-T one CPU x16 uplink"
+  (gr_text "X11DPH-T two CPU x16 uplinks"
     (at 464.000 170.000 90) (layer "F.SilkS")
     (effects (font (size 1.1 1.1) (thickness 0.14))))
   (gr_text "3x x16 + 4x x8 Gen3  MPN Unknown"
@@ -1177,18 +1174,25 @@
   (gr_text "X11DPH-T NOT ON THIS PCB"
     (at 488.000 170.000 90) (layer "F.SilkS")
     (effects (font (size 1.1 1.1) (thickness 0.14))))
-  (gr_text "NO SECOND SWITCH MPN"
+  (gr_rect (start 452.000 284.000) (end 492.000 324.000)
+    (stroke (width 0.25) (type dash)) (fill none) (layer "F.CrtYd"))
+  (gr_rect (start 452.000 284.000) (end 492.000 324.000)
+    (stroke (width 0.2) (type dash)) (fill none) (layer "Dwgs.User"))
+  (gr_text "U_SW1 DNP PRIMARY"
     (at 472.000 304.000 90) (layer "F.SilkS")
-    (effects (font (size 1.2 1.2) (thickness 0.14))))
-  (gr_text "PEX8796 / PEX88096 / PM40100 not placed"
-    (at 482.000 304.000 90) (layer "F.SilkS")
-    (effects (font (size 0.85 0.85) (thickness 0.1))))
+    (effects (font (size 1.3 1.3) (thickness 0.16))))
+  (gr_text "PM8536B-FEI 37.5mm 1311-FCBGA"
+    (at 480.000 304.000 90) (layer "F.SilkS")
+    (effects (font (size 1.0 1.0) (thickness 0.12))))
+  (gr_text "seats 4-7  x8/GCD  16US+64DS"
+    (at 488.000 304.000 90) (layer "F.SilkS")
+    (effects (font (size 0.9 0.9) (thickness 0.1))))
   (gr_text "STAR-FED P48V — LOCAL POURS ONLY — DO NOT ENERGIZE"
     (at 246.000 360.000) (layer "F.SilkS")
     (effects (font (size 1.8 1.8) (thickness 0.22))))
-  (gr_text "PEX8780 CANDIDATE DNP. 8L likely if 1156 stuffed. PCBWay 1156 assembly Unknown. No signal tracks."
+  (gr_text "12L 2.0mm stuffed-switch TARGET. 8L 2.0mm is cheaper DNP option only. PEX8780 docs-only. No signal tracks."
     (at 246.000 16.5) (layer "Cmts.User")
-    (effects (font (size 1.2 1.2) (thickness 0.14))))
+    (effects (font (size 1.1 1.1) (thickness 0.12))))
   (gr_text "Seat grid: row0 (Y=20) seats 0-3; row1 (Y=186) seats 4-7; col pitch 103 mm. Conn rotation 180 Inferred."
     (at 246.000 354.000) (layer "Cmts.User")
     (effects (font (size 1.2 1.2) (thickness 0.14))))
@@ -12642,7 +12646,7 @@
     (pad "" np_thru_hole circle (at -14.3 8) (size 8.00 8.00) (drill 6.60) (layers "*.Cu" "*.Mask"))
     (pad "" np_thru_hole circle (at 14.3 8) (size 8.00 8.00) (drill 6.60) (layers "*.Cu" "*.Mask"))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "ca4ab652-2174-409f-a915-7815ec624800")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "500a95ad-763b-44e0-b321-0f14ce24a694")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12651,7 +12655,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 38.450 155.600) (xy 46.550 155.600) (xy 46.550 162.900) (xy 38.450 162.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "4f83e400-6058-4d0e-98d3-912c27122b81")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "78cb2224-1d89-480a-bae7-0c41cac3e202")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12660,7 +12664,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 141.450 155.600) (xy 149.550 155.600) (xy 149.550 162.900) (xy 141.450 162.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "3a237716-75e3-409b-9b9a-4a2610542435")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "a14bf4e3-f94b-46a4-bebc-7a5c72652bdc")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12669,7 +12673,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 244.450 155.600) (xy 252.550 155.600) (xy 252.550 162.900) (xy 244.450 162.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "3b06a9f9-6175-4c21-a4f6-ad87cfccae97")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "d454a2ed-4ba3-4f82-aa56-965baf23c0b4")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12678,7 +12682,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 347.450 155.600) (xy 355.550 155.600) (xy 355.550 162.900) (xy 347.450 162.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "b97241e2-d630-4ad1-8275-781d3774007e")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "e1b7a3c9-39ae-4f43-b723-91d88f900b4e")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12687,7 +12691,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 38.450 321.600) (xy 46.550 321.600) (xy 46.550 328.900) (xy 38.450 328.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "6735c94d-f1f0-459e-b72d-d92902fc804f")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "b4b1d14d-9414-49a0-8759-3f84374c8a93")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12696,7 +12700,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 141.450 321.600) (xy 149.550 321.600) (xy 149.550 328.900) (xy 141.450 328.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "511c82f8-de1f-4280-a023-7492ad745817")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "9a03d6fd-1d24-4ff9-99dc-c437bb3b7dc8")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12705,7 +12709,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 244.450 321.600) (xy 252.550 321.600) (xy 252.550 328.900) (xy 244.450 328.900)))
   )
-  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "534b530d-98e5-4032-bdb6-0526290b0c96")
+  (zone (net 2) (net_name "P48V") (layer "F.Cu") (uuid "930852e1-cae3-4b25-be1f-ed48ab041e8c")
     (hatch edge 0.5)
     (priority 20)
     (connect_pads yes (clearance 0.64))
@@ -12714,7 +12718,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 347.450 321.600) (xy 355.550 321.600) (xy 355.550 328.900) (xy 347.450 328.900)))
   )
-  (zone (net 6) (net_name "P48V_STAR") (layer "F.Cu") (uuid "d57e1272-62ba-4167-b92f-32bedd0b9a0d")
+  (zone (net 6) (net_name "P48V_STAR") (layer "F.Cu") (uuid "f050ec53-9731-490b-87d7-db72896d5196")
     (hatch edge 0.5)
     (priority 15)
     (connect_pads yes (clearance 0.64))
@@ -12723,7 +12727,7 @@
     (fill yes (thermal_gap 0.64) (thermal_bridge_width 0.5))
     (polygon (pts (xy 48.000 340.000) (xy 92.000 340.000) (xy 92.000 368.000) (xy 48.000 368.000)))
   )
-  (zone (net 1) (net_name "GND") (layer "In1.Cu") (uuid "d1a69955-bb66-4673-b703-09fe15e3b5ad")
+  (zone (net 1) (net_name "GND") (layer "In1.Cu") (uuid "da70b087-ac53-4c10-84ad-1f8df71cb7e9")
     (hatch edge 0.5)
     (priority 0)
     (connect_pads yes (clearance 0.25))
@@ -12732,7 +12736,7 @@
     (fill yes (thermal_gap 0.25) (thermal_bridge_width 0.5))
     (polygon (pts (xy 2.000 2.000) (xy 490.000 2.000) (xy 490.000 370.000) (xy 2.000 370.000)))
   )
-  (zone (net 1) (net_name "GND") (layer "In4.Cu") (uuid "32ad0775-c917-45ae-8f20-9eec8a4629ef")
+  (zone (net 1) (net_name "GND") (layer "In4.Cu") (uuid "8e8df332-9a3e-4197-b0ca-e30ec7586b19")
     (hatch edge 0.5)
     (priority 0)
     (connect_pads yes (clearance 0.25))
@@ -12741,7 +12745,7 @@
     (fill yes (thermal_gap 0.25) (thermal_bridge_width 0.5))
     (polygon (pts (xy 2.000 2.000) (xy 490.000 2.000) (xy 490.000 370.000) (xy 2.000 370.000)))
   )
-  (zone (net 1) (net_name "GND") (layer "In7.Cu") (uuid "51739052-20cf-4dae-9393-aefa9e4bea2a")
+  (zone (net 1) (net_name "GND") (layer "In7.Cu") (uuid "1c03da2a-4f8a-4ba1-bb79-e176d0f91df9")
     (hatch edge 0.5)
     (priority 0)
     (connect_pads yes (clearance 0.25))
@@ -12750,7 +12754,7 @@
     (fill yes (thermal_gap 0.25) (thermal_bridge_width 0.5))
     (polygon (pts (xy 2.000 2.000) (xy 490.000 2.000) (xy 490.000 370.000) (xy 2.000 370.000)))
   )
-  (zone (net 1) (net_name "GND") (layer "In10.Cu") (uuid "863af54c-e9e0-4932-a7ff-456aad1755da")
+  (zone (net 1) (net_name "GND") (layer "In10.Cu") (uuid "85dce7fe-2182-4acd-a796-d2a3b95a0cc3")
     (hatch edge 0.5)
     (priority 0)
     (connect_pads yes (clearance 0.25))
@@ -12759,84 +12763,91 @@
     (fill yes (thermal_gap 0.25) (thermal_bridge_width 0.5))
     (polygon (pts (xy 2.000 2.000) (xy 490.000 2.000) (xy 490.000 370.000) (xy 2.000 370.000)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "239af338-d78f-4210-9013-1ab4126c0e51")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "f54e97fa-f407-4f95-b23a-01b535b6adbb")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 452.000 28.000) (xy 492.000 28.000) (xy 492.000 68.000) (xy 452.000 68.000)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "d5d596ba-cf09-49aa-91c4-5840c785dd91")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "1ab0a127-1f96-446d-8511-563666bc91cb")
+    (hatch edge 0.5)
+    (priority 0)
+    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
+    (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
+    (polygon (pts (xy 452.000 284.000) (xy 492.000 284.000) (xy 492.000 324.000) (xy 452.000 324.000)))
+  )
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "ff53cfb1-5ff1-4d76-9cf0-b399a4af3e65")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 452.000 90.000) (xy 492.000 90.000) (xy 492.000 250.000) (xy 452.000 250.000)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "c4c8ba6a-f45d-4b39-97f1-1be3ec481947")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "29a4cd1a-4aa9-41f8-8abc-3a1d4b038618")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 21.676 155.210) (xy 41.676 155.210) (xy 41.676 167.210) (xy 21.676 167.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "709d3301-d871-47ad-b7d9-9f28c76d4d7a")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "0d8c9eb5-f74a-4b11-a5e6-125453157311")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 124.676 155.210) (xy 144.676 155.210) (xy 144.676 167.210) (xy 124.676 167.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "b120249e-5ab5-41b5-8a8b-0002a4033304")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "d5d21c6a-dcab-45b3-bf88-48066c467576")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 227.676 155.210) (xy 247.676 155.210) (xy 247.676 167.210) (xy 227.676 167.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "3d86bd67-0222-4ffb-b61a-72d469cdadbf")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "7c1411f0-1025-455b-93b9-bb9db05fd231")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 330.676 155.210) (xy 350.676 155.210) (xy 350.676 167.210) (xy 330.676 167.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "94cebf22-68c1-46bc-9382-7171ce6b3653")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "dac4e891-5dd9-46e9-98e8-dc6504bebe51")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 21.676 321.210) (xy 41.676 321.210) (xy 41.676 333.210) (xy 21.676 333.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "1e3f57d0-24c9-49ca-9c61-2863eb473607")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "db15b34b-dc79-46e6-b232-20ff0a5bdd1e")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 124.676 321.210) (xy 144.676 321.210) (xy 144.676 333.210) (xy 124.676 333.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "dbb48410-2e5b-48c3-a914-41f5121d60d4")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "f15c310c-9599-4b75-80f2-afcdcf26e282")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 227.676 321.210) (xy 247.676 321.210) (xy 247.676 333.210) (xy 227.676 333.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "f2912f53-e43a-452b-8f89-eb776a32bb40")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "2ccf76e4-41f6-4696-87ec-d15850a6bb64")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 330.676 321.210) (xy 350.676 321.210) (xy 350.676 333.210) (xy 330.676 333.210)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "83d3c38c-c583-421c-b9bc-4dc9d3993eff")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "c0f309fd-55b2-478b-8771-586a0a4b2504")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon (pts (xy 118.000 354.000) (xy 148.000 354.000) (xy 148.000 366.000) (xy 118.000 366.000)))
   )
-  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "0a34a4f1-49e4-4144-b964-505e8a30c5d4")
+  (zone (net 0) (net_name "") (layers "*.Cu") (uuid "cff421e6-0950-43b8-923e-3f6e9a8af19a")
     (hatch edge 0.5)
     (priority 0)
     (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints not_allowed))

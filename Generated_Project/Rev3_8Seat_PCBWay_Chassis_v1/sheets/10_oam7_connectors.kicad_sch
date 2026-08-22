@@ -1,5 +1,5 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "b216402b-423f-4338-aefa-e81865f9083f")
+	(uuid "8b029fda-21a1-479d-98a7-c9039a527578")
 	(paper "A3")
 	(title_block
 		(title "OAM7 connectors")
@@ -8,14 +8,14 @@
         (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
         (comment 2 "Documentation sheet — no invented nets")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. Star-fed P48V.")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
 	)
 
-	(text "OAM7 connector instances — electrically designed; module may be DNP.\n\nFootprint: Molex 218910-1115 candidate (geometry). Hermaphroditic — mates with itself\n(Farnell 2189101115: Mates With 2189101115; mated height 5.00 mm).\n\nPad nets assigned on the PCB from the v1.0 CSV for this seat:\nP48V/P12V1/P3V3/GND, PE (16 lanes) toward PEX8780-AB80BI G CANDIDATE DNP (8x x8 + one x16 uplink; not stuffed),\nPE_REFCLK / PERST# / HOST_PWRGD (ENABLE). S1-S7 have NO NET (no xGMI).\nTEST*/RFU/DO_NOT_USE unmapped. PVREF is a module output — never drive.\nP12V2 named from v1.0 but Unknown / may be NC. P48V is a LOCAL pour after a ~15 A fuse keepout.\n\nMODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).\n"
+	(text "OAM7 connector instances — electrically designed; module may be DNP.\n\nFootprint: Molex 218910-1115 candidate (geometry). Hermaphroditic — mates with itself\n(Farnell 2189101115: Mates With 2189101115; mated height 5.00 mm).\n\nPad nets assigned on the PCB from the v1.0 CSV for this seat:\nP48V/P12V1/P3V3/GND, PE (16 lanes) toward SW1 PM8536B-FEI DNP PRIMARY (seats 4-7, x8/GCD),\nPE_REFCLK / PERST# / HOST_PWRGD (ENABLE). S1-S7 have NO NET (no xGMI).\nTEST*/RFU/DO_NOT_USE unmapped. PVREF is a module output — never drive.\nP12V2 named from v1.0 but Unknown / may be NC. P48V is a LOCAL pour after a ~15 A fuse keepout.\n\nMODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "b7ef5578-76ab-463c-aa78-ac5b04f4e44f")
+		(uuid "49f3902d-5d40-479e-9425-86638099785e")
 	)
 
 
@@ -23,112 +23,112 @@
 		(shape bidirectional)
 		(at 25.4 150 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "d4409f5a-62a4-4b53-965e-c9088da8226e")
+		(uuid "2c29a79c-37e2-457b-b158-3fc5ea8e6602")
 	)
 
 	(hierarchical_label "P12V1"
 		(shape bidirectional)
 		(at 25.4 155.08 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b04fbacb-c545-41be-a175-619be3e59ea6")
+		(uuid "73cffd91-fd09-4c27-8b28-3e79f2b98a1d")
 	)
 
 	(hierarchical_label "P12V2"
 		(shape bidirectional)
 		(at 25.4 160.16000000000003 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "c36266d8-97b2-49e4-acce-f21ae4bdf3a4")
+		(uuid "331d4f09-0ec7-4283-85d7-35e49bec4817")
 	)
 
 	(hierarchical_label "P3V3"
 		(shape bidirectional)
 		(at 25.4 165.24000000000004 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b96dbd38-feca-4b85-ba22-d7c7a6a3799a")
+		(uuid "eceee69e-aa79-4ac1-95df-63c5e5fabf43")
 	)
 
 	(hierarchical_label "GND"
 		(shape bidirectional)
 		(at 25.4 170.32000000000005 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a9a6e2ac-8d30-47b5-adfc-ea10e5efcda7")
+		(uuid "2967be67-2360-4153-aae6-d0bbc82a1efb")
 	)
 
 	(hierarchical_label "OAM7_PVREF"
 		(shape bidirectional)
 		(at 25.4 175.40000000000006 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "92f1ace0-7aad-470f-a19d-42f1b3361d4a")
+		(uuid "e9d312f8-a90d-425a-8a22-06e5a6d9ea26")
 	)
 
 	(hierarchical_label "OAM7_PE_REFCLKP"
 		(shape bidirectional)
 		(at 25.4 180.48000000000008 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "597ff26a-ed2e-447e-af44-cc4218b3c8c8")
+		(uuid "da9f5f95-76b2-4340-be20-bb63ac3986a3")
 	)
 
 	(hierarchical_label "OAM7_PE_REFCLKN"
 		(shape bidirectional)
 		(at 25.4 185.5600000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "7889adde-04bf-4e4e-bce0-5435b9e5217a")
+		(uuid "5511fb5c-62fb-434e-9585-79a46dd0d5e1")
 	)
 
 	(hierarchical_label "OAM7_PERST#"
 		(shape bidirectional)
 		(at 25.4 190.6400000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "b5f98d5b-4f9e-43ac-bd6a-980fe8e5f9a8")
+		(uuid "8fe17232-87c1-4b11-a300-571b1832ca30")
 	)
 
 	(hierarchical_label "OAM7_HOST_PWRGD"
 		(shape bidirectional)
 		(at 25.4 195.7200000000001 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "8cce0d0f-da4e-4d46-a433-95c93077f9d8")
+		(uuid "7754ad38-4359-4e19-952e-8ef981bde4a6")
 	)
 
 	(hierarchical_label "OAM7_MODULE_PWRGD"
 		(shape bidirectional)
 		(at 25.4 200.80000000000013 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "0f90c2d6-c98d-4bff-a884-9e0ae7d9a408")
+		(uuid "9f0080a2-0a60-4900-a472-b41b38b5cd0e")
 	)
 
 	(hierarchical_label "OAM7_WARMRST#"
 		(shape bidirectional)
 		(at 25.4 205.88000000000014 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "a0f78058-cbe0-4821-9080-bd9add1ed98b")
+		(uuid "15dd53a4-e947-4620-a63d-6e199f3f2895")
 	)
 
 	(hierarchical_label "OAM7_PWRBRK#"
 		(shape bidirectional)
 		(at 25.4 210.96000000000015 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "14132a6f-1031-4f0b-a6d1-34242c878ea4")
+		(uuid "0311ab17-a2fb-4c6e-bc5f-5a6191530fe3")
 	)
 
 	(hierarchical_label "OAM7_PRSNT0#"
 		(shape bidirectional)
 		(at 25.4 216.04000000000016 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "aebef85b-5023-4c56-a0b3-941edd422109")
+		(uuid "62dd66a0-0a6f-434b-933b-2eae32170210")
 	)
 
 	(hierarchical_label "OAM7_SMBus_SLV_D"
 		(shape bidirectional)
 		(at 25.4 221.12000000000018 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "0ed7d7d4-b3fc-4597-b0c6-d65b67eec9a6")
+		(uuid "d814eff5-0fb7-4895-9c0e-debc5b9163e7")
 	)
 
 	(hierarchical_label "OAM7_SMBus_SLV_CLK"
 		(shape bidirectional)
 		(at 25.4 226.2000000000002 0)
 		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "33c43c7d-6af5-47ff-ba77-6c8270d94579")
+		(uuid "f2430ae0-5e84-4d05-960e-4dbd3151c8e5")
 	)
 
 

@@ -9,14 +9,14 @@ Pin names: 22_Pinmap_Research/extracted/OAM_v1.0_OCP_Generic_Pin_Map.csv
 
 Architecture:
 - 8 electrically designed OAM seats (first stuffing may populate 2 modules / 6 DNP).
-  16x Molex 218910-1115. Board 492 x 372 mm. Generated stack 12-layer 2.0 mm.
-  If the PEX8780 1156-FCBGA is ever stuffed, 8-layer 2.0 mm is likely.
+  16x Molex 218910-1115. Board 492 x 372 mm. 12-layer 2.0 mm stuffed-switch TARGET
+  (plan 12-16L, not 4). 8-layer 2.0 mm is a documented cheaper DNP-switch option only.
 - 4x2 tiling of 103x166 mm KOZ = 412x332 mm (INFERRED) + 20 mm margin + 40 mm host strip.
-- All 8 seats: named P48V/P12V1/P3V3/GND, named PE toward one DNP CANDIDATE
-  Broadcom PEX8780-AB80BI G (8x x8 Gen3 + one x16 uplink). Per-seat REFCLK/PERST#/HOST_PWRGD.
-  Do not invent a second switch MPN. Do not stuff. PCBWay 1156-FCBGA assembly Unknown.
+- All 8 seats: named P48V/P12V1/P3V3/GND, named PE toward two DNP PM8536B-FEI
+  (PRIMARY; x8 per GCD; SW0 seats 0-3, SW1 seats 4-7), per-seat REFCLK/PERST#/HOST_PWRGD.
+  PEX8780-AB80BI G is a cheaper 80-lane alt in docs only — not placed.
 - Host stub: silk + connector keepout toward X11DPH-T (3x Gen3 x16 + 4x Gen3 x8).
-  One CPU x16 = switch uplink. Do NOT invent a CEM MPN.
+  Two CPU x16 = switch uplinks. Do NOT invent a CEM MPN.
 - Do not route S1-S7 (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. Never drive PVREF.
 - HOST_PWRGD is ENABLE. No GPU multiphase VRM on this PCB.
 - P48V: Anderson SB175 + per-seat ~15 A fuse keepouts + LOCAL pours on the 16
@@ -77,6 +77,8 @@ BOARD_W = MARGIN + N_COLS * KOZ_W + MARGIN + HOST_STRIP  # 492
 BOARD_H = MARGIN + N_ROWS * KOZ_H + MARGIN              # 372
 HOST_PCIE_SEATS = {0, 1, 2, 3, 4, 5, 6, 7}  # all 8 electrically named; first stuffing may populate 0-1
 FIRST_STUFF_SEATS = {0, 1}
+SW0_SEATS = {0, 1, 2, 3}
+SW1_SEATS = {4, 5, 6, 7}
 # Classes named on every seat so stuffing 6 more modules needs no respin.
 NAMED_ON_ALL = {
     "power_shared", "pcie_stub", "clock_reset", "mgmt_stub",
@@ -94,7 +96,7 @@ ROT = 180  # Inferred PIN A3 vs candidate land (same as Rev2 2-seat)
 
 PCBWAY_ADV_ML = (508.0, 600.0)
 PCBWAY_STD_ML = (560.0, 1150.0)
-N_LAYERS = 12  # generated copper stack. 8L 2.0 mm is likely IF PEX8780 1156 is stuffed.
+N_LAYERS = 12  # stuffed-switch TARGET (two 1311-ball 1.0 mm PM8536). 8L 2.0 mm is docs-only DNP-switch.
 BOARD_THICK_MM = 2.0
 OZ2_UM = 0.070
 OZ1_UM = 0.035
@@ -102,16 +104,19 @@ P48V_CLEAR_MM = 0.64  # OCP UBB v1.5 >40 V internal 25 mil
 GND_CLEAR_MM = 0.25
 # Long-edge SB175 (DS-SB175 2-pole envelope 53.1 x 35.4 mm). Body hangs off Y=372.
 SB175_AT = (70.0, 362.0)
-# Broadcom PEX8780-AB80BI G — the only switch MPN on this keepout.
-# 80 lane / 20 port PCIe Gen3, 35x35 mm 1156-FCBGA. CANDIDATE, not stuffed.
-# Street ~$309-$359 (OMO/Digi-Key tray). PCBWay 1156-FCBGA assembly Unknown.
-# 8x x8 Gen3 (64 DS) + one x16 uplink (16 US) = 80. Not 8x x16 (256).
-# Do not invent a second switch MPN (no PEX8796/PEX88096/PM40100 keepout).
-PEX8780_MPN = "PEX8780-AB80BI G"
-PEX8780_BODY_MM = 35.0
-PEX8780_CRTYD_MM = 40.0  # host strip is 40 mm
-PEX8780_KEEPOUT = (452.0, 28.0, 492.0, 68.0)
-# X11DPH-T cable keepout (one CPU x16 uplink). MPN Unknown — no CEM invented.
+# PRIMARY: Microchip PM8536B-FEI DNP x2. Switchtec PFX 96-lane Gen3,
+# 1311-ball 37.5 mm FCBGA, 1.0 mm pitch. ~$460-475, ~18 wk.
+# Architecture: x8 per GCD. SW0 seats 0-3 (16 US + 64 DS). SW1 seats 4-7.
+# PCBWay can assemble 1.0 mm without HDI; plan 12-16 layers (not 4).
+# Host strip is 40 mm; 37.5 mm body + 1.25 mm per side.
+# PEX8780-AB80BI G is a cheaper 80-lane alt in docs only — not placed.
+# PM8533B-F3EI (48-lane, 27 mm) is a 2-seat alt in docs only — not placed.
+PM8536_MPN = "PM8536B-FEI"
+PM8536_BODY_MM = 37.5
+PM8536_CRTYD_MM = 40.0
+SW0_KEEPOUT = (452.0, 28.0, 492.0, 68.0)    # seats 0-3
+SW1_KEEPOUT = (452.0, 284.0, 492.0, 324.0)  # seats 4-7
+# X11DPH-T cable keepout (two CPU x16 uplinks). MPN Unknown — no CEM invented.
 HOST_CABLE_KEEPOUT = (452.0, 90.0, 492.0, 250.0)
 
 
@@ -240,9 +245,9 @@ def write_classification_csv(rows: list[dict]) -> None:
                 )
             elif cls == "pcie_stub":
                 note = (
-                    "Named on all 8 seats toward PEX8780-AB80BI G CANDIDATE DNP "
-                    "(8x x8 Gen3 + one x16 uplink = 80). Not 8x x16. Not a CEM mapping. "
-                    "Do not invent a second switch MPN."
+                    "Named on all 8 seats toward DNP PM8536B-FEI PRIMARY (x8/GCD). "
+                    "SW0=seats 0-3, SW1=seats 4-7. Not a CEM mapping. "
+                    "PEX8780 is a cheaper 80-lane alt in docs only."
                 )
             w.writerow([r["connector"], r["pin"], sig, cls, *nets, "yes" if wired else "no", note])
 
@@ -354,7 +359,7 @@ def sch_header(title: str, comment: str) -> str:
         (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
         (comment 2 "{kicad_escape(comment)}")
         (comment 3 "Pin names: OAM Pin map rev 1.0.xlsx — OCP generic, NOT AMD overlay")
-        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. PEX8780 CANDIDATE DNP. 8L likely if stuffed. Star-fed P48V.")
+        (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. 2x PM8536 DNP. Star-fed P48V.")
 	)
 '''
 
@@ -371,7 +376,7 @@ SHEETS = [
     ("08_OAM5_MechPower", "sheets/08_oam5_connectors.kicad_sch"),
     ("09_OAM6_MechPower", "sheets/09_oam6_connectors.kicad_sch"),
     ("10_OAM7_MechPower", "sheets/10_oam7_connectors.kicad_sch"),
-    ("11_PEX8780_CANDIDATE", "sheets/11_pcie_switch_unknown.kicad_sch"),
+    ("11_PM8536_DNP", "sheets/11_pcie_switch_unknown.kicad_sch"),
     ("12_Unmapped_AMD", "sheets/12_unmapped_amd.kicad_sch"),
 ]
 
@@ -385,10 +390,10 @@ def write_root_sch() -> None:
     note = (
         "DO NOT FABRICATE / DO NOT ENERGIZE P48V\\n"
         "8 electrically designed OAM seats (first stuffing: 2 modules / 6 DNP OK — no respin).\\n"
-        "16x Molex 218910-1115, 5.00 mm stack. Outline 492 x 372 mm. Generated 12L 2.0 mm.\\n"
+        "16x Molex 218910-1115, 5.00 mm stack. 12-layer 2.0 mm stuffed-switch TARGET. Outline 492 x 372 mm.\\n"
         "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling (not a UBB drawing).\\n"
-        "All 8: named PE toward PEX8780-AB80BI G CANDIDATE DNP (8x x8 + one x16 uplink). No second switch MPN.\\n"
-        "Host stub: X11DPH-T 3x Gen3 x16 + 4x Gen3 x8 keepout. One CPU x16 = switch uplink. No CEM invented.\\n"
+        "All 8: named PE toward 2x PM8536B-FEI DNP PRIMARY (x8/GCD; SW0=0-3, SW1=4-7). No CEM invented.\\n"
+        "Host stub: X11DPH-T 3x Gen3 x16 + 4x Gen3 x8 keepout. Two CPU x16 = switch uplinks.\\n"
         "X11DPH-T / NH-D9 DX-3647 / B550M are NOT on this PCB. Chamber A mATX is not this PCB.\\n"
         "S1-S7 NOT routed (no xGMI). TEST*/RFU/DO_NOT_USE unmapped. PVREF never driven.\\n"
         "P48V: SB175 long-edge entry + ~15A fuse/seat + LOCAL pours on 16 Conn0 pads. NOT a 100A flood.\\n"
@@ -486,15 +491,15 @@ def write_do_not_fab_sheet() -> None:
 4. AMD overlay unknowns (TEST*, dual-GCD PE vs SERDES_7, SMBus map, P12V2 need, xGMI S1-S7).
 5. Host X11DPH-T is NOT on this PCB. Cooler on the host is NH-D9 DX-3647 (NOT U14S).
    Chamber A mATX B550M 244x244 is NOT on this PCB.
-6. PCIe: all 8 seats named toward one PEX8780-AB80BI G CANDIDATE DNP
-   (8x x8 Gen3 + one x16 uplink = 80 lanes). Not 8x x16. Do not invent a second switch MPN.
-   No CEM cable invented. Host MPN Unknown (silk keepout only). PCBWay 1156-FCBGA assembly Unknown.
+6. PCIe: all 8 seats named toward 2x PM8536B-FEI DNP PRIMARY (x8 per GCD).
+   SW0 seats 0-3, SW1 seats 4-7. Two CPU x16 uplinks. PEX8780 is docs-only cheaper 80-lane alt.
+   No CEM cable invented. Host MPN Unknown (silk keepout only).
 7. HOST_PWRGD is ENABLE. Sequencing vs P48V/P12V1/P3V3 — OCP + AMD overlay only.
 8. Do not reuse the old MFC qty-5 cart for 220x120 mm. That quote is UNRELATED.
 9. Per-seat ~15 A fuse MPN still Unknown (keepout only). P12V1 <=50 W and P3V3 <=5 W
    sources are keepouts — no GPU multiphase VRM on this PCB.
-10. Do not upload to PCBWay. If the PEX8780 1156-FCBGA is ever stuffed, 8-layer
-    is likely. Generated KiCad is 12L 2.0 mm until a stack respin. Keep DNP.
+10. Do not upload to PCBWay. 12L 2.0 mm is the stuffed-switch target (plan 12-16L, not 4);
+    8L 2.0 mm is a cheaper DNP-switch option only.
 
 Until then this KiCad tree is a mapping artifact. Do not send to PCBWay. DO NOT ENERGIZE P48V.
 """
@@ -582,27 +587,26 @@ OCP pin list (module POV):
 This sheet does NOT map those pairs onto a CEM x16 connector pinout.
 Do NOT invent a CEM cable, SlimSAS, MCIO, or retimer BOM.
 
-Intended 8x topology (CANDIDATE keepout, not stuffed):
-- One Broadcom PEX8780-AB80BI G (80 lane / 20 port PCIe Gen3, 35x35 mm 1156-FCBGA).
-  Street ~$309-$359 (OMO/Digi-Key tray). Do not invent a second switch MPN.
-- 8x x8 Gen3 downstream + one x16 uplink from the host = 80 lanes.
-  Eight MI250X at 2x x16 Gen4 would be 256 lanes — impossible on this part and on
-  the X11DPH-T (80 Gen3 = 3x x16 + 4x x8).
-- Each seat still has 16 named v1.0 PE lanes; the CANDIDATE only budgets x8 per module.
-  GCD1 / PE 8-15 stay named, not fanned into the 80-lane part. SERDES_7 is Inferred.
-  Do not route S1-S7 as GCD1. No xGMI.
-- Host X11DPH-T (NOT on this PCB): one CPU x16 = switch uplink
-  (silk + connector keepout, MPN Unknown). Remaining host slots unused on this chassis.
+Intended 8x topology (PRIMARY DNP until stuffed):
+- Two Microchip PM8536B-FEI (Switchtec PFX 96-lane Gen3, 1311-ball 37.5 mm FCBGA, 1.0 mm).
+  ~$460-475, ~18 wk. PCBWay can assemble 1.0 mm without HDI; plan 12-16 layers (not 4).
+  SW0 = seats 0-3 (16 US + 64 DS). SW1 = seats 4-7. x8 per GCD.
+- Each MI250X GCD has its own PCIe Gen4 x16 (AMD + Hot Chips 34). Host trains Gen3.
+- OAM v1.5: one PE x16 on Conn0; a second host x16 may be SERDES_7 on Conn1.
+  GCD1 = SERDES_7 is Inferred — there is NO public AMD overlay proving it.
+  Do not route S1-S7 as if that were proven. No xGMI.
+- Each seat's 16 named PE lanes = 2x x8 (GCD0/GCD1 split is planning; PE_BIF AMD-unknown).
+- Host X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.
+  Two CPU x16 = switch uplinks (silk + connector keepout, MPN Unknown).
+  Remaining 1x x16 + 4x x8 unused on this chassis.
 
-PEX8796 is a 96-lane alt — not placed. PEX88096 is OEM/50wk/Unknown price — not placed.
-Microchip PM40100 is Gen4 100-lane but OOS — not placed. Do not invent a second keepout.
-
-8L 2.0 mm is likely if this 1156-FCBGA is ever stuffed. PCBWay assembly of 1156-FCBGA
-is Unknown — keep DNP.
+8 x 2 x x16 = 256 downstream vs 80 host Gen3 — do not attempt x16-per-GCD.
+PEX8780-AB80BI G (80-lane 35 mm) is a cheaper alt in docs only — not placed.
+PM8533B-F3EI (48-lane 27 mm) is a 2-seat alt in docs only — not placed.
 
 X11DPH-T is NOT a part on this PCB. Chamber A B550M is NOT this PCB.
 """
-    write_text_sheet("sheets/02_host_pcie_stub.kicad_sch", "Host PE stub (all 8 seats via PEX8780 CANDIDATE)", text)
+    write_text_sheet("sheets/02_host_pcie_stub.kicad_sch", "Host PE stub (all 8 seats via DNP PM8536 PRIMARY)", text)
     labels = []
     for oam in range(N_SEATS):
         for n in range(16):
@@ -613,7 +617,7 @@ X11DPH-T is NOT a part on this PCB. Chamber A B550M is NOT this PCB.
 
 
 def write_oam_connector_sheet(oam: int, rel: str) -> None:
-    sw = "PEX8780-AB80BI G CANDIDATE DNP (8x x8 + one x16 uplink; not stuffed)"
+    sw = "SW0 PM8536B-FEI DNP PRIMARY (seats 0-3, x8/GCD)" if oam in SW0_SEATS else "SW1 PM8536B-FEI DNP PRIMARY (seats 4-7, x8/GCD)"
     stuff = "FIRST STUFF candidate (2 modules / 6 DNP OK)" if oam in FIRST_STUFF_SEATS else "electrically designed; module may be DNP"
     text = f"""OAM{oam} connector instances — {stuff}.
 
@@ -640,34 +644,35 @@ MODULE_ID / LINK_CONFIG 1k pulldowns NOT placed (AMD overlay unknown).
 
 
 def write_switch_unknown_sheet() -> None:
-    text = """PEX8780-AB80BI G KEEPOUT — CANDIDATE, not stuffed. No fake schematic pins.
-Do not invent a second switch MPN.
+    text = """TWO PM8536B-FEI KEEPOUTS — PRIMARY, DNP. No fake schematic pins.
 
-U_SW  Broadcom PEX8780-AB80BI G  CANDIDATE DNP
-      80 lane / 20 port PCIe Gen3
-      35 x 35 mm 1156-FCBGA
-      Street ~$309-$359 (OMO/Digi-Key tray)
+U_SW0  PM8536B-FEI  DNP  seats 0-3   16 US + 64 DS   x8 per GCD
+U_SW1  PM8536B-FEI  DNP  seats 4-7   16 US + 64 DS   x8 per GCD
 
-Topology on this 80-lane part:
-- 8x x8 Gen3 downstream (one x8 per MI250X) + one x16 uplink = 80.
-- Host X11DPH-T has 80 Gen3 (3x x16 + 4x x8). One CPU x16 is the uplink.
-- Eight MI250X at 2x x16 Gen4 = 256 DS — impossible. Not 8x x16.
+Package (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA,
+1.0 mm pitch. Street ~$460-475, ~18 wk. PCBWay can assemble 1.0 mm without HDI;
+plan 12-16 layers (not 4). 12L 2.0 mm is the stuffed-switch TARGET.
+8L 2.0 mm is a cheaper DNP-switch / mezz+power option only.
 
-Not placed (do not invent a second keepout):
-- PEX8796 — 96-lane alt
-- PEX88096 — OEM / 50 wk / Unknown price
-- Microchip PM40100 — Gen4 100-lane, OOS
+Do NOT populate until Eli buys the parts. Courtyard/keepout only — a DNP box, no fake pins.
 
-PCBWay assembly of 1156-FCBGA is Unknown — keep DNP.
-If this BGA is ever stuffed, 8-layer 2.0 mm is likely.
+Cheaper 80-lane alt in docs only (not placed): PEX8780-AB80BI G, 35 mm 1156-FCBGA.
+2-seat alt in docs only (not placed): PM8533B-F3EI (48-lane, 27 mm, 1.0 mm).
 
-Host connector MPN Unknown. Silk + keepout only. Do not invent CEM / SlimSAS / MCIO / retimer.
-Do NOT route S1-S7 (no xGMI). GCD1 = SERDES_7 is Inferred, not routed.
+Each MI250X GCD has its own PCIe Gen4 x16 (AMD + Hot Chips 34). Host trains Gen3.
+OAM v1.5: one PE x16 on Conn0; a second host x16 may be SERDES_7 on Conn1.
+GCD1 = SERDES_7 is Inferred — NO public AMD overlay proving it. Do NOT route S1-S7.
+
+Host X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.
+Two CPU x16 become the two switch uplinks (silk + connector keepout, MPN Unknown).
+Do not invent CEM / SlimSAS / MCIO / retimer / xGMI.
+
+8 x 2 x x16 = 256 DS vs 80 host — x16-per-GCD is impossible. x8 per GCD is the plan.
 
 Refclk / PERST# / HOST_PWRGD per seat per OAM v1.5
 (HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.
 """
-    write_text_sheet("sheets/11_pcie_switch_unknown.kicad_sch", "PEX8780-AB80BI G CANDIDATE (keepout, not stuffed)", text)
+    write_text_sheet("sheets/11_pcie_switch_unknown.kicad_sch", "PM8536B-FEI DNP x2 PRIMARY (keepout only)", text)
 
 
 def write_unmapped_sheet(rows: list[dict]) -> None:
@@ -726,7 +731,7 @@ def keepout_rect(x0: float, y0: float, x1: float, y1: float, layers: str = "*.Cu
 
 
 def write_pcb(rows: list[dict]) -> None:
-    """12-layer generated stack: local P48V pours, GND planes, SB175, PEX8780 CANDIDATE keepout."""
+    """12-layer stuffed-switch target: local P48V pours, GND planes, SB175, 2x PM8536 DNP keepouts."""
     pads = parse_footprint_pads()
     if len(pads) != 688:
         raise SystemExit(f"expected 688 footprint pads, got {len(pads)}")
@@ -831,7 +836,7 @@ def write_pcb(rows: list[dict]) -> None:
         f'  (gr_text "DO NOT FABRICATE  /  DO NOT ENERGIZE P48V  /  Rev3 8-seat PCBWay chassis stub"',
         f'    (at {BOARD_W/2:.3f} 6) (layer "F.SilkS")',
         '    (effects (font (size 2.4 2.4) (thickness 0.3))))',
-        f'  (gr_text "Molex 218910-1115 x16  |  PEX8780-AB80BI G CANDIDATE DNP  |  8L likely if stuffed  |  SB175 star  |  NOT a UBB"',
+        f'  (gr_text "Molex 218910-1115 x16  |  12L 2.0mm TARGET  |  LOCAL P48V pours  |  2x PM8536B-FEI DNP  |  SB175 star  |  NOT a UBB"',
         f'    (at {BOARD_W/2:.3f} 12) (layer "F.SilkS")',
         '    (effects (font (size 1.5 1.5) (thickness 0.18))))',
         f'  (gr_text "4x2 of 103x166 mm KOZ = 412x332 mm INFERRED tiling. Outline {BOARD_W:.0f}x{BOARD_H:.0f} mm < PCBWay adv ML 508x600."',
@@ -862,10 +867,11 @@ def write_pcb(rows: list[dict]) -> None:
         mx, my = mod_origin(oam)
         cx = kx + KOZ_W / 2
         cy = ky + 8
+        sw = "SW0" if oam in SW0_SEATS else "SW1"
         if oam in FIRST_STUFF_SEATS:
-            role = f"SEAT {oam}  ELEC NAMED  first-stuff OK  PE->PEX8780  x8"
+            role = f"SEAT {oam}  ELEC NAMED  first-stuff OK  PE->{sw}  x8/GCD"
         else:
-            role = f"SEAT {oam}  ELEC NAMED  module DNP OK  PE->PEX8780  x8  no respin"
+            role = f"SEAT {oam}  ELEC NAMED  module DNP OK  PE->{sw}  no respin"
         graphics += [
             f'  (gr_rect (start {kx:.3f} {ky:.3f}) (end {kx+KOZ_W:.3f} {ky+KOZ_H:.3f})',
             '    (stroke (width 0.15) (type solid)) (fill none) (layer "Dwgs.User"))',
@@ -885,7 +891,8 @@ def write_pcb(rows: list[dict]) -> None:
         ]
 
     hx0 = MARGIN + N_COLS * KOZ_W + MARGIN  # 452
-    a0, a1, a2, a3 = PEX8780_KEEPOUT
+    a0, a1, a2, a3 = SW0_KEEPOUT
+    b0, b1, b2, b3 = SW1_KEEPOUT
     h0, h1, h2, h3 = HOST_CABLE_KEEPOUT
     graphics += [
         f'  (gr_rect (start {hx0:.3f} {MARGIN:.3f}) (end {BOARD_W:.3f} {BOARD_H-MARGIN:.3f})',
@@ -894,18 +901,15 @@ def write_pcb(rows: list[dict]) -> None:
         '    (stroke (width 0.25) (type dash)) (fill none) (layer "F.CrtYd"))',
         f'  (gr_rect (start {a0:.3f} {a1:.3f}) (end {a2:.3f} {a3:.3f})',
         '    (stroke (width 0.2) (type dash)) (fill none) (layer "Dwgs.User"))',
-        f'  (gr_text "U_SW CANDIDATE DNP"',
+        f'  (gr_text "U_SW0 DNP PRIMARY"',
         f'    (at {hx0+HOST_STRIP/2:.3f} {48:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 1.3 1.3) (thickness 0.16))))',
-        f'  (gr_text "PEX8780-AB80BI G"',
+        f'  (gr_text "PM8536B-FEI 37.5mm 1311-FCBGA"',
         f'    (at {hx0+HOST_STRIP/2+8:.3f} {48:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
-        f'  (gr_text "35mm 1156-FCBGA  80-lane"',
+        '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
+        f'  (gr_text "seats 0-3  x8/GCD  16US+64DS"',
         f'    (at {hx0+HOST_STRIP/2+16:.3f} {48:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
-        f'  (gr_text "8x x8 + one x16 UL  NOT stuffed"',
-        f'    (at {hx0+HOST_STRIP/2+24:.3f} {48:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 0.85 0.85) (thickness 0.1))))',
         f'  (gr_rect (start {h0:.3f} {h1:.3f}) (end {h2:.3f} {h3:.3f})',
         '    (stroke (width 0.2) (type dash)) (fill none) (layer "F.CrtYd"))',
         f'  (gr_rect (start {h0:.3f} {h1:.3f}) (end {h2:.3f} {h3:.3f})',
@@ -913,7 +917,7 @@ def write_pcb(rows: list[dict]) -> None:
         f'  (gr_text "HOST CABLE KEEPOUT"',
         f'    (at {hx0+HOST_STRIP/2:.3f} {170:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 1.5 1.5) (thickness 0.18))))',
-        f'  (gr_text "X11DPH-T one CPU x16 uplink"',
+        f'  (gr_text "X11DPH-T two CPU x16 uplinks"',
         f'    (at {hx0+HOST_STRIP/2-8:.3f} {170:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
         f'  (gr_text "3x x16 + 4x x8 Gen3  MPN Unknown"',
@@ -925,18 +929,25 @@ def write_pcb(rows: list[dict]) -> None:
         f'  (gr_text "X11DPH-T NOT ON THIS PCB"',
         f'    (at {hx0+HOST_STRIP/2+16:.3f} {170:.3f} 90) (layer "F.SilkS")',
         '    (effects (font (size 1.1 1.1) (thickness 0.14))))',
-        f'  (gr_text "NO SECOND SWITCH MPN"',
+        f'  (gr_rect (start {b0:.3f} {b1:.3f}) (end {b2:.3f} {b3:.3f})',
+        '    (stroke (width 0.25) (type dash)) (fill none) (layer "F.CrtYd"))',
+        f'  (gr_rect (start {b0:.3f} {b1:.3f}) (end {b2:.3f} {b3:.3f})',
+        '    (stroke (width 0.2) (type dash)) (fill none) (layer "Dwgs.User"))',
+        f'  (gr_text "U_SW1 DNP PRIMARY"',
         f'    (at {hx0+HOST_STRIP/2:.3f} {304:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
-        f'  (gr_text "PEX8796 / PEX88096 / PM40100 not placed"',
-        f'    (at {hx0+HOST_STRIP/2+10:.3f} {304:.3f} 90) (layer "F.SilkS")',
-        '    (effects (font (size 0.85 0.85) (thickness 0.1))))',
+        '    (effects (font (size 1.3 1.3) (thickness 0.16))))',
+        f'  (gr_text "PM8536B-FEI 37.5mm 1311-FCBGA"',
+        f'    (at {hx0+HOST_STRIP/2+8:.3f} {304:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 1.0 1.0) (thickness 0.12))))',
+        f'  (gr_text "seats 4-7  x8/GCD  16US+64DS"',
+        f'    (at {hx0+HOST_STRIP/2+16:.3f} {304:.3f} 90) (layer "F.SilkS")',
+        '    (effects (font (size 0.9 0.9) (thickness 0.1))))',
         f'  (gr_text "STAR-FED P48V — LOCAL POURS ONLY — DO NOT ENERGIZE"',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-12:.3f}) (layer "F.SilkS")',
         '    (effects (font (size 1.8 1.8) (thickness 0.22))))',
-        f'  (gr_text "PEX8780 CANDIDATE DNP. 8L likely if 1156 stuffed. PCBWay 1156 assembly Unknown. No signal tracks."',
+        f'  (gr_text "12L 2.0mm stuffed-switch TARGET. 8L 2.0mm is cheaper DNP option only. PEX8780 docs-only. No signal tracks."',
         f'    (at {BOARD_W/2:.3f} 16.5) (layer "Cmts.User")',
-        '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
+        '    (effects (font (size 1.1 1.1) (thickness 0.12))))',
         f'  (gr_text "Seat grid: row0 (Y={MARGIN:.0f}) seats 0-3; row1 (Y={MARGIN+KOZ_H:.0f}) seats 4-7; col pitch {KOZ_W:.0f} mm. Conn rotation 180 Inferred."',
         f'    (at {BOARD_W/2:.3f} {BOARD_H-18:.3f}) (layer "Cmts.User")',
         '    (effects (font (size 1.2 1.2) (thickness 0.14))))',
@@ -998,7 +1009,8 @@ def write_pcb(rows: list[dict]) -> None:
     zones.append(zone(gnd_id, "GND", "In10.Cu", GND_CLEAR_MM, gnd_poly, priority=0))
 
     keepouts = [
-        keepout_rect(*PEX8780_KEEPOUT),
+        keepout_rect(*SW0_KEEPOUT),
+        keepout_rect(*SW1_KEEPOUT),
         keepout_rect(*HOST_CABLE_KEEPOUT),
     ]
     for oam, fcx, fcy in fuse_centers:
@@ -1014,7 +1026,7 @@ def write_pcb(rows: list[dict]) -> None:
     (date "2026-08-21")
     (rev "Rev3_8Seat_PCBWay_v1")
     (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written; 1.2A/contact OPEN.")
-    (comment 2 "492 x 372 mm. PEX8780-AB80BI G CANDIDATE DNP. 8L likely if stuffed. SB175.")
+    (comment 2 "492 x 372 mm 12-layer 2.0 mm stuffed-switch TARGET. Local P48V. 2x PM8536 DNP PRIMARY. SB175.")
   )
   (layers
     (0 "F.Cu" signal)
@@ -1200,13 +1212,15 @@ def main() -> None:
         "molex_current_followup_open": "1.2 A per used power contact at 48-59.5 V (2 oz); skip/void NC on same MPN",
         "eli_ack": "2026-08-19",
         "layers": N_LAYERS,
-        "layer_stack_target": "generated 12L 2.0 mm; 8L 2.0 mm likely if PEX8780 1156 stuffed",
-        "layer_stack_dnp_option": "8L 2.0 mm likely stuffed stack for this 1156-FCBGA CANDIDATE",
+        "layer_stack_target": "12L 2.0 mm stuffed-switch (two PM8536B-FEI DNP)",
+        "layer_stack_dnp_option": "8L 2.0 mm cheaper DNP-switch / mezz+power option only",
         "board_thickness_mm_planning": BOARD_THICK_MM,
         "copper_oz": {"F.Cu": 2, "inners": 1, "B.Cu": 2},
         "oam_seats": N_SEATS,
         "electrically_named_seats": list(range(N_SEATS)),
         "first_stuff_seats": sorted(FIRST_STUFF_SEATS),
+        "sw0_seats": sorted(SW0_SEATS),
+        "sw1_seats": sorted(SW1_SEATS),
         "connectors_per_seat": 2,
         "molex_mpn": "218910-1115",
         "molex_qty": 16,
@@ -1228,21 +1242,18 @@ def main() -> None:
         "no_psu_shopping_on_pcb_bom": True,
         "fuse_per_seat_A": 15,
         "fuse_mpn": "Unknown",
-        "pcie_switch_mpn": "PEX8780-AB80BI G",
-        "pcie_switch_status": "CANDIDATE_not_stuffed",
-        "pcie_switch_qty_dnp": 1,
-        "pcie_switch_package": "1156-ball 35 mm FCBGA",
-        "pcie_switch_lanes": 80,
-        "pcie_switch_topology": "8x x8 Gen3 + one x16 uplink = 80; not 8x x16",
-        "pcie_switch_street_usd": [309, 359],
-        "pcie_switch_not_placed": [
-            "PEX8796 96-lane alt",
-            "PEX88096 OEM/50wk/Unknown price",
-            "PM40100 Gen4 100-lane OOS",
-        ],
-        "pcbway_1156_fcbga_assembly": "Unknown",
+        "pcie_switch_mpn": "PM8536B-FEI",
+        "pcie_switch_status": "PRIMARY_DNP",
+        "pcie_switch_qty_dnp": 2,
+        "pcie_switch_package": "1311-ball 37.5 mm FCBGA 1.0 mm pitch",
+        "pcie_switch_lanes": 96,
+        "pcie_switch_topology": "x8 per GCD; SW0 seats 0-3 (16US+64DS); SW1 seats 4-7; not x16-per-GCD",
+        "pcie_switch_street_usd": [460, 475],
+        "pcie_switch_lead_wk": 18,
+        "pcie_switch_alt_docs_only": "PEX8780-AB80BI G 80-lane 35 mm cheaper alt, not placed",
+        "pcie_switch_2seat_alt_docs_only": "PM8533B-F3EI 48-lane 27 mm, not placed",
         "host_connector_mpn": "Unknown",
-        "host_uplinks": "one X11DPH-T CPU x16 to PEX8780 CANDIDATE",
+        "host_uplinks": "two X11DPH-T CPU x16 to SW0/SW1",
         "xgmi_routed": False,
         "no_gpu_vrm": True,
         "pvref_driven": False,
