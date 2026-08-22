@@ -1,5 +1,5 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "c88034d5-d84c-484b-b550-2f16e9d7a235")
+	(uuid "f0642bc0-bb7f-4d4f-80bd-13ab6b762dd9")
 	(paper "A3")
 	(title_block
 		(title "Unmapped / AMD-unknown pads")
@@ -15,7 +15,7 @@
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "0b0a6849-f2f9-4f1b-96e3-e7d6c14583cb")
+		(uuid "7981632d-0f00-4e5e-8a65-af9459867825")
 	)
 
 	(sheet_instances

@@ -12,9 +12,9 @@
 | 16 | J0_Conn0, J0_Conn1 … J7_Conn0, J7_Conn1 | **Molex 218910-1115** (2189101115) | Mirror Mezz Pro, 688 contact, hermaphroditic, 5.00 mm mated height | **Verified** OCP v1.5 §5/§6.2 + Farnell | Only stuffed connector MPN. Street **~$50–$96 ea**. **Do not order** from this tree. Voltage: CSA 60 V written 2026-08-18 at OCP P48V (COFC 80170713); **1.2 A/contact at 48–59.5 V still OPEN**. No extra skip/void NC pads. Factory pack typically reel; BGA/mezz attach is not a default PCBWay process. |
 | 1 | J_SB175 | Anderson **SB175** 2-pole | 175 A / 600 V board-entry landing, 2 AWG, Kelvin pads | **Verified** family rating (DS-SB175). Geometry planning from 2-pole envelope **53.1×35.4 mm**, holes **Ø6.6 / 28.6 mm** | Housing+contacts are the chassis inlet, not a 48 V PSU. **Do not tie to D3000E-S1 (12 V).** |
 | 8 | F0–F7 | **~15 A fuse keepout** | Per-seat P48V fuse | **Keepout only** | **MPN Unknown.** Not a buy line. |
-| 0 | U_SW0, U_SW1 | **PM8536B-FEI** | Switchtec PFX 96-lane Gen3, 1311-ball 37.5 mm FCBGA, 1.0 mm | **DNP keepout** | Qty 2 courtyards. Do not stuff until purchased. Not a PCBWay SMT line today. PEX8780-AB80BI G is docs-only cheaper 80-lane alt. |
+| 0 | U_SW | **PEX8780-AB80BI G** | 80-lane / 20-port Gen3, 35×35 mm 1156-FCBGA | **CANDIDATE DNP** | Qty 1 courtyard. Street **~$309–$359** (OMO/Digi-Key tray). Topology **8× x8 + one x16 uplink**, not 8× x16. **Do not stuff.** PCBWay 1156 assembly **Unknown**. Do not invent a second MPN (PEX8796 / PEX88096 / PM40100 not placed). |
 | 32 | H01–H74 (H{seat}{1–4}) | NPTH φ 3.9 mm, 8 mm MIN land | OAM Fig 2 M3.5 holes | **Verified** geometry | Screw length / bolster **Unknown**. Not a fastener SKU here. |
-| 1 | PCB | **12-layer, 492 × 372 mm, 2.0 mm**, 2 oz outer / 1 oz inner planning | FR4 chassis, eight 103×166 mm KOZ + host-stub strip | **Inferred** outline | **Not a fab gerber.** Guest 12L 2.0 mm qty-5 **$2237.90 + $68.43 DHL**. **Do not upload.** |
+| 1 | PCB | **12-layer generated**, 492 × 372 mm, 2.0 mm, 2 oz outer / 1 oz inner planning | FR4 chassis, eight 103×166 mm KOZ + host-stub strip | **Inferred** outline | **Not a fab gerber.** **8L 2.0 mm is likely if PEX8780 stuffed** (guest qty-5 **$832.74 + $68.43 DHL**). **Do not upload.** |
 
 ## Explicitly not on this PCB (sheet-compatible, do not buy onto the carrier)
 

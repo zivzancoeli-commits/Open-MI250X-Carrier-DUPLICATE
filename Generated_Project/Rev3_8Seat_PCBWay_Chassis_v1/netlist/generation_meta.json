@@ -38,8 +38,8 @@
   "molex_current_followup_open": "1.2 A per used power contact at 48-59.5 V (2 oz); skip/void NC on same MPN",
   "eli_ack": "2026-08-19",
   "layers": 12,
-  "layer_stack_target": "12L 2.0 mm stuffed-switch (8x-running)",
-  "layer_stack_dnp_option": "8L 2.0 mm cheaper DNP-switch option only",
+  "layer_stack_target": "generated 12L 2.0 mm; 8L 2.0 mm likely if PEX8780 1156 stuffed",
+  "layer_stack_dnp_option": "8L 2.0 mm likely stuffed stack for this 1156-FCBGA CANDIDATE",
   "board_thickness_mm_planning": 2.0,
   "copper_oz": {
     "F.Cu": 2,
@@ -60,18 +60,6 @@
   "first_stuff_seats": [
     0,
     1
-  ],
-  "sw0_seats": [
-    0,
-    1,
-    2,
-    3
-  ],
-  "sw1_seats": [
-    4,
-    5,
-    6,
-    7
   ],
   "connectors_per_seat": 2,
   "molex_mpn": "218910-1115",
@@ -123,12 +111,24 @@
   "no_psu_shopping_on_pcb_bom": true,
   "fuse_per_seat_A": 15,
   "fuse_mpn": "Unknown",
-  "pcie_switch_mpn": "PM8536B-FEI",
-  "pcie_switch_qty_dnp": 2,
-  "pcie_switch_package": "1311-ball 37.5 mm FCBGA 1.0 mm pitch",
-  "pcie_switch_alt_docs_only": "PEX8780-AB80BI G 80-lane 35 mm",
+  "pcie_switch_mpn": "PEX8780-AB80BI G",
+  "pcie_switch_status": "CANDIDATE_not_stuffed",
+  "pcie_switch_qty_dnp": 1,
+  "pcie_switch_package": "1156-ball 35 mm FCBGA",
+  "pcie_switch_lanes": 80,
+  "pcie_switch_topology": "8x x8 Gen3 + one x16 uplink = 80; not 8x x16",
+  "pcie_switch_street_usd": [
+    309,
+    359
+  ],
+  "pcie_switch_not_placed": [
+    "PEX8796 96-lane alt",
+    "PEX88096 OEM/50wk/Unknown price",
+    "PM40100 Gen4 100-lane OOS"
+  ],
+  "pcbway_1156_fcbga_assembly": "Unknown",
   "host_connector_mpn": "Unknown",
-  "host_uplinks": "two X11DPH-T CPU x16 to SW0/SW1",
+  "host_uplinks": "one X11DPH-T CPU x16 to PEX8780 CANDIDATE",
   "xgmi_routed": false,
   "no_gpu_vrm": true,
   "pvref_driven": false,

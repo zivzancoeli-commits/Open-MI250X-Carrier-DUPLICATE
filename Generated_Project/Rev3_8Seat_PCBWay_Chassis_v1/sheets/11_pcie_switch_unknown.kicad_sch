@@ -1,8 +1,8 @@
 (kicad_sch (version 20250114) (generator "rev3_8seat_pcbway_chassis_v1") (generator_version "9.0")
-	(uuid "3cdaf84c-f82f-4192-808c-146f416cdb74")
+	(uuid "e2e60ce3-d17d-4fe5-b99c-4ff86f9552e6")
 	(paper "A3")
 	(title_block
-		(title "PM8536B-FEI DNP x2 (keepout only)")
+		(title "PEX8780-AB80BI G CANDIDATE (keepout, not stuffed)")
 		(date "2026-08-21")
 		(rev "Rev3_8Seat_PCBWay_v1")
         (comment 1 "DO NOT FABRICATE. DO NOT ENERGIZE P48V. Molex 60V written 2026-08-18; 1.2A/contact OPEN.")
@@ -11,11 +11,11 @@
         (comment 4 "r2.0 UNUSABLE. P3V3=Conn0 C1/C2. 12L 2.0mm stuffed-switch TARGET. Star-fed P48V.")
 	)
 
-	(text "TWO PM8536B-FEI KEEPOUTS — DNP. No fake schematic pins.\n\nU_SW0  PM8536B-FEI  DNP  seats 0-3   16 US + 64 DS   x8 per GCD\nU_SW1  PM8536B-FEI  DNP  seats 4-7   16 US + 64 DS   x8 per GCD\n\nPackage (Verified Microchip PFX table): 96-lane Gen3, 1311-ball 37.5 x 37.5 mm FCBGA, 1.0 mm pitch.\nPCBWay can assemble 1.0 mm without HDI; 12L 2.0 mm is the stuffed-switch TARGET.\n8L 2.0 mm is a cheaper DNP-switch / mezz+power option only — not the 8x-running stack.\nCaveat: guest quotes used 6/6 mil + 0.3 mm hole; 1311-ball escape may need finer rules.\n\nDo NOT populate until Eli buys the parts. Courtyard/keepout only.\nPEX8780-AB80BI G (80-lane 35 mm) is a cheaper alt in docs only — not placed.\nPM8533B-F3EI (48-lane 27 mm) is a 2-seat alt in docs only — not placed.\n\nHost X11DPH-T (NOT on this PCB): 3x Gen3 x16 + 4x Gen3 x8 = 80 Gen3 lanes.\nTwo CPU x16 become the two switch uplinks (silk + connector keepout, MPN Unknown).\nDo not invent CEM / SlimSAS / MCIO / retimer.\n\n8 x 2 x x16 = 256 DS vs 80 host — x16-per-GCD is impossible. x8 per GCD is the plan.\nGCD1 = SERDES_7 is Inferred (OAM v1.5 may put a second PE x16 on Conn1 SERDES_7).\nDo NOT route S1-S7 as if that were proven. No xGMI mesh.\n\nRefclk / PERST# / HOST_PWRGD per seat per OAM v1.5\n(HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.\n"
+	(text "PEX8780-AB80BI G KEEPOUT — CANDIDATE, not stuffed. No fake schematic pins.\nDo not invent a second switch MPN.\n\nU_SW  Broadcom PEX8780-AB80BI G  CANDIDATE DNP\n      80 lane / 20 port PCIe Gen3\n      35 x 35 mm 1156-FCBGA\n      Street ~$309-$359 (OMO/Digi-Key tray)\n\nTopology on this 80-lane part:\n- 8x x8 Gen3 downstream (one x8 per MI250X) + one x16 uplink = 80.\n- Host X11DPH-T has 80 Gen3 (3x x16 + 4x x8). One CPU x16 is the uplink.\n- Eight MI250X at 2x x16 Gen4 = 256 DS — impossible. Not 8x x16.\n\nNot placed (do not invent a second keepout):\n- PEX8796 — 96-lane alt\n- PEX88096 — OEM / 50 wk / Unknown price\n- Microchip PM40100 — Gen4 100-lane, OOS\n\nPCBWay assembly of 1156-FCBGA is Unknown — keep DNP.\nIf this BGA is ever stuffed, 8-layer 2.0 mm is likely.\n\nHost connector MPN Unknown. Silk + keepout only. Do not invent CEM / SlimSAS / MCIO / retimer.\nDo NOT route S1-S7 (no xGMI). GCD1 = SERDES_7 is Inferred, not routed.\n\nRefclk / PERST# / HOST_PWRGD per seat per OAM v1.5\n(HOST_PWRGD >= 100 ms after MODULE_PWRGD). AMD delays still Unknown.\n"
 		(exclude_from_sim no)
 		(at 20.32 20.32 0)
 		(effects (font (size 1.5 1.5)) (justify left top))
-		(uuid "e45665d5-93a0-46fa-b13e-2e0dab27b020")
+		(uuid "3cc91e45-370e-48ef-9054-356c170bf7b3")
 	)
 
 	(sheet_instances

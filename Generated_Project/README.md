@@ -64,7 +64,7 @@ Shopping list: `20_System_BOM/SHOPPING.md`. Pin map authority: `22_Pinmap_Resear
 Generated_Project/Rev3_8Seat_PCBWay_Chassis_v1/
 ```
 
-Eight electrically designed OAM seats on a **12-layer 2.0 mm** stuffed-switch target (8L 2.0 mm is a cheaper DNP-switch option in docs only). Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
+Eight electrically designed OAM seats on a **12-layer 2.0 mm** generated stack. **PEX8780-AB80BI G** is the switch **CANDIDATE** (DNP, 8× x8 + one x16 uplink). **8L 2.0 mm is likely if that 1156 is stuffed.** Compatible with the Chamber B sheet (X11DPH-T neighbour, not on this PCB). See `Rev3_8Seat_PCBWay_Chassis_v1/docs/STATUS.md`.
 
 ## Exhaustive public-source hunt (copied tree, 2026-08-17)
 
