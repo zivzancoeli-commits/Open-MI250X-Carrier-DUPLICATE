@@ -19,6 +19,7 @@ Chamber B **OAM chassis PCB** only. Not a motherboard. Do not swap X11DPH-T.
 |---|---|
 | `fab/Rev3_8Seat_PCBWay_12L_492x372_qty5_gerbers.zip` | Gerbers, drill, IPC-356, PnP, FAB_NOTES, BOM |
 | `docs/STATUS.md` | What Eli can upload vs what stays DNP |
+| `docs/HUNT_MOLEX_PLUG_COOL.md` | Research: Molex 1.2 A @ 48–59.5 V, 218910→CEM path, MI250X cooler FRU — all **not found** |
 | `docs/CONCEPT_8x_FULL_WIDTH.md` | Pointer to 8× full-width **CONCEPT** (ideas only) |
 | `docs/LATE_BIND.md` | Pointer: reserved vs later-spin (**respin**, not silk ECO) |
 | [`../Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md`](../Rev3_8Seat_FULLWIDTH_CONCEPT/LATE_BIND.md) | Late-bind table. **DO NOT FABRICATE** live PE. |
